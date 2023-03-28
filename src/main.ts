@@ -1,5 +1,10 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
+import { createApp } from 'vue';
+import { Quasar } from 'quasar';
+import quasarUserOptions from '@/quasar-user-options';
+import App from '@/App.vue';
+import router from '@/router';
 
-createApp(App).mount('#app')
+createApp(App)
+  .use(Quasar, quasarUserOptions)
+  .use(router)
+  .mount('#app');
