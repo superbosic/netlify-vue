@@ -17,7 +17,7 @@
                 created at:
               </q-item-section>
               <q-item-section>
-                {{ formatFromTimestamp(projectInformation?.tokentable?.created_at, 'DD.MM.YYYY HH:mm') }}
+                {{ formatFromTimestamp(projectInformation?.tokentable?.created_at) }}
               </q-item-section>
             </q-item>
             <q-item dense>
@@ -59,7 +59,7 @@ import { useDateFormatters } from '@/composition/useFormatters';
 
 const { formatFromTimestamp } = useDateFormatters();
 const tokenTableApi = createApiInstance(Tokentable);
-const { sendRequest: tokentableList, loading, responseData: projectInformation } = useRequest({
+const { sendRequest: tokentableList, responseData: projectInformation } = useRequest({
   request: () => tokenTableApi.projectInformationList().then((data) => data.data.data),
 });
 const title = computed(() => projectInformation.value?.name ?? '');

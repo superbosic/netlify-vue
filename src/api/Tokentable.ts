@@ -53,4 +53,64 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
       format: "json",
       ...params,
     });
+  /**
+   * @description <br /><br /> <b>Authentication:</b> required
+   *
+   * @tags tokentable
+   * @name TokenAllocationList
+   * @request GET:/tokentable/token_allocation
+   * @secure
+   */
+  tokenAllocationList = (params: RequestParams = {}) =>
+    this.request<
+      {
+        data?: {
+          /** @format int64 */
+          id?: number;
+          /**
+           * @format timestamptz
+           * @default "now"
+           */
+          created_at?: number;
+          name?: string;
+          tokentable?: {
+            /**
+             * @format timestamptz
+             * @default "now"
+             */
+            created_at?: number;
+            /** @format int64 */
+            max_token_supply?: number;
+            /** @format int64 */
+            vesting_period?: number;
+            _token_allocation?: {
+              /** @format int64 */
+              id?: number;
+              /**
+               * @format timestamptz
+               * @default "now"
+               */
+              created_at?: number;
+              /** @format int64 */
+              tokentable_id?: number;
+              round?: string;
+              /** @format int64 */
+              token_percent?: number;
+              /** @format int64 */
+              token_amount?: number;
+              price_usd?: number;
+              /** @format int64 */
+              raise_usd?: number;
+            }[];
+          } | null;
+        };
+      },
+      void
+    >({
+      path: `/tokentable/token_allocation`,
+      method: "GET",
+      secure: true,
+      format: "json",
+      ...params,
+    });
 }
