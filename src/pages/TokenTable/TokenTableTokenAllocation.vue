@@ -1,5 +1,5 @@
 <template>
-  MainPage
+  TokenTableTokenAllocation
 </template>
 
 <script lang="ts" setup>

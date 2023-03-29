@@ -1,4 +1,6 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import {
+  createRouter, createWebHistory, createWebHashHistory, RouteRecordRaw,
+} from 'vue-router';
 import { RouteNames } from '@/router/routeNames';
 
 const routes: Array<RouteRecordRaw> = [
@@ -15,20 +17,38 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '',
-    redirect: { name: RouteNames.Main },
+    redirect: { name: RouteNames.TokenTable },
     component: () => import('@/layouts/MainLayout.vue'),
     children: [
       {
-        path: '/main',
-        component: () => import('@/pages/MainPage.vue'),
-        name: RouteNames.Main,
+        path: 'token-table',
+        redirect: { name: RouteNames.TokenTableProjectInformation },
+        component: () => import('@/pages/TokenTable/index.vue'),
+        name: RouteNames.TokenTable,
+        children: [
+          {
+            path: 'project-information',
+            component: () => import('@/pages/TokenTable/TokenTableProjectInformation.vue'),
+            name: RouteNames.TokenTableProjectInformation,
+          },
+          {
+            path: 'token-allocation',
+            component: () => import('@/pages/TokenTable/TokenTableTokenAllocation.vue'),
+            name: RouteNames.TokenTableTokenAllocation,
+          },
+          {
+            path: 'unlock-tokens',
+            component: () => import('@/pages/TokenTable/TokenTableUnlockTokens.vue'),
+            name: RouteNames.TokenTableUnlockTokens,
+          },
+        ],
       },
     ],
   },
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes,
 });
 

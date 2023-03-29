@@ -1,4 +1,7 @@
 export enum RouteNames {
     AccountLogin = 'AccountLogin',
-    Main = 'Main',
+    TokenTable = 'TokenTable',
+    TokenTableProjectInformation = 'TokenTableProjectInformation',
+    TokenTableTokenAllocation = 'TokenTableTokenAllocation',
+    TokenTableUnlockTokens = 'TokenTableUnlockTokens',
 }
