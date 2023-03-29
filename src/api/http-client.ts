@@ -55,7 +55,7 @@ export enum ContentType {
 }
 
 export class HttpClient<SecurityDataType = unknown> {
-  public baseUrl: string = "https://x8ki-letl-twmt.n7.xano.io:443/api:Qx9OLo-W";
+  public baseUrl: string = "https://x8ki-letl-twmt.n7.xano.io:443/api:3xJ2zQ1y";
   private securityData: SecurityDataType | null = null;
   private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"];
   private abortControllers = new Map<CancelToken, AbortController>();

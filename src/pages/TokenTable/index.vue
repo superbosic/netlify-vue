@@ -3,7 +3,10 @@
     <div
       class="q-gutter-y-md"
     >
-      <q-card>
+      <q-card
+        flat
+        bordered
+      >
         <q-tabs>
           <q-route-tab
             label="Project Information"
