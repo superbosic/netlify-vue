@@ -13,6 +13,18 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
+  {
+    path: '',
+    redirect: { name: RouteNames.Main },
+    component: () => import('@/layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '/main',
+        component: () => import('@/pages/MainPage.vue'),
+        name: RouteNames.Main,
+      },
+    ],
+  },
 ];
 
 const router = createRouter({

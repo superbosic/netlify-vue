@@ -1,7 +1,7 @@
 export const MAX_INT32 = 2147483647;
 
 export function useValidationRules() {
-  const FIELD_REQUIRED = 'Обязательное поле';
+  const FIELD_REQUIRED = 'Required';
 
   function defaultRequiredRule<T>(value: T | null | undefined): boolean | string {
     return !!value || FIELD_REQUIRED;

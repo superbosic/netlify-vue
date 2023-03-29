@@ -1,10 +1,11 @@
 import { ref } from 'vue';
 import { useQuasar } from 'quasar';
+import { Auth } from '@/api/Auth';
+import { HttpResponse } from '@/api/http-client';
 
-export interface IUser {
-    name: string;
-    lastname: string;
-}
+type ExtractHttpResponseType<P> = P extends Promise<HttpResponse<infer T>> ? T : never;
+
+export type IUser = ExtractHttpResponseType<ReturnType<Auth['getAuth']>>;
 
 const APP_TOKEN_KEY = 'APP_TOKEN_KEY';
 
@@ -19,7 +20,7 @@ export function useAccountStore() {
   }
 
   function getToken() {
-    return token.value ?? localStorage.getItem<string>(APP_TOKEN_KEY);
+    return token.value ?? localStorage.getItem<string>(APP_TOKEN_KEY) ?? '';
   }
 
   function setToken(value: string) {
@@ -27,10 +28,17 @@ export function useAccountStore() {
     localStorage.set(APP_TOKEN_KEY, value);
   }
 
+  function logout() {
+    localStorage.remove(APP_TOKEN_KEY);
+    user.value = null;
+    token.value = null;
+  }
+
   return {
     setUser,
     getToken,
     setToken,
+    logout,
     user,
   };
 }

@@ -1,8 +1,9 @@
 <template>
   <q-layout
-    v-if="userInfo"
+    v-if="!loading"
     view="lHh LpR fFf"
   >
+    <the-header-panel />
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -16,7 +17,19 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onBeforeMount } from 'vue';
+import { createApiInstance } from '@/api';
+import { Auth } from '@/api/Auth';
+import { useAccountStore } from '@/store/account';
+import useRequest from '@/composition/useRequest';
+import TheHeaderPanel from '@/components/TheHeaderPanel.vue';
 
-const userInfo = ref(true);
+const { setUser } = useAccountStore();
+const authApi = createApiInstance(Auth);
+const { sendRequest: loadAccountInfo, loading } = useRequest({
+  request: () => authApi.getAuth().then((data) => data!.data!),
+  successCallback: (account) => setUser(account),
+});
+
+onBeforeMount(loadAccountInfo);
 </script>
