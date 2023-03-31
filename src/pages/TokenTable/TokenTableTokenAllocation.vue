@@ -8,16 +8,33 @@
     hide-pagination
     flat
     bordered
-  />
+  >
+    <template #top>
+      <div class="full-width row">
+        <div class="text-h5 col">
+          {{ title }}
+        </div>
+        <q-space />
+        <q-btn
+          color="primary"
+          label="Add token allocation"
+          no-caps
+          @click="tokenTableTokenAllocationAddNewDialogIsOpen = true"
+        />
+      </div>
+    </template>
+  </q-table>
+  <token-table-token-allocation-add-new-dialog v-model="tokenTableTokenAllocationAddNewDialogIsOpen" />
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { QTableProps } from 'quasar';
 import { createApiInstance } from '@/api';
 import { Tokentable } from '@/api/Tokentable';
 import useRequest from '@/composition/useRequest';
 import { useDateFormatters, useFormatNumber } from '@/composition/useFormatters';
+import TokenTableTokenAllocationAddNewDialog from '@/components/TokenTable/TokenTableTokenAllocationAddNewDialog.vue';
 
 const tokenTableApi = createApiInstance(Tokentable);
 const { formatFromTimestamp } = useDateFormatters();
@@ -26,6 +43,7 @@ const { sendRequest: tokentableList, loading, responseData: tokenAllocationList 
   request: () => tokenTableApi.tokenAllocationList().then((data) => data.data.data),
 });
 const title = computed(() => tokenAllocationList.value?.name ?? '');
+const tokenTableTokenAllocationAddNewDialogIsOpen = ref(false);
 // eslint-disable-next-line no-underscore-dangle
 const rows = computed(() => tokenAllocationList.value?.tokentable?._token_allocation ?? []);
 const columns:QTableProps['columns'] = [

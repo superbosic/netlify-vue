@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.ts",
     "lint-fix": "eslint . --ext .vue,.ts --fix",
+    "vue-tsc": "vue-tsc",
     "generate-api": "npx swagger-typescript-api -p https://x8ki-letl-twmt.n7.xano.io/apispec:3xJ2zQ1y -o ./src/api/ --modular --module-name-index 0"
   },
   "dependencies": {

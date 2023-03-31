@@ -16,11 +16,11 @@ export function useValidationRules() {
   }
 
   function minValue(min: number, minText: string | number = min): Rule<number> {
-    return (value) => value >= min || `Введенное значение должно быть не меньше ${minText}`;
+    return (value) => value >= min || `Min value is ${minText}`;
   }
 
   function maxValue(max: number, maxText: string | number = max): Rule<number> {
-    return (value) => value <= max || `Введенное значение должно быть не больше ${maxText}`;
+    return (value) => value <= max || `Max value is ${maxText}`;
   }
 
   function numberCustomMinValue(min: number): Rule<'' | number | null | undefined> {
