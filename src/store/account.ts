@@ -1,9 +1,7 @@
 import { ref } from 'vue';
 import { useQuasar } from 'quasar';
 import { Auth } from '@/api/Auth';
-import { HttpResponse } from '@/api/http-client';
-
-type ExtractHttpResponseType<P> = P extends Promise<HttpResponse<infer T>> ? T : never;
+import { ExtractHttpResponseType } from '@/types';
 
 export type IUser = ExtractHttpResponseType<ReturnType<Auth['getAuth']>>;
 

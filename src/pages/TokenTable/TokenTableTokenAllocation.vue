@@ -24,7 +24,10 @@
       </div>
     </template>
   </q-table>
-  <token-table-token-allocation-add-new-dialog v-model="tokenTableTokenAllocationAddNewDialogIsOpen" />
+  <token-table-token-allocation-add-new-dialog
+    v-model="tokenTableTokenAllocationAddNewDialogIsOpen"
+    @created="onTokenAllocationCreated"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -45,49 +48,92 @@ const { sendRequest: tokentableList, loading, responseData: tokenAllocationList 
 const title = computed(() => tokenAllocationList.value?.name ?? '');
 const tokenTableTokenAllocationAddNewDialogIsOpen = ref(false);
 // eslint-disable-next-line no-underscore-dangle
-const rows = computed(() => tokenAllocationList.value?.tokentable?._token_allocation ?? []);
+const rows = computed(() => tokenAllocationList.value?.tokentable?.token_allocation ?? []);
 const columns:QTableProps['columns'] = [
   {
-    label: 'created at',
-    field: 'created_at',
-    name: 'created_at',
-    format: (value:number) => formatFromTimestamp(value),
-  },
-  {
-    label: 'tokentable id',
-    field: 'tokentable_id',
-    name: 'tokentable_id',
-  },
-  {
-    label: 'round',
+    label: 'Token allocation',
     field: 'round',
     name: 'round',
   },
   {
-    label: 'token percent',
+    label: '%',
     field: 'token_percent',
     name: 'token_percent',
     format: (value:number) => percentFormat(value),
   },
   {
-    label: 'token amount',
+    label: 'Token',
     field: 'token_amount',
     name: 'token_amount',
     format: (value:number) => numberFormat(value),
   },
   {
-    label: 'price usd',
+    label: 'Price, USD',
     field: 'price_usd',
     name: 'price_usd',
     format: (value:number) => currencyFormat(value),
   },
   {
-    label: 'raise usd',
+    label: 'Raise, USD',
     field: 'raise_usd',
     name: 'raise_usd',
     format: (value:number) => currencyFormat(value),
   },
+  {
+    label: 'FDV, USD',
+    field: 'raise_usd',
+    name: 'raise_usd',
+    format: (value:number) => currencyFormat(value),
+  },
+  {
+    label: 'TGE, %',
+    field: 'tge_percent',
+    name: 'tge_percent',
+    format: (value:number) => percentFormat(value),
+  },
+  {
+    label: 'TGE, tokens',
+    field: 'tge_amount',
+    name: 'tge_amount',
+    format: (value:number) => numberFormat(value),
+  },
+  {
+    label: 'P-TGE, %',
+    field: 'post_tge_percent',
+    name: 'post_tge_percent',
+    format: (value:number) => percentFormat(value),
+  },
+  {
+    label: 'P-TGE, tokens',
+    field: 'post_tge_amount',
+    name: 'post_tge_amount',
+    format: (value:number) => numberFormat(value),
+  },
+  {
+    label: 'Cliff (M)',
+    field: 'cliff_months',
+    name: 'cliff_months',
+    format: (value:number) => numberFormat(value),
+  },
+  {
+    label: 'Vesting (M)',
+    field: 'vesting_months',
+    name: 'vesting_months',
+    format: (value:number) => numberFormat(value),
+  },
+  {
+    label: 'Vesting (%/M)',
+    field: 'vesting_months',
+    name: 'vesting_months',
+    // format: (value:number) => numberFormat(value),
+    format: (value:number) => '?',
+  },
 ];
+
+function onTokenAllocationCreated() {
+  tokentableList();
+  tokenTableTokenAllocationAddNewDialogIsOpen.value = false;
+}
 
 tokentableList();
 </script>

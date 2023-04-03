@@ -9,7 +9,7 @@
  * ---------------------------------------------------------------
  */
 
-import { HttpClient, RequestParams } from "./http-client";
+import { ContentType, HttpClient, RequestParams } from "./http-client";
 
 export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
@@ -83,16 +83,9 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
             max_token_supply?: number;
             /** @format int64 */
             vesting_period?: number;
-            _token_allocation?: {
+            token_allocation?: {
               /** @format int64 */
               id?: number;
-              /**
-               * @format timestamptz
-               * @default "now"
-               */
-              created_at?: number;
-              /** @format int64 */
-              tokentable_id?: number;
               round?: string;
               /** @format int64 */
               token_percent?: number;
@@ -101,6 +94,20 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
               price_usd?: number;
               /** @format int64 */
               raise_usd?: number;
+              /** @format int64 */
+              fdv_usd?: number;
+              /** @format int64 */
+              tge_percent?: number;
+              /** @format int64 */
+              tge_amount?: number;
+              /** @format int64 */
+              post_tge_percent?: number;
+              /** @format int64 */
+              post_tge_amount?: number;
+              /** @format int64 */
+              cliff_months?: number;
+              /** @format int64 */
+              vesting_months?: number;
             }[];
           } | null;
         };
@@ -110,6 +117,75 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
       path: `/tokentable/token_allocation`,
       method: "GET",
       secure: true,
+      format: "json",
+      ...params,
+    });
+  /**
+   * @description <br /><br /> <b>Authentication:</b> required
+   *
+   * @tags tokentable
+   * @name TokenAllocationCreate
+   * @request POST:/tokentable/token_allocation
+   * @secure
+   */
+  tokenAllocationCreate = (
+    data: {
+      round?: string;
+      /** @format int64 */
+      token_percent?: number;
+      price_usd?: number;
+      /** @format int64 */
+      tge_percent?: number;
+      /** @format int64 */
+      cliff_month?: number;
+      /** @format int64 */
+      vesting_month?: number;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<
+      {
+        data?: {
+          /** @format int64 */
+          id?: number;
+          /**
+           * @format timestamptz
+           * @default "now"
+           */
+          created_at?: number;
+          /** @format int64 */
+          tokentable_id?: number;
+          round?: string;
+          /** @format int64 */
+          token_percent?: number;
+          /** @format int64 */
+          token_amount?: number;
+          price_usd?: number;
+          /** @format int64 */
+          raise_usd?: number;
+          /** @format int64 */
+          fdv_usd?: number;
+          /** @format int64 */
+          tge_percent?: number;
+          /** @format int64 */
+          tge_amount?: number;
+          /** @format int64 */
+          post_tge_percent?: number;
+          /** @format int64 */
+          post_tge_amount?: number;
+          /** @format int64 */
+          cliff_months?: number;
+          /** @format int64 */
+          vesting_months?: number;
+        };
+      },
+      void
+    >({
+      path: `/tokentable/token_allocation`,
+      method: "POST",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
       format: "json",
       ...params,
     });
