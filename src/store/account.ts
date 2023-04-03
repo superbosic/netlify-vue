@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 import { useQuasar } from 'quasar';
 import { Auth } from '@/api/Auth';
-import { ExtractHttpResponseType } from '@/types';
+import { ExtractHttpResponseType } from '@/types/http';
 
 export type IUser = ExtractHttpResponseType<ReturnType<Auth['getAuth']>>;
 
