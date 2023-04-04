@@ -71,7 +71,7 @@ const columns:QTableProps['columns'] = [
     label: 'Price, USD',
     field: 'price_usd',
     name: 'price_usd',
-    format: (value:number) => currencyFormat(value),
+    format: (value:number) => currencyFormat(value, undefined, 2),
   },
   {
     label: 'Raise, USD',

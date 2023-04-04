@@ -4,7 +4,10 @@
     @update:model-value="emits('update:model-value', $event)"
   >
     <q-card style="width: 640px">
-      <q-form @submit="tokenAllocationCreate">
+      <q-form
+        novalidate
+        @submit="tokenAllocationCreate"
+      >
         <q-card-section>
           <div class="text-h6">
             Add new token allocation
@@ -26,6 +29,7 @@
             <ui-number-field
               v-model="tokenAllocationData.price_usd"
               label="Price Usd"
+              step="0.00"
             />
             <ui-number-field
               v-model="tokenAllocationData.cliff_month"

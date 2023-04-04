@@ -20,8 +20,8 @@ export function useFormatNumber() {
     return (isDefined(value) && !Number.isNaN(value) ? usNumberFormat.format(Number(value.toFixed(fractionDigits))) : '');
   }
 
-  function currencyFormat(value: NotDefined<number>, currency = '$') {
-    return isDefined(value) ? `${numberFormat(value)} ${currency}` : '';
+  function currencyFormat(value: NotDefined<number>, currency = '$', fractionDigits = FRACTION_DIGITS) {
+    return isDefined(value) ? `${numberFormat(value, fractionDigits)} ${currency}` : '';
   }
 
   function percentFormat(value: NotDefined<number>) {
