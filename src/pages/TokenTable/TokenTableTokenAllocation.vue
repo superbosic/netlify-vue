@@ -169,8 +169,8 @@ const columns:QTableProps['columns'] = [
   },
   {
     label: 'FDV, USD',
-    field: 'raise_usd',
-    name: 'raise_usd',
+    field: 'fdv_usd',
+    name: 'fdv_usd',
     format: (value:number) => currencyFormat(value),
   },
   {
