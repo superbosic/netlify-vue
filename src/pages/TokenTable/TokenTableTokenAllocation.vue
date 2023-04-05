@@ -7,6 +7,7 @@
         :loading="loading"
         :rows="rows"
         :columns="columns"
+        :pagination="{ rowsPerPage: 0 }"
         hide-pagination
         flat
         bordered
@@ -21,7 +22,7 @@
               color="primary"
               label="Add token allocation"
               no-caps
-              @click="tokenTableTokenAllocationAddNewDialogIsOpen = true"
+              @click="addNewTokenClick"
             />
           </div>
         </template>
@@ -273,8 +274,14 @@ function editItem(row: IRow) {
 }
 
 function onTokenAllocationCreated() {
+  rowToEdit.value = undefined;
   tokentableList();
   tokenTableTokenAllocationAddNewDialogIsOpen.value = false;
+}
+
+function addNewTokenClick() {
+  rowToEdit.value = undefined;
+  tokenTableTokenAllocationAddNewDialogIsOpen.value = true;
 }
 
 tokentableList();
