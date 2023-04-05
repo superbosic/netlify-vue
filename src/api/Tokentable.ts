@@ -57,6 +57,34 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
    * @description <br /><br /> <b>Authentication:</b> required
    *
    * @tags tokentable
+   * @name TokenAllocationDelete
+   * @request DELETE:/tokentable/token_allocation
+   * @secure
+   */
+  tokenAllocationDelete = (
+    query: {
+      /** @format int64 */
+      id: number;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<
+      {
+        data?: string;
+      },
+      void
+    >({
+      path: `/tokentable/token_allocation`,
+      method: "DELETE",
+      query: query,
+      secure: true,
+      format: "json",
+      ...params,
+    });
+  /**
+   * @description <br /><br /> <b>Authentication:</b> required
+   *
+   * @tags tokentable
    * @name TokenAllocationList
    * @request GET:/tokentable/token_allocation
    * @secure
@@ -137,47 +165,17 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
       /** @format int64 */
       tge_percent?: number;
       /** @format int64 */
-      cliff_month?: number;
+      cliff_months?: number;
       /** @format int64 */
-      vesting_month?: number;
+      vesting_months?: number;
+      /** @format int64 */
+      id?: number;
     },
     params: RequestParams = {},
   ) =>
     this.request<
       {
-        data?: {
-          /** @format int64 */
-          id?: number;
-          /**
-           * @format timestamptz
-           * @default "now"
-           */
-          created_at?: number;
-          /** @format int64 */
-          tokentable_id?: number;
-          round?: string;
-          /** @format int64 */
-          token_percent?: number;
-          /** @format int64 */
-          token_amount?: number;
-          price_usd?: number;
-          /** @format int64 */
-          raise_usd?: number;
-          /** @format int64 */
-          fdv_usd?: number;
-          /** @format int64 */
-          tge_percent?: number;
-          /** @format int64 */
-          tge_amount?: number;
-          /** @format int64 */
-          post_tge_percent?: number;
-          /** @format int64 */
-          post_tge_amount?: number;
-          /** @format int64 */
-          cliff_months?: number;
-          /** @format int64 */
-          vesting_months?: number;
-        };
+        data?: string;
       },
       void
     >({

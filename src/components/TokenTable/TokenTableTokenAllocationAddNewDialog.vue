@@ -10,7 +10,7 @@
       >
         <q-card-section>
           <div class="text-h6">
-            Add new token allocation
+            {{ title }}
           </div>
         </q-card-section>
         <q-card-section>
@@ -32,7 +32,7 @@
               step="0.00"
             />
             <ui-number-field
-              v-model="tokenAllocationData.cliff_month"
+              v-model="tokenAllocationData.cliff_months"
               label="Cliff (M)"
             />
             <ui-number-field
@@ -40,7 +40,7 @@
               label="TGE, %"
             />
             <ui-number-field
-              v-model="tokenAllocationData.vesting_month"
+              v-model="tokenAllocationData.vesting_months"
               label="Мesting (M)"
             />
           </div>
@@ -67,27 +67,31 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useValidationRules } from '@/composition/useValidationRules';
 import UiNumberField from '@/components/ui/UiNumberField.vue';
 import { createApiInstance } from '@/api';
 import { Tokentable } from '@/api/Tokentable';
 import useRequest from '@/composition/useRequest';
 
+type TokenAllocation = Parameters<Tokentable['tokenAllocationCreate']>[0];
+
 const props = defineProps<{
     modelValue: boolean
+    token?: TokenAllocation,
 }>();
 const emits = defineEmits<{
     (e:'update:model-value', value:boolean):void,
     (e:'created'):void,
 }>();
 
-type TokenAllocation = Parameters<Tokentable['tokenAllocationCreate']>[0];
 const tokentableApi = createApiInstance(Tokentable);
-const tokenAllocationData = ref<TokenAllocation>({});
+const tokenAllocationData = ref<TokenAllocation>({ ...props.token ?? {} });
 const { defaultRequiredRules } = useValidationRules();
 const { sendRequest: tokenAllocationCreate, loading } = useRequest({
   request: () => tokentableApi.tokenAllocationCreate(tokenAllocationData.value),
   successCallback: () => emits('created'),
 });
+
+const title = computed(() => (props.token ? `Edit ${props.token.round}` : 'Add new token allocation'));
 </script>
