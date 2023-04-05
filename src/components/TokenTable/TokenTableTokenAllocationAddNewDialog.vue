@@ -73,12 +73,11 @@ import UiNumberField from '@/components/ui/UiNumberField.vue';
 import { createApiInstance } from '@/api';
 import { Tokentable } from '@/api/Tokentable';
 import useRequest from '@/composition/useRequest';
-
-type TokenAllocation = Parameters<Tokentable['tokenAllocationCreate']>[0];
+import { TokenAllocationInput } from '@/types/token';
 
 const props = defineProps<{
     modelValue: boolean
-    token?: TokenAllocation,
+    token?: TokenAllocationInput,
 }>();
 const emits = defineEmits<{
     (e:'update:model-value', value:boolean):void,
@@ -86,7 +85,7 @@ const emits = defineEmits<{
 }>();
 
 const tokentableApi = createApiInstance(Tokentable);
-const tokenAllocationData = ref<TokenAllocation>({ ...props.token ?? {} });
+const tokenAllocationData = ref<TokenAllocationInput>({ ...props.token ?? {} });
 const { defaultRequiredRules } = useValidationRules();
 const { sendRequest: tokenAllocationCreate, loading } = useRequest({
   request: () => tokentableApi.tokenAllocationCreate(tokenAllocationData.value),

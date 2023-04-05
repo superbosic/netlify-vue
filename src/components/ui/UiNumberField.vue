@@ -5,6 +5,7 @@
     :rules="innerRules"
     :suffix="suffix"
     :step="step"
+    :dense="dense"
     outlined
     type="number"
     :hide-bottom-space="hideBottomSpace"
@@ -22,6 +23,7 @@ const props = withDefaults(defineProps<{
     modelValue?: number,
     label: QInput['label'],
     rules?: QInput['rules'],
+    dense?: boolean,
     minValue?: number,
     maxValue?: number,
     suffix?: string,

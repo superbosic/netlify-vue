@@ -1,5 +1,5 @@
 <template>
-  <div class="column q-gutter-md">
+  <div class="q-gutter-md">
     <div>
       <q-table
         key="id"
@@ -95,6 +95,9 @@
         </q-card-section>
       </q-card>
     </div>
+    <div>
+      <token-table-token-allocation-by-months :token-allocation-data="rows" />
+    </div>
   </div>
 </template>
 
@@ -112,12 +115,12 @@ import useRequest from '@/composition/useRequest';
 import { useFormatNumber } from '@/composition/useFormatters';
 import TokenTableTokenAllocationAddNewDialog from '@/components/TokenTable/TokenTableTokenAllocationAddNewDialog.vue';
 import { COLORS } from '@/utils/chart';
-import { ExtractHttpResponseType } from '@/types/http';
+import { TokenAllocationListItem } from '@/types/token';
+import TokenTableTokenAllocationByMonths from '@/components/TokenTable/TokenTableTokenAllocationByMonths.vue';
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
-type IRow = NonNullable<NonNullable<NonNullable<ExtractHttpResponseType<ReturnType<Tokentable['tokenAllocationList']>>['data']>['tokentable']>['token_allocation']>[0];
-type ITotalRow = Pick<IRow, 'token_amount' | 'token_percent' | 'tge_amount' | 'raise_usd' | 'post_tge_amount'>;
+type ITotalRow = Pick<TokenAllocationListItem, 'token_amount' | 'token_percent' | 'tge_amount' | 'raise_usd' | 'post_tge_amount'>;
 const { dialog } = useQuasar();
 const tokenTableApi = createApiInstance(Tokentable);
 const { numberFormat, currencyFormat, percentFormat } = useFormatNumber();
@@ -129,7 +132,7 @@ const { sendRequest: tokenAllocationDelete } = useRequest({
   successCallback: tokentableList,
 });
 const title = computed(() => tokenAllocationList.value?.name ?? '');
-const rowToEdit = ref<IRow>();
+const rowToEdit = ref<TokenAllocationListItem>();
 const tokenTableTokenAllocationAddNewDialogIsOpen = ref(false);
 // eslint-disable-next-line no-underscore-dangle
 const rows = computed(() => tokenAllocationList.value?.tokentable?.token_allocation ?? []);
@@ -259,7 +262,7 @@ const totalRow = computed<ITotalRow>(() => rows.value?.reduce((acc, item) => {
   post_tge_amount: 0,
 } as ITotalRow) ?? {});
 
-function deleteItem(row: IRow) {
+function deleteItem(row: TokenAllocationListItem) {
   dialog({
     title: 'Delete token allocation',
     message: `Delete token allocation ${row.round}?`,
@@ -268,7 +271,7 @@ function deleteItem(row: IRow) {
   }).onOk(() => tokenAllocationDelete(row.id!));
 }
 
-function editItem(row: IRow) {
+function editItem(row: TokenAllocationListItem) {
   rowToEdit.value = row;
   tokenTableTokenAllocationAddNewDialogIsOpen.value = true;
 }
