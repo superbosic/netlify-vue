@@ -25,6 +25,7 @@
             />
           </div>
         </template>
+
         <template #body-cell-actions="{ row }">
           <q-td>
             <q-btn
@@ -42,6 +43,41 @@
               @click="deleteItem(row)"
             />
           </q-td>
+        </template>
+
+        <template #bottom-row>
+          <q-tr>
+            <q-td>
+              <div class="text-bold">
+                Total
+              </div>
+            </q-td>
+            <q-td class="text-bold text-right">
+              {{ percentFormat(totalRow.token_percent) }}
+            </q-td>
+            <q-td class="text-bold text-right">
+              {{ numberFormat(totalRow.token_amount) }}
+            </q-td>
+            <q-td class="text-bold text-right">
+              {{ currencyFormat(totalRow.price_usd) }}
+            </q-td>
+            <q-td class="text-bold text-right">
+              {{ currencyFormat(totalRow.raise_usd) }}
+            </q-td>
+            <q-td />
+            <q-td class="text-bold text-right">
+              {{ percentFormat(totalRow.tge_percent) }}
+            </q-td>
+            <q-td class="text-bold text-right">
+              {{ numberFormat(totalRow.tge_amount) }}
+            </q-td>
+            <q-td class="text-bold text-right">
+              {{ percentFormat(totalRow.post_tge_percent) }}
+            </q-td>
+            <q-td class="text-bold text-right">
+              {{ numberFormat(totalRow.post_tge_amount) }}
+            </q-td>
+          </q-tr>
         </template>
       </q-table>
       <token-table-token-allocation-add-new-dialog
@@ -86,7 +122,7 @@ import { ExtractHttpResponseType } from '@/types/http';
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
 type IRow = NonNullable<NonNullable<NonNullable<ExtractHttpResponseType<ReturnType<Tokentable['tokenAllocationList']>>['data']>['tokentable']>['token_allocation']>[0];
-
+type ITotalRow = Pick<IRow, 'token_amount' | 'token_percent' | 'tge_amount' | 'tge_percent' | 'price_usd' | 'raise_usd' | 'post_tge_amount' | 'post_tge_percent'>;
 const { dialog } = useQuasar();
 const tokenTableApi = createApiInstance(Tokentable);
 const { numberFormat, currencyFormat, percentFormat } = useFormatNumber();
@@ -107,6 +143,7 @@ const columns:QTableProps['columns'] = [
     label: 'Token allocation',
     field: 'round',
     name: 'round',
+    align: 'left',
   },
   {
     label: '%',
@@ -210,6 +247,28 @@ const chartOptions: ChartOptions = {
     },
   },
 };
+
+const totalRow = computed<ITotalRow>(() => rows.value?.reduce((acc, item) => {
+  acc.token_amount! += item.token_amount ?? 0;
+  acc.token_percent! += item.token_percent ?? 0;
+  acc.raise_usd! += item.raise_usd ?? 0;
+  acc.price_usd! += item.price_usd ?? 0;
+  acc.tge_amount! += item.tge_amount ?? 0;
+  acc.tge_percent! += item.tge_percent ?? 0;
+  acc.post_tge_amount! += item.post_tge_amount ?? 0;
+  acc.post_tge_percent! += item.post_tge_percent ?? 0;
+
+  return acc;
+}, {
+  token_amount: 0,
+  token_percent: 0,
+  raise_usd: 0,
+  price_usd: 0,
+  tge_amount: 0,
+  tge_percent: 0,
+  post_tge_amount: 0,
+  post_tge_percent: 0,
+} as ITotalRow) ?? {});
 
 function deleteItem(row: IRow) {
   dialog({
