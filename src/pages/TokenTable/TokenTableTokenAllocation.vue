@@ -96,7 +96,10 @@
       </q-card>
     </div>
     <div>
-      <token-table-token-allocation-by-months :token-allocation-data="rows" />
+      <token-table-token-allocation-by-months
+        :token-allocation-data="rows"
+        :max-token-supply="maxTokenSupply"
+      />
     </div>
   </div>
 </template>
@@ -132,6 +135,7 @@ const { sendRequest: tokenAllocationDelete } = useRequest({
   successCallback: tokentableList,
 });
 const title = computed(() => tokenAllocationList.value?.name ?? '');
+const maxTokenSupply = computed(() => tokenAllocationList.value?.tokentable?.max_token_supply ?? 0);
 const rowToEdit = ref<TokenAllocationListItem>();
 const tokenTableTokenAllocationAddNewDialogIsOpen = ref(false);
 // eslint-disable-next-line no-underscore-dangle

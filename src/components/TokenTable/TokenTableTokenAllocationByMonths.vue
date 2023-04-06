@@ -31,13 +31,14 @@
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
+import { QTableProps } from 'quasar';
 import { TokenAllocationListItem } from '@/types/token';
 import { useFormatNumber } from '@/composition/useFormatters';
 import UiNumberField from '@/components/ui/UiNumberField.vue';
-import {QTableProps} from "quasar";
 
 const props = defineProps<{
-tokenAllocationData: TokenAllocationListItem[]
+  tokenAllocationData: TokenAllocationListItem[];
+  maxTokenSupply: number;
 }>();
 
 const { numberFormat, percentFormat } = useFormatNumber();
@@ -56,30 +57,92 @@ const months = computed({
 
 const tableData = computed(() => {
   const monthsList = Array.from(new Array(months.value), (_, index) => index + 1);
+  const mainRows = props.tokenAllocationData.map((token) => {
+    const result = {
+      round: token.round,
+      token_amount: token.token_amount,
+      token_percent: token.token_percent,
+      tge_amount: token.tge_amount,
+      tge_percent: token.tge_percent,
+    };
+
+    return monthsList.reduce((acc, currentMonthNumber) => {
+      acc[`month_${currentMonthNumber}`] = currentMonthNumber > token.cliff_months! && currentMonthNumber <= (token.cliff_months! + token.vesting_months!)
+        ? token.post_tge_amount! / token.vesting_months! : 0;
+
+      return acc;
+    }, result as any);
+  });
+  const unlockScheduleRow = {
+    round: 'Unlock schedule',
+    total: true,
+    ...mainRows.reduce((acc, item) => {
+      Object.keys(item).forEach((key) => {
+        if (typeof item[key] === 'number') {
+          acc[key] = typeof acc[key] === 'number' ? acc[key] += item[key] : item[key];
+        }
+      });
+
+      return acc;
+    }, {} as any),
+  };
+  const circulatingRow = {
+    round: 'Circulating',
+    token_percent: 100,
+    token_amount: unlockScheduleRow.token_amount,
+    tge_amount: unlockScheduleRow.tge_amount,
+    tge_percent: Math.round((unlockScheduleRow.tge_amount / props.maxTokenSupply) * 100),
+    ...monthsList.reduce((acc, item) => {
+      if (item === 1) {
+        acc[`month_${item}`] = unlockScheduleRow.tge_amount + unlockScheduleRow[`month_${item}`];
+      } else {
+        acc[`month_${item}`] = acc[`month_${item - 1}`] + unlockScheduleRow[`month_${item}`];
+      }
+
+      return acc;
+    }, {} as any),
+  };
+  const lockedRow = {
+    round: 'Locked',
+    token_percent: 0,
+    token_amount: 0,
+    tge_percent: 100 - circulatingRow.tge_percent,
+    tge_amount: props.maxTokenSupply - circulatingRow.tge_amount,
+    ...monthsList.reduce((acc, item) => {
+      acc[`month_${item}`] = props.maxTokenSupply - circulatingRow[`month_${item}`];
+
+      return acc;
+    }, {} as any),
+  };
+  const closingTotalSupplyRow = {
+    round: 'Closing Total Supply',
+    total: true,
+    token_percent: 100,
+    token_amount: props.maxTokenSupply,
+    tge_percent: circulatingRow.tge_percent + lockedRow.tge_percent,
+    tge_amount: circulatingRow.tge_amount + lockedRow.tge_amount,
+    ...monthsList.reduce((acc, item) => {
+      acc[`month_${item}`] = circulatingRow[`month_${item}`] + lockedRow[`month_${item}`];
+
+      return acc;
+    }, {} as any),
+  };
 
   return {
-    rows: props.tokenAllocationData.map((token) => {
-      const result = {
-        round: token.round,
-        token_amount: token.token_amount,
-        token_percent: token.token_percent,
-        tge_amount: token.tge_amount,
-        tge_percent: token.tge_percent,
-      };
-
-      return monthsList.reduce((acc, currentMonthNumber) => {
-        acc[`month_${currentMonthNumber}`] = currentMonthNumber > token.cliff_months! && currentMonthNumber <= (token.cliff_months! + token.vesting_months!)
-          ? token.post_tge_amount! / token.vesting_months! : 0;
-
-        return acc;
-      }, result as any);
-    }),
+    rows: [
+      unlockScheduleRow,
+      ...mainRows,
+      closingTotalSupplyRow,
+      circulatingRow,
+      lockedRow,
+    ],
     columns: [
       {
         label: '',
         field: 'round',
         name: 'round',
         align: 'left',
+        classes: getClasses,
       },
       {
         label: '% of total',
@@ -87,6 +150,7 @@ const tableData = computed(() => {
         name: 'token_percent',
         align: 'right',
         format: (value:number) => percentFormat(value),
+        classes: getClasses,
       },
       {
         label: 'Total',
@@ -94,6 +158,7 @@ const tableData = computed(() => {
         name: 'token_percent',
         align: 'right',
         format: (value:number) => numberFormat(value),
+        classes: getClasses,
       },
       {
         label: '% of TGE',
@@ -101,6 +166,7 @@ const tableData = computed(() => {
         name: 'tge_percent',
         align: 'right',
         format: (value:number) => percentFormat(value),
+        classes: getClasses,
       },
       {
         label: 'TGE',
@@ -108,16 +174,22 @@ const tableData = computed(() => {
         name: 'tge_amount',
         align: 'right',
         format: (value:number) => numberFormat(value),
+        classes: getClasses,
       },
       ...monthsList.map((month) => ({
         label: `Month ${month}`,
         field: `month_${month}`,
         name: `month_${month}`,
         format: (value:number) => numberFormat(value),
+        classes: getClasses,
       })),
     ],
   };
 });
+
+function getClasses(row: any) {
+  return row.total ? 'text-bold' : undefined;
+}
 </script>
 <style lang="sass">
 .my-sticky-column-table
