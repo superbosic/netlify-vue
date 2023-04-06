@@ -99,6 +99,7 @@
       <token-table-token-allocation-by-months
         :token-allocation-data="rows"
         :max-token-supply="maxTokenSupply"
+        :tge-tokens-total="totalRow?.tge_amount ?? 0"
       />
     </div>
   </div>

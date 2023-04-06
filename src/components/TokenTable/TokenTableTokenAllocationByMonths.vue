@@ -39,6 +39,7 @@ import UiNumberField from '@/components/ui/UiNumberField.vue';
 const props = defineProps<{
   tokenAllocationData: TokenAllocationListItem[];
   maxTokenSupply: number;
+  tgeTokensTotal: number;
 }>();
 
 const { numberFormat, percentFormat } = useFormatNumber();
@@ -63,7 +64,7 @@ const tableData = computed(() => {
       token_amount: token.token_amount,
       token_percent: token.token_percent,
       tge_amount: token.tge_amount,
-      tge_percent: token.tge_percent,
+      tge_percent: token.tge_amount ? Math.round((token.tge_amount / props.tgeTokensTotal) * 100) : 0,
     };
 
     return monthsList.reduce((acc, currentMonthNumber) => {
