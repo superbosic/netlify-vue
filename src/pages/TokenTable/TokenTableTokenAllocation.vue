@@ -1,5 +1,8 @@
 <template>
-  <div class="q-gutter-md">
+  <div
+    v-if="tokenAllocationList"
+    class="q-gutter-md"
+  >
     <div>
       <q-table
         key="id"
@@ -88,9 +91,13 @@
         bordered
       >
         <q-card-section>
-          <pie
-            :data="chartData"
+          <chart
             :options="chartOptions"
+          />
+        </q-card-section>
+        <q-card-section>
+          <chart
+            :options="unlockTokensByMonthTotalChartOptions"
           />
         </q-card-section>
       </q-card>
@@ -110,27 +117,27 @@
       />
     </div>
   </div>
+  <q-card-section v-else>
+    <div class="row justify-center">
+      <q-spinner
+        size="3em"
+      />
+    </div>
+  </q-card-section>
 </template>
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import { QTableProps, useQuasar } from 'quasar';
-import {
-  Chart as ChartJS, ArcElement, Tooltip, Legend, Title,
-  ChartOptions, ChartData,
-} from 'chart.js';
-import { Pie } from 'vue-chartjs';
+import { Chart } from 'highcharts-vue';
 import { createApiInstance } from '@/api';
 import { Tokentable } from '@/api/Tokentable';
 import useRequest from '@/composition/useRequest';
 import { useFormatNumber } from '@/composition/useFormatters';
 import TokenTableTokenAllocationAddNewDialog from '@/components/TokenTable/TokenTableTokenAllocationAddNewDialog.vue';
-import { COLORS } from '@/utils/chart';
 import { TokenAllocationListItem } from '@/types/token';
 import TokenTableTokenAllocationByMonths from '@/components/TokenTable/TokenTableTokenAllocationByMonths.vue';
 import TokenTableTokenAllocationByYears from '@/components/TokenTable/TokenTableTokenAllocationByYears.vue';
-
-ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
 type ITotalRow = Pick<TokenAllocationListItem, 'token_amount' | 'token_percent' | 'tge_amount' | 'raise_usd' | 'post_tge_amount'>;
 const { dialog } = useQuasar();
@@ -235,29 +242,94 @@ const columns:QTableProps['columns'] = [
     name: 'actions',
   },
 ];
-const chartData = computed<ChartData<'pie', number[]>>(() => ({
-  labels: rows.value.map(({ round }) => round),
-  datasets: [
-    {
-      backgroundColor: COLORS,
-      // eslint-disable-next-line camelcase
-      data: rows.value.map(({ token_percent }) => token_percent!),
-    },
-  ],
-}));
-const chartOptions: ChartOptions = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      position: 'top',
-    },
-    title: {
-      display: true,
-      text: 'Token Allocation',
+const chartOptions = computed(() => ({
+  chart: {
+    type: 'pie',
+  },
+  title: {
+    text: 'Token Allocation',
+  },
+  plotOptions: {
+    pie: {
+      allowPointSelect: true,
+      cursor: 'pointer',
+      dataLabels: {
+        enabled: true,
+        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+      },
     },
   },
-};
+  series: [
+    {
+      data: rows.value.map(({ round, token_percent }) => ({
+        name: round,
+        y: token_percent!,
+      })),
+      color: '#6fcd98',
+    },
+  ],
+  credits: {
+    enabled: false,
+  },
+}));
+const unlockTokensByMonthTotalChartOptions = computed(() => {
+  const monthsList = Array.from(new Array(120), (_, index) => index + 1);
+  const series = rows.value?.map((token) => ({
+    name: token.round,
+    data: monthsList.reduce((acc, currentMonthNumber, i) => {
+      if (currentMonthNumber > token.cliff_months! && currentMonthNumber <= (token.cliff_months! + token.vesting_months!)) {
+        const value = token.post_tge_amount! / token.vesting_months!;
+
+        if (typeof acc[i - 1] === 'number') {
+          acc.push(acc[i - 1] + value);
+        } else {
+          acc.push(value);
+        }
+      } else {
+        acc.push(acc[i - 1] ?? 0);
+      }
+
+      return acc;
+    }, [] as number[]),
+  }));
+
+  return {
+    chart: {
+      type: 'area',
+    },
+    title: {
+      text: 'Unlock tokens by month total',
+      align: 'left',
+    },
+    yAxis: {
+      opposite: true,
+      title: {
+        text: 'Tokens',
+      },
+    },
+    tooltip: {
+      shared: true,
+      headerFormat: '<span style="font-size:12px"><b>{point.key}</b></span><br>',
+    },
+    plotOptions: {
+      series: {
+        pointStart: 1,
+      },
+      area: {
+        stacking: 'normal',
+        lineColor: '#666666',
+        lineWidth: 1,
+        marker: {
+          enabled: false,
+        },
+      },
+    },
+    series,
+    credits: {
+      enabled: false,
+    },
+  };
+});
 
 const totalRow = computed<ITotalRow>(() => rows.value?.reduce((acc, item) => {
   acc.token_amount! += item.token_amount ?? 0;

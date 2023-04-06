@@ -18,6 +18,7 @@ module.exports = {
     },
     rules: {
         'no-undef': 'off',
+        'camelcase': 'off',
         'no-spaced-func': 'off',
         'func-call-spacing': 'off',
         'arrow-body-style': 'off',
@@ -141,6 +142,7 @@ module.exports = {
             ],
             rules: {
                 'no-unused-expressions': 'off',
+                'camelcase': 'off',
                 'no-useless-constructor': 'off',
                 '@typescript-eslint/no-unused-expressions': ['error'],
                 '@typescript-eslint/no-useless-constructor': 'error',
