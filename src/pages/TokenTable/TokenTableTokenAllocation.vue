@@ -96,6 +96,13 @@
       </q-card>
     </div>
     <div>
+      <token-table-token-allocation-by-years
+        :token-allocation-data="rows"
+        :max-token-supply="maxTokenSupply"
+        :tge-tokens-total="totalRow?.tge_amount ?? 0"
+      />
+    </div>
+    <div>
       <token-table-token-allocation-by-months
         :token-allocation-data="rows"
         :max-token-supply="maxTokenSupply"
@@ -121,6 +128,7 @@ import TokenTableTokenAllocationAddNewDialog from '@/components/TokenTable/Token
 import { COLORS } from '@/utils/chart';
 import { TokenAllocationListItem } from '@/types/token';
 import TokenTableTokenAllocationByMonths from '@/components/TokenTable/TokenTableTokenAllocationByMonths.vue';
+import TokenTableTokenAllocationByYears from '@/components/TokenTable/TokenTableTokenAllocationByYears.vue';
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
