@@ -111,6 +111,7 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
             max_token_supply?: number;
             /** @format int64 */
             vesting_period?: number;
+            public_sale_price_usd?: number;
             token_allocation?: {
               /** @format int64 */
               id?: number;

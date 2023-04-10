@@ -103,14 +103,14 @@
       </q-card>
     </div>
     <div>
-      <token-table-token-allocation-by-years
+      <token-table-token-allocation-by-months
         :token-allocation-data="rows"
         :max-token-supply="maxTokenSupply"
         :tge-tokens-total="totalRow?.tge_amount ?? 0"
       />
     </div>
     <div>
-      <token-table-token-allocation-by-months
+      <token-table-token-allocation-by-years
         :token-allocation-data="rows"
         :max-token-supply="maxTokenSupply"
         :tge-tokens-total="totalRow?.tge_amount ?? 0"
@@ -179,7 +179,7 @@ const columns:QTableProps['columns'] = [
     label: 'Price, USD',
     field: 'price_usd',
     name: 'price_usd',
-    format: (value:number) => currencyFormat(value, undefined, 2),
+    format: (value:number) => currencyFormat(value, undefined, 4),
   },
   {
     label: 'Raise, USD',
@@ -192,18 +192,6 @@ const columns:QTableProps['columns'] = [
     field: 'fdv_usd',
     name: 'fdv_usd',
     format: (value:number) => currencyFormat(value),
-  },
-  {
-    label: 'TGE, %',
-    field: 'tge_percent',
-    name: 'tge_percent',
-    format: (value:number) => percentFormat(value),
-  },
-  {
-    label: 'TGE, tokens',
-    field: 'tge_amount',
-    name: 'tge_amount',
-    format: (value:number) => numberFormat(value),
   },
   {
     label: 'P-TGE, %',
@@ -228,13 +216,6 @@ const columns:QTableProps['columns'] = [
     field: 'vesting_months',
     name: 'vesting_months',
     format: (value:number) => numberFormat(value),
-  },
-  {
-    label: 'Vesting (%/M)',
-    field: 'vesting_months',
-    name: 'vesting_months',
-    // format: (value:number) => numberFormat(value),
-    format: (value:number) => '?',
   },
   {
     label: 'Actions',
