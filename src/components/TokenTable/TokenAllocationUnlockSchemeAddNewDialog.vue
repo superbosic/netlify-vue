@@ -24,20 +24,20 @@
             <ui-number-field
               v-model="tokenAllocationUnlockSchemeInputData.month_after_tge"
               label="Month after TGE"
-              :rules="defaultRequiredRules"
+              :rules="[numberRequiredRule]"
             />
             <ui-number-field
               v-if="tokenAllocationUnlockSchemeInputData.type === 'onetime'"
               v-model="tokenAllocationUnlockSchemeInputData.percent"
               label="Token percent"
               :max-value="100"
-              :rules="defaultRequiredRules"
+              :rules="[numberRequiredRule]"
             />
             <ui-number-field
               v-if="tokenAllocationUnlockSchemeInputData.type === 'liner'"
               v-model="tokenAllocationUnlockSchemeInputData.vesting_months"
               label="Vesting Months"
-              :rules="defaultRequiredRules"
+              :rules="[numberRequiredRule]"
             />
           </div>
         </q-card-section>
@@ -87,7 +87,7 @@ const tokenAllocationUnlockSchemeInputData = ref<TokenAllocationUnlockSchemeInpu
     type: 'onetime',
   },
 );
-const { defaultRequiredRules } = useValidationRules();
+const { numberRequiredRule } = useValidationRules();
 const { sendRequest: tokenAllocationUnlockSchemeCreate, loading } = useRequest({
   request: () => tokentableApi.tokenAllocationUnlockSchemeCreate(tokenAllocationUnlockSchemeInputData.value),
   successCallback: () => emits('created'),
