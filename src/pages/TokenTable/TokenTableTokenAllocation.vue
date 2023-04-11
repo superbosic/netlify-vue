@@ -194,15 +194,15 @@ const columns:QTableProps['columns'] = [
     format: (value:number) => currencyFormat(value),
   },
   {
-    label: 'P-TGE, %',
-    field: 'post_tge_percent',
-    name: 'post_tge_percent',
+    label: 'TGE, %',
+    field: 'tge_percent',
+    name: 'tge_percent',
     format: (value:number) => percentFormat(value),
   },
   {
-    label: 'P-TGE, tokens',
-    field: 'post_tge_amount',
-    name: 'post_tge_amount',
+    label: 'TGE, tokens',
+    field: 'tge_amount',
+    name: 'tge_amount',
     format: (value:number) => numberFormat(value),
   },
   {
