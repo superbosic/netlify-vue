@@ -118,7 +118,7 @@
       <token-allocation-unlock-scheme-add-new-dialog
         v-if="tokenAllocationUnlockSchemeAddNewDialogIsOpen"
         v-model="tokenAllocationUnlockSchemeAddNewDialogIsOpen"
-        :token="rowToEdit"
+        :token="rowToEdit!"
         @created="onTokenAllocationUnlockSchemeCreated"
       />
     </div>

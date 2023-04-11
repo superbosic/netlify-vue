@@ -23,7 +23,7 @@
           :debounce="300"
           :min-value="minMonths"
           :max-value="maxMonths"
-          @update:model-value="emits('update:months', $event)"
+          @update:model-value="emits('update:months', $event as number)"
         />
       </div>
     </template>
