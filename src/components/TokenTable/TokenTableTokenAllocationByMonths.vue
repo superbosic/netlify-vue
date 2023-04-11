@@ -16,13 +16,14 @@
         </div>
         <q-space />
         <ui-number-field
-          v-model="months"
+          :model-value="months"
           label="Months"
           outlined
           dense
           :debounce="300"
           :min-value="minMonths"
           :max-value="maxMonths"
+          @update:model-value="emits('update:months', $event)"
         />
       </div>
     </template>
@@ -40,24 +41,19 @@ const props = defineProps<{
   tokenAllocationData: TokenAllocationListItem[];
   maxTokenSupply: number;
   tgeTokensTotal: number;
+  minMonths: number;
+  maxMonths: number;
+  months: number,
+}>();
+
+const emits = defineEmits<{
+    (e: 'update:months', value: number): void
 }>();
 
 const { numberFormat, percentFormat } = useFormatNumber();
-const minMonths = 1;
-const maxMonths = 120;
-// eslint-disable-next-line no-underscore-dangle
-const _months = ref(12);
-const months = computed({
-  get: () => _months.value,
-  set: (value) => {
-    if (value >= minMonths && value <= maxMonths) {
-      _months.value = value;
-    }
-  },
-});
 
 const tableData = computed(() => {
-  const monthsList = Array.from(new Array(months.value), (_, index) => index + 1);
+  const monthsList = Array.from(new Array(props.months), (_, index) => index + 1);
   const mainRows = props.tokenAllocationData.map((token) => {
     const result = {
       round: token.round,

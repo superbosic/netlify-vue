@@ -30,8 +30,37 @@
           </div>
         </template>
 
+        <template #body-cell-unlock_scheme="{ row }">
+          <q-td>
+            <div
+              v-for="item in row.unlock_scheme"
+              :key="item.id"
+              class="row items-center no-wrap justify-end"
+            >
+              <div>
+                {{ unlockScheme(item) }}
+              </div>
+              <q-btn
+                icon="close"
+                color="negative"
+                flat
+                padding="4px"
+                :loading="tokenAllocationUnlockSchemeDeleteLoading"
+                @click="tokenAllocationUnlockSchemeDelete(item)"
+              />
+            </div>
+          </q-td>
+        </template>
+
         <template #body-cell-actions="{ row }">
           <q-td>
+            <q-btn
+              icon="add"
+              color="primary"
+              flat
+              padding="4px"
+              @click="addTokenAllocationUnlockScheme(row)"
+            />
             <q-btn
               icon="edit"
               color="primary"
@@ -78,11 +107,19 @@
           </q-tr>
         </template>
       </q-table>
+
       <token-table-token-allocation-add-new-dialog
         v-if="tokenTableTokenAllocationAddNewDialogIsOpen"
         v-model="tokenTableTokenAllocationAddNewDialogIsOpen"
         :token="rowToEdit"
         @created="onTokenAllocationCreated"
+      />
+
+      <token-allocation-unlock-scheme-add-new-dialog
+        v-if="tokenAllocationUnlockSchemeAddNewDialogIsOpen"
+        v-model="tokenAllocationUnlockSchemeAddNewDialogIsOpen"
+        :token="rowToEdit"
+        @created="onTokenAllocationUnlockSchemeCreated"
       />
     </div>
     <div>
@@ -104,9 +141,12 @@
     </div>
     <div>
       <token-table-token-allocation-by-months
+        v-model:months="months"
         :token-allocation-data="rows"
         :max-token-supply="maxTokenSupply"
         :tge-tokens-total="totalRow?.tge_amount ?? 0"
+        :min-months="minMonths"
+        :max-months="maxMonths"
       />
     </div>
     <div>
@@ -135,9 +175,11 @@ import { Tokentable } from '@/api/Tokentable';
 import useRequest from '@/composition/useRequest';
 import { useFormatNumber } from '@/composition/useFormatters';
 import TokenTableTokenAllocationAddNewDialog from '@/components/TokenTable/TokenTableTokenAllocationAddNewDialog.vue';
-import { TokenAllocationListItem } from '@/types/token';
+import { TokenAllocationListItem, TokenAllocationListItemUnlockScheme } from '@/types/token';
 import TokenTableTokenAllocationByMonths from '@/components/TokenTable/TokenTableTokenAllocationByMonths.vue';
 import TokenTableTokenAllocationByYears from '@/components/TokenTable/TokenTableTokenAllocationByYears.vue';
+import TokenAllocationUnlockSchemeAddNewDialog
+  from '@/components/TokenTable/TokenAllocationUnlockSchemeAddNewDialog.vue';
 
 type ITotalRow = Pick<TokenAllocationListItem, 'token_amount' | 'token_percent' | 'tge_amount' | 'raise_usd' | 'post_tge_amount'>;
 const { dialog } = useQuasar();
@@ -150,10 +192,29 @@ const { sendRequest: tokenAllocationDelete } = useRequest({
   request: (id: number) => tokenTableApi.tokenAllocationDelete({ id }).then((data) => data.data.data),
   successCallback: tokentableList,
 });
+const { sendRequest: tokenAllocationUnlockSchemeDelete, loading: tokenAllocationUnlockSchemeDeleteLoading } = useRequest({
+  request: ({ id, tokentable_allocation_id }: TokenAllocationListItemUnlockScheme) =>
+    tokenTableApi.tokenAllocationUnlockSchemeDelete({ id: id!, tokentable_allocation_id: tokentable_allocation_id! }),
+  successCallback: tokentableList,
+});
 const title = computed(() => tokenAllocationList.value?.name ?? '');
 const maxTokenSupply = computed(() => tokenAllocationList.value?.tokentable?.max_token_supply ?? 0);
 const rowToEdit = ref<TokenAllocationListItem>();
 const tokenTableTokenAllocationAddNewDialogIsOpen = ref(false);
+const tokenAllocationUnlockSchemeAddNewDialogIsOpen = ref(false);
+
+const minMonths = 1;
+const maxMonths = 120;
+// eslint-disable-next-line no-underscore-dangle
+const _months = ref(12);
+const months = computed({
+  get: () => _months.value,
+  set: (value) => {
+    if (value >= minMonths && value <= maxMonths) {
+      _months.value = value;
+    }
+  },
+});
 // eslint-disable-next-line no-underscore-dangle
 const rows = computed(() => tokenAllocationList.value?.tokentable?.token_allocation ?? []);
 const columns:QTableProps['columns'] = [
@@ -206,16 +267,9 @@ const columns:QTableProps['columns'] = [
     format: (value:number) => numberFormat(value),
   },
   {
-    label: 'Cliff (M)',
-    field: 'cliff_months',
-    name: 'cliff_months',
-    format: (value:number) => numberFormat(value),
-  },
-  {
-    label: 'Vesting (M)',
-    field: 'vesting_months',
-    name: 'vesting_months',
-    format: (value:number) => numberFormat(value),
+    label: 'Unlock',
+    field: 'unlock_scheme',
+    name: 'unlock_scheme',
   },
   {
     label: 'Actions',
@@ -254,7 +308,7 @@ const chartOptions = computed(() => ({
   },
 }));
 const unlockTokensByMonthTotalChartOptions = computed(() => {
-  const monthsList = Array.from(new Array(120), (_, index) => index + 1);
+  const monthsList = Array.from(new Array(months.value), (_, index) => index + 1);
   const series = rows.value?.map((token) => ({
     name: token.round,
     data: monthsList.reduce((acc, currentMonthNumber, i) => {
@@ -328,6 +382,14 @@ const totalRow = computed<ITotalRow>(() => rows.value?.reduce((acc, item) => {
   post_tge_amount: 0,
 } as ITotalRow) ?? {});
 
+function unlockScheme(item: TokenAllocationListItemUnlockScheme) {
+  if (item.type === 'onetime') {
+    return `${percentFormat(item.percent)} ${numberFormat(item.month_after_tge)} month after TGE`;
+  }
+
+  return `liner ${numberFormat(item.month_after_tge)} month after TGE for ${numberFormat(item.vesting_months)} months`;
+}
+
 function deleteItem(row: TokenAllocationListItem) {
   dialog({
     title: 'Delete token allocation',
@@ -348,9 +410,20 @@ function onTokenAllocationCreated() {
   tokenTableTokenAllocationAddNewDialogIsOpen.value = false;
 }
 
+function onTokenAllocationUnlockSchemeCreated() {
+  rowToEdit.value = undefined;
+  tokentableList();
+  tokenAllocationUnlockSchemeAddNewDialogIsOpen.value = false;
+}
+
 function addNewTokenClick() {
   rowToEdit.value = undefined;
   tokenTableTokenAllocationAddNewDialogIsOpen.value = true;
+}
+
+function addTokenAllocationUnlockScheme(row: TokenAllocationListItem) {
+  rowToEdit.value = row;
+  tokenAllocationUnlockSchemeAddNewDialogIsOpen.value = true;
 }
 
 tokentableList();

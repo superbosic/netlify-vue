@@ -57,6 +57,73 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
    * @description <br /><br /> <b>Authentication:</b> required
    *
    * @tags tokentable
+   * @name TokenAllocationUnlockSchemeDelete
+   * @request DELETE:/tokentable/token_allocation/unlock_scheme
+   * @secure
+   */
+  tokenAllocationUnlockSchemeDelete = (
+    query: {
+      /** @format int64 */
+      tokentable_allocation_id: number;
+      /** @format int64 */
+      id: number;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<
+      {
+        data?: string;
+      },
+      void
+    >({
+      path: `/tokentable/token_allocation/unlock_scheme`,
+      method: "DELETE",
+      query: query,
+      secure: true,
+      format: "json",
+      ...params,
+    });
+  /**
+   * @description <br /><br /> <b>Authentication:</b> required
+   *
+   * @tags tokentable
+   * @name TokenAllocationUnlockSchemeCreate
+   * @request POST:/tokentable/token_allocation/unlock_scheme
+   * @secure
+   */
+  tokenAllocationUnlockSchemeCreate = (
+    data: {
+      /** @format int64 */
+      tokentable_allocation_id?: number;
+      /** @format int64 */
+      id?: number;
+      type?: string;
+      /** @format int64 */
+      month_after_tge?: number;
+      percent?: number;
+      /** @format int64 */
+      vesting_months?: number;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<
+      {
+        data?: string;
+      },
+      void
+    >({
+      path: `/tokentable/token_allocation/unlock_scheme`,
+      method: "POST",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * @description <br /><br /> <b>Authentication:</b> required
+   *
+   * @tags tokentable
    * @name TokenAllocationDelete
    * @request DELETE:/tokentable/token_allocation
    * @secure
@@ -116,7 +183,6 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
               /** @format int64 */
               id?: number;
               round?: string;
-              /** @format int64 */
               token_percent?: number;
               /** @format int64 */
               token_amount?: number;
@@ -137,6 +203,18 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
               cliff_months?: number;
               /** @format int64 */
               vesting_months?: number;
+              unlock_scheme?: {
+                /** @format int64 */
+                id?: number;
+                /** @format int64 */
+                tokentable_allocation_id?: number;
+                type?: "onetime" | "liner";
+                /** @format int64 */
+                month_after_tge?: number;
+                percent?: number;
+                /** @format int64 */
+                vesting_months?: number;
+              }[];
             }[];
           } | null;
         };
@@ -160,8 +238,6 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
   tokenAllocationCreate = (
     data: {
       round?: string;
-      /** @format int64 */
-      token_percent?: number;
       price_usd?: number;
       /** @format int64 */
       tge_percent?: number;
@@ -171,6 +247,7 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
       vesting_months?: number;
       /** @format int64 */
       id?: number;
+      token_percent?: number;
     },
     params: RequestParams = {},
   ) =>
