@@ -8,6 +8,7 @@ import App from '@/App.vue';
 import router from '@/router';
 import { init } from '@/api';
 import { createHttpErrorHook, noneAuthorizeHook } from '@/api/hooks';
+import '@/styles/index.sass';
 
 stockInit(Highcharts);
 

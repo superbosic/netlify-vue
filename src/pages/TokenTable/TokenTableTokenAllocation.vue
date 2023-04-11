@@ -48,19 +48,19 @@
                 :loading="tokenAllocationUnlockSchemeDeleteLoading"
                 @click="tokenAllocationUnlockSchemeDelete(item)"
               />
+              <q-btn
+                icon="add"
+                color="primary"
+                flat
+                padding="4px"
+                @click="addTokenAllocationUnlockScheme(row)"
+              />
             </div>
           </q-td>
         </template>
 
         <template #body-cell-actions="{ row }">
           <q-td>
-            <q-btn
-              icon="add"
-              color="primary"
-              flat
-              padding="4px"
-              @click="addTokenAllocationUnlockScheme(row)"
-            />
             <q-btn
               icon="edit"
               color="primary"
