@@ -20,4 +20,9 @@ export const menuItems: INavigationMenuItem[] = [
     icon: 'attach_money',
     label: 'Token Table',
   },
+  {
+    routeName: RouteNames.Fundraising,
+    icon: 'savings',
+    label: 'Fundraising',
+  },
 ];

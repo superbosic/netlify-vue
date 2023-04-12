@@ -34,7 +34,7 @@ export class Auth<SecurityDataType = unknown> extends HttpClient<SecurityDataTyp
   ) =>
     this.request<
       {
-        authToken?: string;
+        authToken: string;
       },
       void
     >({

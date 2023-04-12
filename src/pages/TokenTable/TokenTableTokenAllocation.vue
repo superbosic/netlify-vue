@@ -38,7 +38,7 @@
               class="row items-center no-wrap justify-end"
             >
               <div>
-                {{ unlockScheme(item) }}
+                {{ unlockSchemeToString(item) }}
               </div>
               <q-btn
                 icon="close"
@@ -180,11 +180,13 @@ import TokenTableTokenAllocationByMonths from '@/components/TokenTable/TokenTabl
 import TokenTableTokenAllocationByYears from '@/components/TokenTable/TokenTableTokenAllocationByYears.vue';
 import TokenAllocationUnlockSchemeAddNewDialog
   from '@/components/TokenTable/TokenAllocationUnlockSchemeAddNewDialog.vue';
+import { useToken } from '@/composition/business/useToken';
 
 type ITotalRow = Pick<TokenAllocationListItem, 'token_amount' | 'token_percent' | 'tge_amount' | 'raise_usd' | 'post_tge_amount'>;
 const { dialog } = useQuasar();
 const tokenTableApi = createApiInstance(Tokentable);
 const { numberFormat, currencyFormat, percentFormat } = useFormatNumber();
+const { unlockSchemeToString } = useToken();
 const { sendRequest: tokentableList, loading, responseData: tokenAllocationList } = useRequest({
   request: () => tokenTableApi.tokenAllocationList().then((data) => data.data.data),
 });
@@ -381,14 +383,6 @@ const totalRow = computed<ITotalRow>(() => rows.value?.reduce((acc, item) => {
   tge_amount: 0,
   post_tge_amount: 0,
 } as ITotalRow) ?? {});
-
-function unlockScheme(item: TokenAllocationListItemUnlockScheme) {
-  if (item.type === 'onetime') {
-    return `${percentFormat(item.percent)} ${numberFormat(item.month_after_tge)} month after TGE`;
-  }
-
-  return `liner ${numberFormat(item.month_after_tge)} month after TGE for ${numberFormat(item.vesting_months)} months`;
-}
 
 function deleteItem(row: TokenAllocationListItem) {
   dialog({

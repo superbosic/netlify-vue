@@ -23,25 +23,25 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
   projectInformationList = (params: RequestParams = {}) =>
     this.request<
       {
-        data?: {
+        data: {
           /** @format int64 */
-          id?: number;
+          id: number;
           /**
            * @format timestamptz
            * @default "now"
            */
-          created_at?: number;
-          name?: string;
-          tokentable?: {
+          created_at: number;
+          name: string;
+          tokentable: {
             /**
              * @format timestamptz
              * @default "now"
              */
             created_at?: number;
             /** @format int64 */
-            max_token_supply?: number;
+            max_token_supply: number;
             /** @format int64 */
-            vesting_period?: number;
+            vesting_period: number;
           } | null;
         };
       },
@@ -72,7 +72,7 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
   ) =>
     this.request<
       {
-        data?: string;
+        data: string;
       },
       void
     >({
@@ -94,12 +94,12 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
   tokenAllocationUnlockSchemeCreate = (
     data: {
       /** @format int64 */
-      tokentable_allocation_id?: number;
+      tokentable_allocation_id: number;
       /** @format int64 */
       id?: number;
-      type?: string;
+      type: string;
       /** @format int64 */
-      month_after_tge?: number;
+      month_after_tge: number;
       percent?: number;
       /** @format int64 */
       vesting_months?: number;
@@ -108,7 +108,7 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
   ) =>
     this.request<
       {
-        data?: string;
+        data: string;
       },
       void
     >({
@@ -137,7 +137,7 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
   ) =>
     this.request<
       {
-        data?: string;
+        data: string;
       },
       void
     >({
@@ -159,58 +159,58 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
   tokenAllocationList = (params: RequestParams = {}) =>
     this.request<
       {
-        data?: {
+        data: {
           /** @format int64 */
-          id?: number;
+          id: number;
           /**
            * @format timestamptz
            * @default "now"
            */
-          created_at?: number;
-          name?: string;
-          tokentable?: {
+          created_at: number;
+          name: string;
+          tokentable: {
             /**
              * @format timestamptz
              * @default "now"
              */
             created_at?: number;
             /** @format int64 */
-            max_token_supply?: number;
+            max_token_supply: number;
             /** @format int64 */
-            vesting_period?: number;
-            public_sale_price_usd?: number;
+            vesting_period: number;
+            public_sale_price_usd: number;
             token_allocation?: {
               /** @format int64 */
-              id?: number;
-              round?: string;
-              token_percent?: number;
+              id: number;
+              round: string;
+              token_percent: number;
               /** @format int64 */
-              token_amount?: number;
+              token_amount: number;
               price_usd?: number;
               /** @format int64 */
               raise_usd?: number;
               /** @format int64 */
-              fdv_usd?: number;
+              fdv_usd: number;
               /** @format int64 */
-              tge_percent?: number;
+              tge_percent: number;
               /** @format int64 */
-              tge_amount?: number;
+              tge_amount: number;
               /** @format int64 */
-              post_tge_percent?: number;
+              post_tge_percent: number;
               /** @format int64 */
-              post_tge_amount?: number;
+              post_tge_amount: number;
               /** @format int64 */
-              cliff_months?: number;
+              cliff_months: number;
               /** @format int64 */
-              vesting_months?: number;
+              vesting_months: number;
               unlock_scheme?: {
                 /** @format int64 */
-                id?: number;
+                id: number;
                 /** @format int64 */
-                tokentable_allocation_id?: number;
-                type?: "onetime" | "liner";
+                tokentable_allocation_id: number;
+                type: "onetime" | "liner";
                 /** @format int64 */
-                month_after_tge?: number;
+                month_after_tge: number;
                 percent?: number;
                 /** @format int64 */
                 vesting_months?: number;
@@ -237,7 +237,7 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
    */
   tokenAllocationCreate = (
     data: {
-      round?: string;
+      round: string;
       price_usd?: number;
       /** @format int64 */
       tge_percent?: number;
@@ -247,13 +247,13 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
       vesting_months?: number;
       /** @format int64 */
       id?: number;
-      token_percent?: number;
+      token_percent: number;
     },
     params: RequestParams = {},
   ) =>
     this.request<
       {
-        data?: string;
+        data: string;
       },
       void
     >({

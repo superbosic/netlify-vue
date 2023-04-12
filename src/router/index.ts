@@ -43,6 +43,11 @@ const routes: Array<RouteRecordRaw> = [
           },
         ],
       },
+      {
+        path: 'fundraising',
+        component: () => import('@/pages/Fundraising/FundraisingPage.vue'),
+        name: RouteNames.Fundraising,
+      },
     ],
   },
 ];
