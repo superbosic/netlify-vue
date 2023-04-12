@@ -83,8 +83,9 @@ const emits = defineEmits<{
 const tokentableApi = createApiInstance(Tokentable);
 const tokenAllocationUnlockSchemeInputData = ref<TokenAllocationUnlockSchemeInput>(
   {
-    tokentable_allocation_id: props.token.id,
+    tokentable_allocation_id: props.token.id!,
     type: 'onetime',
+    month_after_tge: 0,
   },
 );
 const { numberRequiredRule } = useValidationRules();

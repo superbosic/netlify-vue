@@ -49,7 +49,7 @@
                             v-for="scheme in round.unlock_scheme"
                             :key="scheme.id"
                           >
-                            {{ unlockSchemeToString(scheme) }}
+                            {{ unlockSchemeToString(scheme as any) }}
                           </div>
                         </div>
                       </div>
@@ -75,6 +75,7 @@ import useRequest from '@/composition/useRequest';
 import { useDateFormatters, useFormatNumber } from '@/composition/useFormatters';
 import { useToken } from '@/composition/business/useToken';
 import FundraisingRoundStatus from '@/components/Fundraising/FundraisingRoundStatus.vue';
+import { TokenAllocationListItemUnlockScheme } from '@/types/token';
 
 const fundraisingApi = createApiInstance(Fundraising);
 

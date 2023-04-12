@@ -85,7 +85,7 @@ const emits = defineEmits<{
 }>();
 
 const tokentableApi = createApiInstance(Tokentable);
-const tokenAllocationData = ref<TokenAllocationInput>({ ...props.token ?? {} });
+const tokenAllocationData = ref<TokenAllocationInput>(props.token ? { ...props.token } : { round: '', token_percent: 0 });
 const { defaultRequiredRules } = useValidationRules();
 const { sendRequest: tokenAllocationCreate, loading } = useRequest({
   request: () => tokentableApi.tokenAllocationCreate(tokenAllocationData.value),
