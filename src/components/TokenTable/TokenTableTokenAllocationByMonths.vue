@@ -61,14 +61,24 @@ const tableData = computed(() => {
       token_percent: token.token_percent,
       tge_amount: token.tge_amount,
       tge_percent: token.tge_amount ? Math.round((token.tge_amount / props.tgeTokensTotal) * 100) : 0,
-    };
+    } as any;
 
-    return monthsList.reduce((acc, currentMonthNumber) => {
-      acc[`month_${currentMonthNumber}`] = currentMonthNumber > token.cliff_months! && currentMonthNumber <= (token.cliff_months! + token.vesting_months!)
-        ? token.post_tge_amount! / token.vesting_months! : 0;
+    token.unlock_scheme?.forEach((scheme) => {
+      if (scheme.type === 'liner') {
+        let sum = 0;
 
-      return acc;
-    }, result as any);
+        for (let i = 1; i <= scheme.vesting_months!; i++) {
+          sum += typeof result[`month_${i}`] === 'number' ? result[`month_${i}`] : 0;
+        }
+
+        for (let i = scheme.month_after_tge!; i <= scheme.vesting_months!; i++) {
+          result[`month_${i}`] = (token.post_tge_amount! - sum) / scheme.month_after_tge!;
+        }
+      } else {
+        result[`month_${scheme.month_after_tge}`] = (token.post_tge_amount! / 100) * scheme.percent!;
+      }
+    });
+    return result;
   });
   const unlockScheduleRow = {
     round: 'Unlock schedule',
