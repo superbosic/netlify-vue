@@ -71,8 +71,8 @@ const tableData = computed(() => {
           sum += typeof result[`month_${i}`] === 'number' ? result[`month_${i}`] : 0;
         }
 
-        for (let i = scheme.month_after_tge!; i <= scheme.vesting_months!; i++) {
-          result[`month_${i}`] = (token.post_tge_amount! - sum) / scheme.month_after_tge!;
+        for (let i = scheme.month_after_tge!; i <= (scheme.month_after_tge! + scheme.vesting_months! - 1); i++) {
+          result[`month_${i}`] = (token.post_tge_amount! - sum) / scheme.vesting_months!;
         }
       } else {
         result[`month_${scheme.month_after_tge}`] = (token.post_tge_amount! / 100) * scheme.percent!;
