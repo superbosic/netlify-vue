@@ -78,6 +78,7 @@ const tableData = computed(() => {
         result[`month_${scheme.month_after_tge}`] = (token.post_tge_amount! / 100) * scheme.percent!;
       }
     });
+
     return result;
   });
   const unlockScheduleRow = {

@@ -66,7 +66,24 @@ const tableData = computed(() => {
       token_percent: token.token_percent,
       tge_amount: token.tge_amount,
       tge_percent: token.tge_amount ? Math.round((token.tge_amount / props.tgeTokensTotal) * 100) : 0,
-    };
+    } as any;
+    const monthsResult = {} as any;
+
+    token.unlock_scheme?.forEach((scheme) => {
+      if (scheme.type === 'liner') {
+        let sum = 0;
+
+        for (let i = 1; i <= scheme.vesting_months!; i++) {
+          sum += typeof monthsResult[`month_${i}`] === 'number' ? monthsResult[`month_${i}`] : 0;
+        }
+
+        for (let i = scheme.month_after_tge!; i <= (scheme.month_after_tge! + scheme.vesting_months! - 1); i++) {
+          monthsResult[`month_${i}`] = (token.post_tge_amount! - sum) / scheme.vesting_months!;
+        }
+      } else {
+        monthsResult[`month_${scheme.month_after_tge}`] = (token.post_tge_amount! / 100) * scheme.percent!;
+      }
+    });
 
     return monthsList.reduce((acc, currentMonthNumber) => {
       const currentYearNumber = Math.floor((currentMonthNumber - 1) / 12) + 1;
@@ -75,8 +92,7 @@ const tableData = computed(() => {
         acc[`year_${currentYearNumber}`] = 0;
       }
 
-      acc[`year_${currentYearNumber}`] += currentMonthNumber > token.cliff_months! && currentMonthNumber <= (token.cliff_months! + token.vesting_months!)
-        ? token.post_tge_amount! / token.vesting_months! : 0;
+      acc[`year_${currentYearNumber}`] += monthsResult[`month_${currentMonthNumber}`] ?? 0;
 
       return acc;
     }, result as any);
