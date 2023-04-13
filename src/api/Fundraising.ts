@@ -16,6 +16,38 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
    * @description <br /><br /> <b>Authentication:</b> required
    *
    * @tags fundraising
+   * @name AvailableUnlockSchemesList
+   * @request GET:/fundraising/available_unlock_schemes
+   * @secure
+   */
+  availableUnlockSchemesList = (params: RequestParams = {}) =>
+    this.request<
+      {
+        data: {
+          /** @format int64 */
+          id?: number;
+          unlock_scheme?: {
+            type: "onetime" | "liner";
+            /** @format int64 */
+            month_after_tge: number;
+            percent?: number;
+            /** @format int64 */
+            vesting_months?: number;
+          }[];
+        }[];
+      },
+      void
+    >({
+      path: `/fundraising/available_unlock_schemes`,
+      method: "GET",
+      secure: true,
+      format: "json",
+      ...params,
+    });
+  /**
+   * @description <br /><br /> <b>Authentication:</b> required
+   *
+   * @tags fundraising
    * @name RoundList
    * @request GET:/fundraising/round
    * @secure
@@ -104,6 +136,8 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
       name: string;
       token_percentage: number;
       token_price_usd: number;
+      /** @format int64 */
+      allocation_id: number;
     },
     params: RequestParams = {},
   ) =>

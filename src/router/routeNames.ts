@@ -5,4 +5,6 @@ export enum RouteNames {
     TokenTableProjectInformation = 'TokenTableProjectInformation',
     TokenTableTokenAllocation = 'TokenTableTokenAllocation',
     TokenTableUnlockTokens = 'TokenTableUnlockTokens',
+    Rounds = 'Rounds',
+    RoundCreate = 'RoundCreate',
 }

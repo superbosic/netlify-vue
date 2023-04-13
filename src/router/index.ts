@@ -1,6 +1,4 @@
-import {
-  createRouter, createWebHistory, createWebHashHistory, RouteRecordRaw,
-} from 'vue-router';
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import { RouteNames } from '@/router/routeNames';
 
 const routes: Array<RouteRecordRaw> = [
@@ -47,6 +45,16 @@ const routes: Array<RouteRecordRaw> = [
         path: 'fundraising',
         component: () => import('@/pages/Fundraising/FundraisingPage.vue'),
         name: RouteNames.Fundraising,
+      },
+      {
+        path: 'rounds',
+        children: [
+          {
+            path: 'create',
+            name: RouteNames.RoundCreate,
+            component: () => import('@/pages/Rounds/RoundCreatePage.vue'),
+          },
+        ],
       },
     ],
   },

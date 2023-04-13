@@ -10,39 +10,43 @@
         </div>
 
         <div class="row q-col-gutter-md">
-          <div class="col-3">
+          <div class="col-4">
             <ui-info-card
               name="Total Supply"
               :value="numberFormat(totalSupply)"
             />
           </div>
-          <div class="col-3">
+          <div class="col-4">
             <ui-info-card
               name="Total raised"
               :value="currencyFormat(totalRaised)"
-              class="col-3"
             />
           </div>
-          <div class="col-3">
+          <div class="col-2">
             <ui-info-card
               name="Founding rounds"
               :value="foundingRounds"
-              class="col-3"
             />
           </div>
-          <div class="col-3">
+          <div class="col-2">
             <ui-info-card
               name="Stakeholders"
               :value="numberFormat(stakeholders)"
-              class="col-3"
             />
           </div>
         </div>
       </div>
 
       <div>
-        <div class="text-h5 q-mb-md text-grey-7">
-          Rounds
+        <div class="row text-h5 q-mb-md text-grey-7">
+          <div>Rounds</div>
+          <q-space />
+          <q-btn
+            no-caps
+            color="primary"
+            label="Create new round"
+            :to="{ name: RouteNames.RoundCreate }"
+          />
         </div>
 
         <div class="row q-col-gutter-md">
@@ -129,6 +133,7 @@ import FundraisingRoundStatus from '@/components/Fundraising/FundraisingRoundSta
 import { TokenAllocationListItemUnlockScheme } from '@/types/token';
 import UiInfoCard from '@/components/ui/UiInfoCard.vue';
 import { useMath } from '@/composition/useMath';
+import { RouteNames } from '@/router/routeNames';
 
 const fundraisingApi = createApiInstance(Fundraising);
 
