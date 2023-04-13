@@ -50,14 +50,14 @@
                     v-for="(scheme, index) in round.unlock_scheme"
                     :key="index"
                   >
-                    {{ unlockSchemeToString(scheme) }}
+                    {{ unlockSchemeToString(scheme as any) }}
                   </div>
                 </ui-info-card>
               </div>
               <div class="col-2">
                 <ui-info-card
                   name="Round Create Date"
-                  :value="formatFromTimestamp(round.create_at, 'DD.MM.YYYY')"
+                  :value="formatFromTimestamp(round.created_at, 'DD.MM.YYYY')"
                 />
               </div>
             </div>
