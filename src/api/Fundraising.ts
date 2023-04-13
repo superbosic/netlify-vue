@@ -48,6 +48,34 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
    * @description <br /><br /> <b>Authentication:</b> required
    *
    * @tags fundraising
+   * @name RoundDelete
+   * @request DELETE:/fundraising/round
+   * @secure
+   */
+  roundDelete = (
+    query: {
+      /** @format int64 */
+      id: number;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<
+      {
+        data: string;
+      },
+      void
+    >({
+      path: `/fundraising/round`,
+      method: "DELETE",
+      query: query,
+      secure: true,
+      format: "json",
+      ...params,
+    });
+  /**
+   * @description <br /><br /> <b>Authentication:</b> required
+   *
+   * @tags fundraising
    * @name RoundList
    * @request GET:/fundraising/round
    * @secure

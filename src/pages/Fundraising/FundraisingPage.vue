@@ -45,7 +45,7 @@
             no-caps
             color="primary"
             label="Create new round"
-            :to="{ name: RouteNames.RoundCreate }"
+            :to="{ name: RouteNames.FundraisingRoundCreate }"
           />
         </div>
 
@@ -130,7 +130,6 @@ import useRequest from '@/composition/useRequest';
 import { useDateFormatters, useFormatNumber } from '@/composition/useFormatters';
 import { useToken } from '@/composition/business/useToken';
 import FundraisingRoundStatus from '@/components/Fundraising/FundraisingRoundStatus.vue';
-import { TokenAllocationListItemUnlockScheme } from '@/types/token';
 import UiInfoCard from '@/components/ui/UiInfoCard.vue';
 import { useMath } from '@/composition/useMath';
 import { RouteNames } from '@/router/routeNames';

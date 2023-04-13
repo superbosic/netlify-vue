@@ -43,19 +43,33 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'fundraising',
-        component: () => import('@/pages/Fundraising/FundraisingPage.vue'),
-        name: RouteNames.Fundraising,
-      },
-      {
-        path: 'rounds',
         children: [
           {
-            path: 'create',
-            name: RouteNames.RoundCreate,
-            component: () => import('@/pages/Rounds/RoundCreatePage.vue'),
+            path: '',
+            component: () => import('@/pages/Fundraising/FundraisingPage.vue'),
+            name: RouteNames.Fundraising,
+          },
+          {
+            path: 'rounds',
+            children: [
+              {
+                path: 'create',
+                name: RouteNames.FundraisingRoundCreate,
+                component: () => import('@/pages/Fundraising/FundraisingRoundCreatePage.vue'),
+              },
+              {
+                path: ':id',
+                name: RouteNames.FundraisingRound,
+                component: () => import('@/pages/Fundraising/FundraisingRoundPage.vue'),
+                props: ({ params }) => ({
+                  id: parseInt(params.id as string, 10),
+                }),
+              },
+            ],
           },
         ],
       },
+
     ],
   },
 ];

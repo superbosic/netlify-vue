@@ -63,6 +63,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import UiNumberField from '@/components/ui/UiNumberField.vue';
 import { FundraisingRoundInput } from '@/types/fundraising';
 import { useValidationRules } from '@/composition/useValidationRules';
@@ -70,6 +71,9 @@ import FundraisingUnlockSchemesSelect from '@/components/Fundraising/Fundraising
 import { createApiInstance } from '@/api';
 import { Fundraising } from '@/api/Fundraising';
 import useRequest from '@/composition/useRequest';
+import { RouteNames } from '@/router/routeNames';
+
+const router = useRouter();
 
 const fundraisingApi = createApiInstance(Fundraising);
 const { defaultRequiredRules, numberRequiredRule } = useValidationRules();
@@ -85,6 +89,6 @@ const { loading, sendRequest: roundCreate } = useRequest({
     ...round.value,
     allocation_id: allocationId.value,
   }).then((data) => data!.data!.data),
-  successCallback: (value) => console.log(value),
+  successCallback: ({ id }) => router.push({ name: RouteNames.FundraisingRound, params: { id } }),
 });
 </script>
