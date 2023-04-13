@@ -136,15 +136,12 @@ const { formatFromTimestamp } = useDateFormatters();
 const { currencyFormat, numberFormat } = useFormatNumber();
 const { unlockSchemeToString } = useToken();
 const { calcSum } = useMath();
-const { loading, sendRequest: fundraisingList, responseData: fundraisings } = useRequest({
+const { sendRequest: fundraisingList, responseData: fundraisings } = useRequest({
   request: () => fundraisingApi.fundraisingList().then((data) => data!.data!.data!),
 });
 
-const totalSupply = computed(() => fundraisings.value?.fundraising_rounds?.reduce((acc, item) => {
-  // eslint-disable-next-line no-param-reassign
-  return acc + calcSum(item?.investors?.map(({ investment_allocation }) => investment_allocation ?? 0) ?? []);
-}, 0));
-const totalRaised = computed(() => calcSum(fundraisings.value?.fundraising_rounds?.map(({ token_amount }) => token_amount ?? 0) ?? []));
+const totalSupply = computed(() => calcSum(fundraisings.value?.fundraising_rounds?.map(({ token_amount }) => token_amount ?? 0) ?? []));
+const totalRaised = computed(() => calcSum(fundraisings.value?.fundraising_rounds?.map(({ raise_usd }) => raise_usd ?? 0) ?? []));
 const foundingRounds = computed(() => numberFormat(fundraisings.value?.fundraising_rounds?.length ?? 0));
 const stakeholders = computed(() => calcSum(fundraisings.value?.fundraising_rounds?.map(({ investors }) => investors?.length ?? 0) ?? []));
 

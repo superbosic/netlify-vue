@@ -9,9 +9,136 @@
  * ---------------------------------------------------------------
  */
 
-import { HttpClient, RequestParams } from "./http-client";
+import { ContentType, HttpClient, RequestParams } from "./http-client";
 
 export class Fundraising<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
+  /**
+   * @description <br /><br /> <b>Authentication:</b> required
+   *
+   * @tags fundraising
+   * @name RoundList
+   * @request GET:/fundraising/round
+   * @secure
+   */
+  roundList = (
+    query: {
+      /** @format int64 */
+      id: number;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<
+      {
+        data: {
+          /** @format int64 */
+          id: number;
+          /**
+           * @format timestamptz
+           * @default "now"
+           */
+          created_at: number;
+          /** @format int64 */
+          project_id: number;
+          name: string;
+          status: "draft" | "ongoing" | "completed";
+          token_percentage: number;
+          /** @format int64 */
+          token_amount: number;
+          token_price_usd: number;
+          /** @format int64 */
+          raise_usd: number;
+          unlock_scheme: {
+            /** @format int64 */
+            id: number;
+            /**
+             * @format timestamptz
+             * @default "now"
+             */
+            created_at?: number;
+            /** @format int64 */
+            fundraising_round_id: number;
+            type: "onetime" | "liner";
+            /** @format int64 */
+            month_after_tge: number;
+            percent?: number;
+            /** @format int64 */
+            vesting_months?: number;
+          }[];
+          investors: {
+            /** @format int64 */
+            id: number;
+            /**
+             * @format timestamptz
+             * @default "now"
+             */
+            created_at?: number;
+            /** @format int64 */
+            fundraising_round_id?: number;
+            /** @format int64 */
+            investor_id?: number;
+            wallet_address: string;
+            /** @format int64 */
+            investment_allocation: number;
+          }[];
+        };
+      },
+      void
+    >({
+      path: `/fundraising/round`,
+      method: "GET",
+      query: query,
+      secure: true,
+      format: "json",
+      ...params,
+    });
+  /**
+   * @description <br /><br /> <b>Authentication:</b> required
+   *
+   * @tags fundraising
+   * @name RoundCreate
+   * @request POST:/fundraising/round
+   * @secure
+   */
+  roundCreate = (
+    data: {
+      name: string;
+      token_percentage: number;
+      token_price_usd: number;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<
+      {
+        data: {
+          /** @format int64 */
+          id: number;
+          /**
+           * @format timestamptz
+           * @default "now"
+           */
+          created_at: number;
+          /** @format int64 */
+          project_id: number;
+          name: string;
+          status: "draft" | "ongoing" | "completed";
+          token_percentage: number;
+          /** @format int64 */
+          token_amount: number;
+          token_price_usd: number;
+          /** @format int64 */
+          raise_usd: number;
+        };
+      },
+      void
+    >({
+      path: `/fundraising/round`,
+      method: "POST",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
   /**
    * @description <br /><br /> <b>Authentication:</b> required
    *
@@ -27,10 +154,8 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
           /** @format int64 */
           id: number;
           name: string;
-          tokentable: {
-            /** @format int64 */
-            max_token_supply: number;
-          } | null;
+          /** @format int64 */
+          max_token_supply: number;
           fundraising_rounds: {
             /** @format int64 */
             id: number;
@@ -44,6 +169,9 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
             token_percentage: number;
             /** @format int64 */
             token_amount: number;
+            token_price_usd: number;
+            /** @format int64 */
+            raise_usd: number;
             unlock_scheme?: {
               /** @format int64 */
               id: number;
