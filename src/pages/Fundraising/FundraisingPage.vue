@@ -55,60 +55,62 @@
             :key="round.id"
             class="col-6"
           >
-            <q-card
-              flat
-              bordered
-            >
-              <q-card-section>
-                <div class="row">
-                  <q-icon
-                    name="list_alt"
-                    color="grey-6"
-                    size="xl"
-                  />
-                  <div class="col q-ml-md">
-                    <div class="text-bold">
-                      {{ round.name }}
-                    </div>
-                    <div class="text-caption text-grey-7">
-                      Created on: {{ formatFromTimestamp(round.created_at) }}
-                    </div>
-                    <div class="q-mt-md">
-                      <div class="row q-gutter-xl">
-                        <div>
-                          <div class="row">
-                            <div class="text-caption text-grey-7">
-                              Raising:
-                            </div>
-                            <div class="q-ml-xs text-caption">
-                              {{ currencyFormat(round.token_amount) }}
+            <router-link :to="{name: RouteNames.FundraisingRound, params: { id: round.id }}">
+              <q-card
+                flat
+                bordered
+              >
+                <q-card-section>
+                  <div class="row">
+                    <q-icon
+                      name="list_alt"
+                      color="grey-6"
+                      size="xl"
+                    />
+                    <div class="col q-ml-md">
+                      <div class="text-bold">
+                        {{ round.name }}
+                      </div>
+                      <div class="text-caption text-grey-7">
+                        Created on: {{ formatFromTimestamp(round.created_at) }}
+                      </div>
+                      <div class="q-mt-md">
+                        <div class="row q-gutter-xl">
+                          <div>
+                            <div class="row">
+                              <div class="text-caption text-grey-7">
+                                Raising:
+                              </div>
+                              <div class="q-ml-xs text-caption">
+                                {{ currencyFormat(round.token_amount) }}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div>
-                          <div class="row">
-                            <div class="text-caption text-grey-7">
-                              Unlock schedule:
-                            </div>
-                            <div class="q-ml-xs text-caption">
-                              <div
-                                v-for="scheme in round.unlock_scheme"
-                                :key="scheme.id"
-                              >
-                                {{ unlockSchemeToString(scheme as any) }}
+                          <div>
+                            <div class="row">
+                              <div class="text-caption text-grey-7">
+                                Unlock schedule:
+                              </div>
+                              <div class="q-ml-xs text-caption">
+                                <div
+                                  v-for="scheme in round.unlock_scheme"
+                                  :key="scheme.id"
+                                >
+                                  {{ unlockSchemeToString(scheme as any) }}
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
+                    <div>
+                      <fundraising-round-status :status="round.status" />
+                    </div>
                   </div>
-                  <div>
-                    <fundraising-round-status :status="round.status" />
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
+                </q-card-section>
+              </q-card>
+            </router-link>
           </div>
         </div>
       </div>

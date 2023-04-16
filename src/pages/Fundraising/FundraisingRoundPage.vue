@@ -64,6 +64,60 @@
           </div>
         </div>
       </div>
+      <div class="q-mt-md">
+        <div class="row q-col-gutter-md">
+          <div class="col-8">
+            <q-card
+              flat
+              bordered
+            >
+              <q-card-section>
+                <div class="row q-col-gutter-lg">
+                  <div class="col-4">
+                    <chart :options="chartOptions" />
+                  </div>
+                  <div class="col-8 row items-center">
+                    <div class="row q-col-gutter-xl">
+                      <div class="col-6">
+                        <ui-chart-legend-item
+                          color="orange-3"
+                          name="Amount Raised"
+                          :value="currencyFormat(round.raise_usd)"
+                        />
+                      </div>
+                      <div class="col-6">
+                        <ui-chart-legend-item
+                          color="grey-8"
+                          name="Pending"
+                          :value="currencyFormat(round.token_amount)"
+                        />
+                      </div>
+                      <div class="col-6">
+                        <ui-chart-legend-item
+                          color="grey-3"
+                          name="Amount Remaining"
+                          :value="currencyFormat(round.token_amount)"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </q-card-section>
+            </q-card>
+          </div>
+          <div class="col-4">
+            <q-card
+              flat
+              bordered
+            >
+              <q-card-section />
+            </q-card>
+          </div>
+        </div>
+      </div>
+      <div class="q-mt-md">
+        <fundraising-investors-table :investors="round?.investors" />
+      </div>
     </div>
     <q-spinner
       v-else
@@ -76,6 +130,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
+import { Chart } from 'highcharts-vue';
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { createApiInstance } from '@/api';
@@ -86,6 +141,8 @@ import UiInfoCard from '@/components/ui/UiInfoCard.vue';
 import { useDateFormatters, useFormatNumber } from '@/composition/useFormatters';
 import { useToken } from '@/composition/business/useToken';
 import { RouteNames } from '@/router/routeNames';
+import UiChartLegendItem from '@/components/ui/UiChartLegendItem.vue';
+import FundraisingInvestorsTable from '@/components/Fundraising/FundraisingInvestorsTable.vue';
 
 const props = defineProps<{
     id: number,
@@ -105,6 +162,52 @@ const { sendRequest: roundDelete } = useRequest({
   successCallback: () => router.replace({ name: RouteNames.Fundraising }),
 });
 const name = computed(() => round.value?.name);
+const chartOptions = computed(() => ({
+  chart: {
+    type: 'pie',
+    height: '300px',
+  },
+  title: {
+    text: '',
+  },
+  plotOptions: {
+    groupPadding: 0,
+    padding: 0,
+    pie: {
+      allowPointSelect: true,
+      cursor: 'pointer',
+      dataLabels: {
+        enabled: false,
+      },
+    },
+  },
+  series: [
+    {
+      innerSize: '70%',
+      data: [
+        {
+          name: 'Amount Raised',
+          y: round.value?.raise_usd,
+          color: '#ffcc80',
+        },
+        {
+          name: 'Amount Remaining',
+          y: round.value?.token_amount,
+          color: '#eeeeee',
+        },
+        {
+          name: 'Pending',
+          y: round.value?.token_percentage,
+          color: '#616161',
+        },
+      ],
+      color: '#6fcd98',
+    },
+  ],
+  credits: {
+    enabled: false,
+  },
+}));
 
 function deleteRoundClick() {
   dialog({
