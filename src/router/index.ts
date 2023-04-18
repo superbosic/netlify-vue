@@ -25,15 +25,10 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'token-table',
-        redirect: { name: RouteNames.TokenTableProjectInformation },
+        redirect: { name: RouteNames.TokenTableTokenAllocation },
         component: () => import('@/pages/TokenTable/index.vue'),
         name: RouteNames.TokenTable,
         children: [
-          {
-            path: 'project-information',
-            component: () => import('@/pages/TokenTable/TokenTableProjectInformation.vue'),
-            name: RouteNames.TokenTableProjectInformation,
-          },
           {
             path: 'token-allocation',
             component: () => import('@/pages/TokenTable/TokenTableTokenAllocation.vue'),
@@ -82,7 +77,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/layouts/EmptyProjectLayout.vue'),
     children: [
       {
-        path: 'create',
+        path: 'edit',
         component: () => import('@/pages/Project/ProjectEditPage.vue'),
         name: RouteNames.ProjectEdit,
       },

@@ -9,12 +9,6 @@
       >
         <q-tabs>
           <q-route-tab
-            label="Project Information"
-            :to="{ name: RouteNames.TokenTableProjectInformation }"
-            exact
-            no-caps
-          />
-          <q-route-tab
             label="Token Allocation"
             :to="{ name: RouteNames.TokenTableTokenAllocation }"
             exact
