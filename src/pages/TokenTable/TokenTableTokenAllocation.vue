@@ -31,7 +31,14 @@
         </template>
 
         <template #body-cell-unlock_scheme="{ row }">
-          <q-td>
+          <q-td class="text-right">
+            <q-btn
+              icon="add"
+              color="primary"
+              flat
+              padding="4px"
+              @click="addTokenAllocationUnlockScheme(row)"
+            />
             <div
               v-for="item in row.unlock_scheme"
               :key="item.id"
@@ -47,13 +54,6 @@
                 padding="4px"
                 :loading="tokenAllocationUnlockSchemeDeleteLoading"
                 @click="tokenAllocationUnlockSchemeDelete(item)"
-              />
-              <q-btn
-                icon="add"
-                color="primary"
-                flat
-                padding="4px"
-                @click="addTokenAllocationUnlockScheme(row)"
               />
             </div>
           </q-td>
