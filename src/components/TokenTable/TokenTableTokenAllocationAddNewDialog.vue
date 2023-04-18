@@ -35,14 +35,6 @@
               v-model="tokenAllocationData.tge_percent"
               label="TGE, %"
             />
-            <ui-number-field
-              v-model="tokenAllocationData.cliff_months"
-              label="Cliff (M)"
-            />
-            <ui-number-field
-              v-model="tokenAllocationData.vesting_months"
-              label="Vesting (M)"
-            />
           </div>
         </q-card-section>
         <q-card-actions align="right">
