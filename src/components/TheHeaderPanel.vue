@@ -7,7 +7,7 @@
       <q-space />
       <div class="row q-gutter-x-xs items-center">
         <div>
-          {{ user?.name }}
+          {{ (user as any)?.name }}
         </div>
         <q-btn
           padding="0"

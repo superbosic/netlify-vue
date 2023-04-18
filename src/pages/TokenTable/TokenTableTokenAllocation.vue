@@ -200,7 +200,7 @@ const { sendRequest: tokenAllocationUnlockSchemeDelete, loading: tokenAllocation
   successCallback: tokentableList,
 });
 const title = computed(() => tokenAllocationList.value?.name ?? '');
-const maxTokenSupply = computed(() => tokenAllocationList.value?.tokentable?.max_token_supply ?? 0);
+const maxTokenSupply = computed(() => tokenAllocationList.value?.max_token_supply ?? 0);
 const rowToEdit = ref<TokenAllocationListItem>();
 const tokenTableTokenAllocationAddNewDialogIsOpen = ref(false);
 const tokenAllocationUnlockSchemeAddNewDialogIsOpen = ref(false);
