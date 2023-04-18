@@ -9,7 +9,7 @@
           >
             <q-card-section>
               <div class="text-center text-h4 text-grey-9">
-                Create New Project
+                {{ title }}
               </div>
             </q-card-section>
             <q-card-section>
@@ -58,7 +58,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import UiNumberField from '@/components/ui/UiNumberField.vue';
 import { createApiInstance } from '@/api';
@@ -80,6 +80,7 @@ const projectInput = ref<ProjectInput>({
   token_network: project.value?.token_network ?? 'polygon',
   token_ticker: project.value?.token_ticker ?? '',
 });
+const title = computed(() => (project.value ? `Edit ${project.value.name} project` : 'Create New Project'));
 const { loading, sendRequest: roundCreate } = useRequest({
   request: () => projectApi.projectCreate(projectInput.value).then((data) => data!.data!.data),
   successCallback: () => router.push({ name: RouteNames.Dashboard }),
