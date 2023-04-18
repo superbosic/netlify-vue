@@ -55,21 +55,7 @@ export class Auth<SecurityDataType = unknown> extends HttpClient<SecurityDataTyp
    * @secure
    */
   getAuth = (params: RequestParams = {}) =>
-    this.request<
-      {
-        /** @format int64 */
-        id?: number;
-        /**
-         * @format timestamptz
-         * @default "now"
-         */
-        created_at?: number;
-        name?: string;
-        /** @format email */
-        email?: string | null;
-      },
-      void
-    >({
+    this.request<object, void>({
       path: `/auth/me`,
       method: "GET",
       secure: true,

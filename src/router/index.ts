@@ -15,9 +15,14 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '',
-    redirect: { name: RouteNames.TokenTable },
+    redirect: { name: RouteNames.Dashboard },
     component: () => import('@/layouts/MainLayout.vue'),
     children: [
+      {
+        path: 'dashboard',
+        component: () => import('@/pages/Dashboard/DashboardPage.vue'),
+        name: RouteNames.Dashboard,
+      },
       {
         path: 'token-table',
         redirect: { name: RouteNames.TokenTableProjectInformation },
@@ -70,6 +75,17 @@ const routes: Array<RouteRecordRaw> = [
         ],
       },
 
+    ],
+  },
+  {
+    path: '/project',
+    component: () => import('@/layouts/EmptyProjectLayout.vue'),
+    children: [
+      {
+        path: 'create',
+        component: () => import('@/pages/Project/ProjectEditPage.vue'),
+        name: RouteNames.ProjectEdit,
+      },
     ],
   },
 ];

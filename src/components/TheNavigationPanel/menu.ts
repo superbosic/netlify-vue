@@ -16,6 +16,11 @@ export interface INavigationMenuItem {
 
 export const menuItems: INavigationMenuItem[] = [
   {
+    routeName: RouteNames.Dashboard,
+    icon: 'home',
+    label: 'Dashboard',
+  },
+  {
     routeName: RouteNames.TokenTable,
     icon: 'attach_money',
     label: 'Token Table',

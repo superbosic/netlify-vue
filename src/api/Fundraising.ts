@@ -26,7 +26,44 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
         data: {
           /** @format int64 */
           id?: number;
+          /**
+           * @format timestamptz
+           * @default "now"
+           */
+          created_at?: number;
+          /** @format int64 */
+          tokentable_id?: number;
+          round?: string;
+          token_percent?: number;
+          /** @format int64 */
+          token_amount?: number;
+          price_usd?: number;
+          /** @format int64 */
+          raise_usd?: number;
+          /** @format int64 */
+          fdv_usd?: number;
+          /** @format int64 */
+          tge_percent?: number;
+          /** @format int64 */
+          tge_amount?: number;
+          /** @format int64 */
+          post_tge_percent?: number;
+          /** @format int64 */
+          post_tge_amount?: number;
+          /** @format int64 */
+          cliff_months?: number;
+          /** @format int64 */
+          vesting_months?: number;
           unlock_scheme?: {
+            /** @format int64 */
+            id: number;
+            /**
+             * @format timestamptz
+             * @default "now"
+             */
+            created_at?: number;
+            /** @format int64 */
+            tokentable_allocation_id: number;
             type: "onetime" | "liner";
             /** @format int64 */
             month_after_tge: number;
@@ -215,9 +252,18 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
         data: {
           /** @format int64 */
           id: number;
+          /**
+           * @format timestamptz
+           * @default "now"
+           */
+          created_at: number;
           name: string;
           /** @format int64 */
+          tokentable: number;
+          /** @format int64 */
           max_token_supply: number;
+          token_ticker: string;
+          token_network: "polygon" | "ethereum" | "fantom" | "binance_smart_chain" | "avalanche";
           fundraising_rounds: {
             /** @format int64 */
             id: number;
@@ -226,6 +272,8 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
              * @default "now"
              */
             created_at?: number;
+            /** @format int64 */
+            project_id?: number;
             name: string;
             status: "draft" | "ongoing" | "completed";
             token_percentage: number;
@@ -267,9 +315,18 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
               /** @format int64 */
               investment_allocation: number;
               profile?: {
+                /** @format int64 */
+                id: number;
+                /**
+                 * @format timestamptz
+                 * @default "now"
+                 */
+                created_at?: number;
                 name: string;
                 /** @format email */
                 email: string | null;
+                /** @format int64 */
+                project_id?: number;
               };
             }[];
           }[];
