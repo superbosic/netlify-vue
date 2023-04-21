@@ -151,25 +151,19 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
               tokentable_id?: number;
               round: string;
               token_percent: number;
-              /** @format int64 */
-              token_amount: number;
               price_usd?: number;
-              /** @format int64 */
-              raise_usd?: number;
-              /** @format int64 */
-              fdv_usd: number;
               /** @format int64 */
               tge_percent: number;
               /** @format int64 */
-              tge_amount: number;
+              token_amount?: number;
               /** @format int64 */
-              post_tge_percent: number;
+              tge_amount?: number;
               /** @format int64 */
-              post_tge_amount: number;
+              post_tge_amount?: number;
               /** @format int64 */
-              cliff_months: number;
+              raise_usd?: number;
               /** @format int64 */
-              vesting_months: number;
+              fdv_usd?: number;
               unlock_scheme?: {
                 /** @format int64 */
                 id: number;
@@ -213,10 +207,6 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
       price_usd?: number;
       /** @format int64 */
       tge_percent?: number;
-      /** @format int64 */
-      cliff_months?: number;
-      /** @format int64 */
-      vesting_months?: number;
       /** @format int64 */
       id?: number;
       token_percent: number;

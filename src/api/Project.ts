@@ -23,7 +23,22 @@ export class Project<SecurityDataType = unknown> extends HttpClient<SecurityData
   projectDelete = (params: RequestParams = {}) =>
     this.request<
       {
-        data: string;
+        data: {
+          /** @format int64 */
+          id: number;
+          /**
+           * @format timestamptz
+           * @default "now"
+           */
+          created_at: number;
+          name: string;
+          /** @format email */
+          email: string | null;
+          /** @format password */
+          password: string | null;
+          /** @format int64 */
+          project_id: number;
+        };
       },
       void
     >({

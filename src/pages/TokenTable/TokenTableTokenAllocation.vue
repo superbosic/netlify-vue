@@ -313,21 +313,40 @@ const unlockTokensByMonthTotalChartOptions = computed(() => {
   const monthsList = Array.from(new Array(months.value), (_, index) => index + 1);
   const series = rows.value?.map((token) => ({
     name: token.round,
-    data: monthsList.reduce((acc, currentMonthNumber, i) => {
-      if (currentMonthNumber > token.cliff_months! && currentMonthNumber <= (token.cliff_months! + token.vesting_months!)) {
-        const value = token.post_tge_amount! / token.vesting_months!;
+    // data: monthsList.reduce((acc, currentMonthNumber, i) => {
+    //   console.log(currentMonthNumber, token.cliff_months, token.cliff_months! + token.vesting_months!);
+    //
+    //   if (currentMonthNumber > token.cliff_months! && currentMonthNumber <= (token.cliff_months! + token.vesting_months!)) {
+    //     const value = token.post_tge_amount! / token.vesting_months!;
+    //
+    //     if (typeof acc[i - 1] === 'number') {
+    //       acc.push(acc[i - 1] + value);
+    //     } else {
+    //       acc.push(value);
+    //     }
+    //   } else {
+    //     acc.push(acc[i - 1] ?? 0);
+    //   }
+    //
+    //   return acc;
+    // }, [] as number[]),
+    data: token.unlock_scheme?.reduce<number[]>((acc, scheme) => {
+      if (scheme.type === 'liner') {
+        let sum = 0;
 
-        if (typeof acc[i - 1] === 'number') {
-          acc.push(acc[i - 1] + value);
-        } else {
-          acc.push(value);
+        for (let i = 1; i <= scheme.vesting_months!; i++) {
+          sum += typeof acc[i] === 'number' ? acc[i] : 0;
+          acc[i] = 0;
+        }
+
+        for (let j = scheme.month_after_tge!; j <= (scheme.month_after_tge! + scheme.vesting_months! - 1); j++) {
+          acc[j] = (token.post_tge_amount! - sum) / scheme.vesting_months!;
         }
       } else {
-        acc.push(acc[i - 1] ?? 0);
+        acc[scheme.month_after_tge!] = (token.post_tge_amount! / 100) * scheme.percent!;
       }
-
       return acc;
-    }, [] as number[]),
+    }, monthsList.map(() => 0)),
   }));
 
   return {
