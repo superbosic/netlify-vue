@@ -110,7 +110,9 @@
               flat
               bordered
             >
-              <q-card-section />
+              <q-card-section>
+                <SignNowUploadDocument />
+              </q-card-section>
             </q-card>
           </div>
         </div>
@@ -143,6 +145,7 @@ import { useToken } from '@/composition/business/useToken';
 import { RouteNames } from '@/router/routeNames';
 import UiChartLegendItem from '@/components/ui/UiChartLegendItem.vue';
 import FundraisingInvestorsTable from '@/components/Fundraising/FundraisingInvestorsTable.vue';
+import SignNowUploadDocument from '@/components/SignNow/SignNowUploadDocument.vue';
 
 const props = defineProps<{
     id: number,

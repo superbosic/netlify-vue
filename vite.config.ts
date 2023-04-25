@@ -26,6 +26,10 @@ export default ({ mode }) => {
           target: apiPath,
           changeOrigin: true,
         },
+        '^/signnow': {
+          target: apiPath,
+          changeOrigin: true,
+        },
       },
     },
   });

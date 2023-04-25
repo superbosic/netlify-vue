@@ -311,26 +311,8 @@ const chartOptions = computed(() => ({
 }));
 const unlockTokensByMonthTotalChartOptions = computed(() => {
   const monthsList = Array.from(new Array(months.value), (_, index) => index + 1);
-  const series = rows.value?.map((token) => ({
-    name: token.round,
-    // data: monthsList.reduce((acc, currentMonthNumber, i) => {
-    //   console.log(currentMonthNumber, token.cliff_months, token.cliff_months! + token.vesting_months!);
-    //
-    //   if (currentMonthNumber > token.cliff_months! && currentMonthNumber <= (token.cliff_months! + token.vesting_months!)) {
-    //     const value = token.post_tge_amount! / token.vesting_months!;
-    //
-    //     if (typeof acc[i - 1] === 'number') {
-    //       acc.push(acc[i - 1] + value);
-    //     } else {
-    //       acc.push(value);
-    //     }
-    //   } else {
-    //     acc.push(acc[i - 1] ?? 0);
-    //   }
-    //
-    //   return acc;
-    // }, [] as number[]),
-    data: token.unlock_scheme?.reduce<number[]>((acc, scheme) => {
+  const series = rows.value?.map((token) => {
+    const data = token.unlock_scheme?.reduce<number[]>((acc, scheme) => {
       if (scheme.type === 'liner') {
         let sum = 0;
 
@@ -346,8 +328,19 @@ const unlockTokensByMonthTotalChartOptions = computed(() => {
         acc[scheme.month_after_tge!] = (token.post_tge_amount! / 100) * scheme.percent!;
       }
       return acc;
-    }, monthsList.map(() => 0)),
-  }));
+    }, monthsList.map(() => 0)) || [];
+
+    for (let i = 0; i < data.length; i++) {
+      data[i] = data[i] ?? 0;
+    }
+
+    console.log(data);
+
+    return {
+      name: token.round,
+      data,
+    };
+  });
 
   return {
     chart: {

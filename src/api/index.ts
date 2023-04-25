@@ -8,6 +8,8 @@ export function init(defaultOptions: Options) {
   httpClient = ky.extend(defaultOptions);
 }
 
+export const TykAuthorization = 'eyJvcmciOiI2NDFkZjRmZTEyNjQ5ZTAwMDFkMmVmZjIiLCJpZCI6IjIzZmEzNjIwMjA0YzRmNTU4MjI5MzcyZjI5NTM2NmM2IiwiaCI6Im11cm11cjEyOCJ9';
+
 export function createApiInstance<C extends typeof HttpClient>(ApiConstructor: C): C['prototype'] {
   const { getToken } = useAccountStore();
   const baseUrl = process.env.NODE_ENV === 'development' ? document.location.origin : import.meta.env.VITE_API_PATH;
@@ -17,9 +19,13 @@ export function createApiInstance<C extends typeof HttpClient>(ApiConstructor: C
     baseUrl: `${baseUrl}/api`,
     baseApiParams: {
       headers: {
-        'Tyk-Authorization': 'eyJvcmciOiI2NDFkZjRmZTEyNjQ5ZTAwMDFkMmVmZjIiLCJpZCI6IjcyMTM5ZWRkOTE1YTQwYTI5MjY1NDNmOWU5M2Y1ODZiIiwiaCI6Im11cm11cjEyOCJ9',
+        'Tyk-Authorization': TykAuthorization,
         Authorization: `Bearer ${getToken()}`,
       },
     },
   });
+}
+
+export function getHttpClient() {
+  return httpClient!;
 }

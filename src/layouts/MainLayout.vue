@@ -25,7 +25,7 @@ import { onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { createApiInstance } from '@/api';
 import { Auth } from '@/api/Auth';
-import { useAccountStore } from '@/store/account';
+import { IUser, useAccountStore } from '@/store/account';
 import useRequest from '@/composition/useRequest';
 import TheHeaderPanel from '@/components/TheHeaderPanel.vue';
 import TheNavigationPanel from '@/components/TheNavigationPanel/TheNavigationPanel.vue';
@@ -53,7 +53,7 @@ const { sendRequest: projectList, responseData: project } = useRequest({
 const { sendRequest: loadAccountInfo, responseData: account } = useRequest({
   request: () => authApi.getAuth().then((data) => data!.data!),
   successCallback: (value) => {
-    setUser(value);
+    setUser(value as IUser);
     projectList();
   },
 });

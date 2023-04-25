@@ -3,7 +3,14 @@ import { useQuasar } from 'quasar';
 import { Auth } from '@/api/Auth';
 import { ExtractHttpResponseType } from '@/types/http';
 
-export type IUser = ExtractHttpResponseType<ReturnType<Auth['getAuth']>>;
+// export type IUser = ExtractHttpResponseType<ReturnType<Auth['getAuth']>>;
+export interface IUser {
+  id: number
+  name: string
+  email: string
+  created_at: string
+  project_id: number
+}
 
 const APP_TOKEN_KEY = 'APP_TOKEN_KEY';
 
