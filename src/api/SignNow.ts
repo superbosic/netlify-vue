@@ -3,8 +3,7 @@ import { getHttpClient, TykAuthorization } from '@/api/index';
 
 const httpClient = getHttpClient();
 const BasicToken = 'ZDVlMTkzMzZmYmM0ZmY4YzgxY2UyZWMyOTczZTM4YTU6MDZkNTQ5M2IxNDI4ZDk5MTQyY2EzM2FhYmZlOTA1NjY=';
-// const baseUrl = process.env.NODE_ENV === 'development' ? document.location.origin : import.meta.env.VITE_API_PATH;
-const baseUrl = document.location.origin;
+const baseUrl = process.env.NODE_ENV === 'development' ? document.location.origin : import.meta.env.VITE_API_PATH;
 
 export interface ISignNowGenerateAccessTokenParams {
     username: string
