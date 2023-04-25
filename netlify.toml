@@ -1,4 +1,4 @@
 [[redirects]]
-  from = "/singnow/*"
+  from = "/signnow/*"
   to = "https://realistic-factor-gw.aws-usw2.cloud-ara.tyk.io/:splat"
   status = 200
