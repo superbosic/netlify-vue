@@ -14,7 +14,7 @@ import { useSignNow } from '@/composition/useSignNow';
 const accountStore = useAccountStore();
 const { upload } = useSignNow(accountStore.user.value!);
 
-function onFilesAdded(files: File[]) {
+function onFilesAdded(files: readonly File[]) {
   upload(files[0]);
 }
 
