@@ -3,6 +3,7 @@ import { getHttpClient, TykAuthorization } from '@/api/index';
 
 const httpClient = getHttpClient();
 const BasicToken = 'ZDVlMTkzMzZmYmM0ZmY4YzgxY2UyZWMyOTczZTM4YTU6MDZkNTQ5M2IxNDI4ZDk5MTQyY2EzM2FhYmZlOTA1NjY=';
+const baseUrl = process.env.NODE_ENV === 'development' ? document.location.origin : import.meta.env.VITE_API_PATH;
 
 export interface ISignNowGenerateAccessTokenParams {
     username: string
@@ -35,7 +36,7 @@ export async function generateAccessToken(params: ISignNowGenerateAccessTokenPar
 
   Object.keys(params).forEach((key) => body.append(key, params[key as keyof ISignNowGenerateAccessTokenParams]!));
 
-  const { access_token } = await httpClient.post('signnow/oauth2/token', {
+  const { access_token } = await httpClient.post(`${baseUrl}/signnow/oauth2/token`, {
     body,
     headers: {
       Accept: 'application/json,',
@@ -57,7 +58,7 @@ export function uploadDocument(file: Blob) {
 
   body.append('file', file);
 
-  return httpClient.post('signnow/document', {
+  return httpClient.post(`${baseUrl}/signnow/document`, {
     body,
     headers: {
       Accept: 'application/json,',
