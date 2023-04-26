@@ -39,7 +39,7 @@ import { computed } from 'vue';
 import { QSelectProps } from 'quasar';
 import useRequest from '@/composition/useRequest';
 import { createApiInstance } from '@/api';
-import { Fundraising } from '@/api/Fundraising';
+import { Fundraising } from '@/api/token/Fundraising';
 import { useToken } from '@/composition/business/useToken';
 
 const props = defineProps<{

@@ -1,5 +1,5 @@
 import { LocalStorage } from 'quasar';
-import { getHttpClient, TykAuthorization } from '@/api/index';
+import { getHttpClient, TykAuthorization } from '@/api';
 
 const httpClient = getHttpClient();
 const BasicToken = 'ZDVlMTkzMzZmYmM0ZmY4YzgxY2UyZWMyOTczZTM4YTU6MDZkNTQ5M2IxNDI4ZDk5MTQyY2EzM2FhYmZlOTA1NjY=';
@@ -61,6 +61,38 @@ export function uploadDocument(file: Blob) {
 
   return httpClient.post(`${baseUrl}/signnow/document`, {
     body,
+    headers: {
+      Accept: 'application/json,',
+      'Tyk-Authorization': TykAuthorization,
+      Authorization: getBasicToken(),
+    },
+    redirect: 'follow',
+  })
+    .then((result) => result.json())
+    .catch((error) => console.error('error', error));
+}
+
+export function createFolder(name: string) {
+  const body = JSON.stringify({
+    name,
+    parent_id: '',
+  });
+
+  return httpClient.post(`${baseUrl}/signnow/user/folder`, {
+    body,
+    headers: {
+      Accept: 'application/json,',
+      'Tyk-Authorization': TykAuthorization,
+      Authorization: getBasicToken(),
+    },
+    redirect: 'follow',
+  })
+    .then((result) => result.json())
+    .catch((error) => console.error('error', error));
+}
+
+export function getAllFolders() {
+  return httpClient.get(`${baseUrl}/signnow/user/folder`, {
     headers: {
       Accept: 'application/json,',
       'Tyk-Authorization': TykAuthorization,

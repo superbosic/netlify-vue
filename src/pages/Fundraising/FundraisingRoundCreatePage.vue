@@ -69,7 +69,7 @@ import { FundraisingRoundInput } from '@/types/fundraising';
 import { useValidationRules } from '@/composition/useValidationRules';
 import FundraisingUnlockSchemesSelect from '@/components/Fundraising/FundraisingUnlockSchemesSelect.vue';
 import { createApiInstance } from '@/api';
-import { Fundraising } from '@/api/Fundraising';
+import { Fundraising } from '@/api/token/Fundraising';
 import useRequest from '@/composition/useRequest';
 import { RouteNames } from '@/router/routeNames';
 

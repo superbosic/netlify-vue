@@ -42,7 +42,7 @@ import router from '@/router';
 import { urlParamsToObject } from '@/utils';
 import { useAccountStore } from '@/store/account';
 import { createApiInstance } from '@/api';
-import { Auth } from '@/api/Auth';
+import { Auth } from '@/api/token/Auth';
 import useRequest from '@/composition/useRequest';
 
 const email = ref('');

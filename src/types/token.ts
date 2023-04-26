@@ -1,4 +1,4 @@
-import { Tokentable } from '@/api/Tokentable';
+import { Tokentable } from '@/api/token/Tokentable';
 import { ExtractHttpResponseType } from '@/types/http';
 
 export type TokenAllocationInput = Parameters<Tokentable['tokenAllocationCreate']>[0];

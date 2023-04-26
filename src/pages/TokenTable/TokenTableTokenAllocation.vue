@@ -171,7 +171,7 @@ import { computed, ref } from 'vue';
 import { QTableProps, useQuasar } from 'quasar';
 import { Chart } from 'highcharts-vue';
 import { createApiInstance } from '@/api';
-import { Tokentable } from '@/api/Tokentable';
+import { Tokentable } from '@/api/token/Tokentable';
 import useRequest from '@/composition/useRequest';
 import { useFormatNumber } from '@/composition/useFormatters';
 import TokenTableTokenAllocationAddNewDialog from '@/components/TokenTable/TokenTableTokenAllocationAddNewDialog.vue';

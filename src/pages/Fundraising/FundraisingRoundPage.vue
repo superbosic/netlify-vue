@@ -109,8 +109,9 @@
             <q-card
               flat
               bordered
+              class="full-height"
             >
-              <q-card-section>
+              <q-card-section class="full-height">
                 <SignNowUploadDocument />
               </q-card-section>
             </q-card>
@@ -136,7 +137,7 @@ import { Chart } from 'highcharts-vue';
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { createApiInstance } from '@/api';
-import { Fundraising } from '@/api/Fundraising';
+import { Fundraising } from '@/api/token/Fundraising';
 import useRequest from '@/composition/useRequest';
 import FundraisingRoundStatus from '@/components/Fundraising/FundraisingRoundStatus.vue';
 import UiInfoCard from '@/components/ui/UiInfoCard.vue';

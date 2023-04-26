@@ -63,7 +63,7 @@ import { computed, ref } from 'vue';
 import { useValidationRules } from '@/composition/useValidationRules';
 import UiNumberField from '@/components/ui/UiNumberField.vue';
 import { createApiInstance } from '@/api';
-import { Tokentable } from '@/api/Tokentable';
+import { Tokentable } from '@/api/token/Tokentable';
 import useRequest from '@/composition/useRequest';
 import { TokenAllocationInput } from '@/types/token';
 

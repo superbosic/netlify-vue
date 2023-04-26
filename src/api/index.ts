@@ -1,8 +1,26 @@
 import ky, { Options } from 'ky';
-import { HttpClient } from '@/api/http-client';
+import { LocalStorage } from 'quasar';
+import { HttpClient } from '@/api/token/http-client';
+import { HttpClient as SingNowHttpClient } from '@/api/singNow/http-client';
 import { useAccountStore } from '@/store/account';
 
 let httpClient: typeof ky | null = null;
+
+export const BearerTokenKey = 'SIGNNOW_BEARER_TOKEN';
+
+const httpSignNowClient = ky.extend({
+  retry: 1,
+  timeout: 60000,
+  hooks: {
+    beforeRequest: [
+      (req) => {
+        if (!req.headers.has('Authorization')) {
+          req.headers.set('Authorization', `Bearer ${LocalStorage.getItem(BearerTokenKey)}`);
+        }
+      },
+    ],
+  },
+});
 
 export function init(defaultOptions: Options) {
   httpClient = ky.extend(defaultOptions);
@@ -21,6 +39,19 @@ export function createApiInstance<C extends typeof HttpClient>(ApiConstructor: C
       headers: {
         'Tyk-Authorization': TykAuthorization,
         Authorization: `Bearer ${getToken()}`,
+      },
+    },
+  });
+}
+export function createSignNowApiInstance<C extends typeof SingNowHttpClient>(ApiConstructor: C): C['prototype'] {
+  const baseUrl = process.env.NODE_ENV === 'development' ? document.location.origin : import.meta.env.VITE_API_PATH;
+
+  return new ApiConstructor({
+    customFetch: httpSignNowClient!,
+    baseUrl: `${baseUrl}/signnow`,
+    baseApiParams: {
+      headers: {
+        'Tyk-Authorization': TykAuthorization,
       },
     },
   });

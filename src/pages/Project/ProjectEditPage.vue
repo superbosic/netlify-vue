@@ -62,7 +62,7 @@ import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import UiNumberField from '@/components/ui/UiNumberField.vue';
 import { createApiInstance } from '@/api';
-import { Project } from '@/api/Project';
+import { Project } from '@/api/token/Project';
 import { useValidationRules } from '@/composition/useValidationRules';
 import useRequest from '@/composition/useRequest';
 import { RouteNames } from '@/router/routeNames';

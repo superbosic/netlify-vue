@@ -1,0 +1,3305 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "SignNow API",
+    "version": "1.0.0",
+    "contact": {}
+  },
+  "servers": [
+    {
+      "url": "{{url}}"
+    },
+    {
+      "url": "{{prod_url}}"
+    }
+  ],
+  "paths": {
+    "/oauth2/token": {
+      "get": {
+        "tags": [
+          "Oauth2"
+        ],
+        "summary": "Verify access token",
+        "description": "Verify an access token for a user",
+        "operationId": "verifyAccessToken",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Oauth2"
+        ],
+        "summary": "Generate access token",
+        "description": "Returns an `access_token`, its' type, scope, expiration time, and `refresh_token` for a user\n   \n   By deafult token expires in 30 days\n   \n   Check out other supported grant types [here](https://docs.signnow.com/authentication).",
+        "operationId": "generateAccessToken",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "expiration_time": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "grant_type": {
+                    "type": "string",
+                    "example": "password"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "{{password}}"
+                  },
+                  "scope": {
+                    "type": "string",
+                    "example": "*"
+                  },
+                  "username": {
+                    "type": "string",
+                    "example": "{{user}}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/document/": {
+      "post": {
+        "tags": [
+          "05 Embedded Signning"
+        ],
+        "summary": "Upload document",
+        "description": "Upload document",
+        "operationId": "uploadDocument1",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/document/{document_id}": {
+      "get": {
+        "tags": [
+          "Document"
+        ],
+        "summary": "Get document",
+        "description": "This endpoint returns details of specific document",
+        "operationId": "getDocument",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Document"
+        ],
+        "summary": "Edit document",
+        "description": "Updates a document by adding/overwriting fields or elements (texts, checks, signatures, hyperlinks, attachments)\n   \n   More details can be found [here](https://docs.signnow.com/reference/oas/document/putdocumentdocumentid)",
+        "operationId": "editDocument",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "document_name": {
+                    "type": "string",
+                    "example": "new_name"
+                  },
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "height": {
+                          "type": "number",
+                          "example": 34
+                        },
+                        "label": {
+                          "type": "string",
+                          "example": "a sample label"
+                        },
+                        "page_number": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "required": {
+                          "type": "boolean",
+                          "example": true
+                        },
+                        "role": {
+                          "type": "string",
+                          "example": "Signer 1"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "signature"
+                        },
+                        "width": {
+                          "type": "number",
+                          "example": 122
+                        },
+                        "x": {
+                          "type": "number",
+                          "example": 305
+                        },
+                        "y": {
+                          "type": "number",
+                          "example": 18
+                        }
+                      }
+                    },
+                    "example": [
+                      {
+                        "height": 34,
+                        "page_number": 0,
+                        "required": true,
+                        "role": "Signer 1",
+                        "type": "signature",
+                        "width": 122,
+                        "x": 305,
+                        "y": 18
+                      },
+                      {
+                        "height": 12,
+                        "label": "a sample label",
+                        "page_number": 0,
+                        "required": true,
+                        "role": "Signer 1",
+                        "type": "text",
+                        "width": 60,
+                        "x": 307,
+                        "y": 67
+                      }
+                    ]
+                  }
+                }
+              },
+              "example": {
+                "document_name": "new_name",
+                "fields": [
+                  {
+                    "height": 34,
+                    "page_number": 0,
+                    "required": true,
+                    "role": "Signer 1",
+                    "type": "signature",
+                    "width": 122,
+                    "x": 305,
+                    "y": 18
+                  },
+                  {
+                    "height": 12,
+                    "label": "a sample label",
+                    "page_number": 0,
+                    "required": true,
+                    "role": "Signer 1",
+                    "type": "text",
+                    "width": 60,
+                    "x": 307,
+                    "y": 67
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Document"
+        ],
+        "summary": "Delete document",
+        "description": "Deletes a document from user’s account",
+        "operationId": "deleteDocument",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/document/{document_id}/invite": {
+      "post": {
+        "tags": [
+          "Document"
+        ],
+        "summary": "Send an invite to sign",
+        "description": "Create and sends an invite to sign a document. \n\nThere are 2 types of signature invite:\n1. Free form invite - for document without fillable fields\n2. Role-based invite - document has at least one field These 2 types of invite require different payloads",
+        "operationId": "sendAnInviteToSign",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cc": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "cc_email@gmail.com"
+                    },
+                    "example": [
+                      "cc_email@gmail.com",
+                      "abnother_cc@gmail.com"
+                    ]
+                  },
+                  "document_id": {
+                    "type": "string",
+                    "example": "{{document_id}}"
+                  },
+                  "from": {
+                    "type": "string",
+                    "example": "sender@email.com"
+                  },
+                  "message": {
+                    "type": "string",
+                    "example": "generic message"
+                  },
+                  "subject": {
+                    "type": "string",
+                    "example": "generic subject"
+                  },
+                  "to": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "authentication_type": {
+                          "type": "string",
+                          "example": "password"
+                        },
+                        "decline_by_signature": {
+                          "type": "string",
+                          "example": "0"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "signer@signnow.com"
+                        },
+                        "expiration_days": {
+                          "type": "number",
+                          "example": 30
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "personalized message"
+                        },
+                        "order": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "password": {
+                          "type": "string",
+                          "example": "123456"
+                        },
+                        "reassign": {
+                          "type": "string",
+                          "example": "0"
+                        },
+                        "reminder": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "role": {
+                          "type": "string",
+                          "example": "Signer 1"
+                        },
+                        "role_id": {
+                          "type": "string",
+                          "example": "488d73a3efab032511f144af3a2572a8aae20162"
+                        },
+                        "subject": {
+                          "type": "string",
+                          "example": "personalized subject"
+                        }
+                      }
+                    },
+                    "example": [
+                      {
+                        "authentication_type": "password",
+                        "decline_by_signature": "0",
+                        "email": "signer@signnow.com",
+                        "expiration_days": 30,
+                        "message": "personalized message",
+                        "order": 1,
+                        "password": "123456",
+                        "reassign": "0",
+                        "reminder": 0,
+                        "role": "Signer 1",
+                        "role_id": "488d73a3efab032511f144af3a2572a8aae20162",
+                        "subject": "personalized subject"
+                      },
+                      {
+                        "decline_by_signature": "1",
+                        "email": "signer2@signnow.com",
+                        "expiration_days": 30,
+                        "order": 2,
+                        "reassign": "1",
+                        "reminder": 0,
+                        "role": "Signer 2",
+                        "role_id": ""
+                      }
+                    ]
+                  }
+                }
+              },
+              "example": {
+                "cc": [
+                  "cc_email@gmail.com",
+                  "abnother_cc@gmail.com"
+                ],
+                "document_id": "{{document_id}}",
+                "from": "sender@email.com",
+                "message": "generic message",
+                "subject": "generic subject",
+                "to": [
+                  {
+                    "authentication_type": "password",
+                    "decline_by_signature": "0",
+                    "email": "signer@signnow.com",
+                    "expiration_days": 30,
+                    "message": "personalized message",
+                    "order": 1,
+                    "password": "123456",
+                    "reassign": "0",
+                    "reminder": 0,
+                    "role": "Signer 1",
+                    "role_id": "488d73a3efab032511f144af3a2572a8aae20162",
+                    "subject": "personalized subject"
+                  },
+                  {
+                    "decline_by_signature": "1",
+                    "email": "signer2@signnow.com",
+                    "expiration_days": 30,
+                    "order": 2,
+                    "reassign": "1",
+                    "reminder": 0,
+                    "role": "Signer 2",
+                    "role_id": ""
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/fieldinvite/{field_id_1}/resend": {
+      "put": {
+        "tags": [
+          "00 Invite to Sign (with fields)"
+        ],
+        "summary": "Resend field invite",
+        "description": "Resend field invite",
+        "operationId": "resendFieldInvite",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              },
+              "example": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "field_id_1",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/document/{document_id}/invite/reassign/{field_invite_id_1}": {
+      "put": {
+        "tags": [
+          "00 Invite to Sign (with fields)"
+        ],
+        "summary": "Reassign signer",
+        "description": "Reassign signer",
+        "operationId": "reassignSigner",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cc": {
+                    "type": "array",
+                    "items": {},
+                    "example": []
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "{{user3}}"
+                  },
+                  "reassign": {
+                    "type": "number",
+                    "example": 1
+                  },
+                  "role_id": {
+                    "type": "string",
+                    "example": "{{role_id_1}}"
+                  }
+                }
+              },
+              "example": {
+                "cc": [],
+                "email": "{{user3}}",
+                "reassign": 1,
+                "role_id": "{{role_id_1}}"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "field_invite_id_1",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/document/{document_id}/invite/changepassword": {
+      "put": {
+        "tags": [
+          "00 Invite to Sign (with fields)"
+        ],
+        "summary": "Change password",
+        "description": "Change password",
+        "operationId": "changePassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "authentication_type": {
+                    "type": "string",
+                    "example": "password"
+                  },
+                  "fieldinvite_id": {
+                    "type": "string",
+                    "example": "{{field_invite_id_2}}"
+                  },
+                  "new_password": {
+                    "type": "string",
+                    "example": "29"
+                  }
+                }
+              },
+              "example": {
+                "authentication_type": "password",
+                "fieldinvite_id": "{{field_invite_id_2}}",
+                "new_password": "29"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/field_invite/{field_invite_id_2}": {
+      "delete": {
+        "tags": [
+          "00 Invite to Sign (with fields)"
+        ],
+        "summary": "Cancel field invite",
+        "description": "Cancel field invite",
+        "operationId": "cancelFieldInvite",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "field_invite_id_2",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/document": {
+      "post": {
+        "tags": [
+          "Document"
+        ],
+        "summary": "Upload document",
+        "description": "Uploads a file to user’s account and returns unique id of the uploaded document.   \n\nAccepts .doc, .docx, .pdf, .xls, .xlsx, .ppt, .pptx and .png file types.",
+        "operationId": "uploadDocument2",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/template": {
+      "post": {
+        "tags": [
+          "Template"
+        ],
+        "summary": "Create template",
+        "description": "Creates a template by flattening an existing document.",
+        "operationId": "createTemplate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "document_id": {
+                    "type": "string",
+                    "example": "{{document_id}}"
+                  },
+                  "document_name": {
+                    "type": "string",
+                    "example": ""
+                  }
+                }
+              },
+              "example": {
+                "document_id": "{{document_id}}",
+                "document_name": ""
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/documents": {
+      "delete": {
+        "tags": [
+          "03 Bulk Invite"
+        ],
+        "summary": "8. Delete Documents",
+        "description": "8. Delete Documents",
+        "operationId": "DeleteDocuments",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "unique_id": {
+                      "type": "string",
+                      "example": "{{document_id}}"
+                    }
+                  }
+                },
+                "example": [
+                  {
+                    "unique_id": "{{document_id}}"
+                  },
+                  {
+                    "unique_id": "{{template_id}}"
+                  }
+                ]
+              },
+              "example": [
+                {
+                  "unique_id": "{{document_id}}"
+                },
+                {
+                  "unique_id": "{{template_id}}"
+                }
+              ]
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/document/{template_id}": {
+      "get": {
+        "tags": [
+          "02 Signing Link"
+        ],
+        "summary": "6.Get role id's for template",
+        "description": "6.Get role id's for template",
+        "operationId": "GetRoleIdSForTemplate",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "03 Bulk Invite"
+        ],
+        "summary": "6. Add 3 signature fields",
+        "description": "6. Add 3 signature fields",
+        "operationId": "Add3SignatureFields",
+        "requestBody": {
+          "content": {
+            "text/plain": {
+              "example": "{\n   \"fields\":[\n      {\n         \"x\":358,\n         \"y\":171,\n         \"width\":177,\n         \"height\":50,\n         \"type\":\"signature\",\n         \"page_number\":0,\n         \"required\":true,\n         \"role\":\"Signer 1\",\n         \"custom_defined_option\":false,\n         \"name\":\"Signer 1\"\n      },\n      {\n         \"x\":358,\n         \"y\":287,\n         \"width\":177,\n         \"height\":50,\n         \"type\":\"signature\",\n         \"page_number\":0,\n         \"required\":true,\n         \"role\":\"Signer 2\",\n         \"custom_defined_option\":false,\n         \"name\":\"signature2\"\n      },\n       {\n         \"x\":358,\n         \"y\":250,\n         \"width\":177,\n         \"height\":50,\n         \"type\":\"signature\",\n         \"page_number\":0,\n         \"required\":true,\n         \"role\":\"Signer 3\",\n         \"custom_defined_option\":false,\n         \"name\":\"signature3\"\n      }\n   ],\n   \"elements\":[\n\n   ],\n   \"client_timestamp\":{{$timestamp}}\n}"
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "template_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/document/{template_id}/template/routing/detail": {
+      "put": {
+        "tags": [
+          "02 Signing Link"
+        ],
+        "summary": "7.Update routing details",
+        "description": "7.Update routing details",
+        "operationId": "UpdateRoutingDetails",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cc": {
+                    "type": "array",
+                    "items": {},
+                    "example": []
+                  },
+                  "cc_step": {
+                    "type": "array",
+                    "items": {},
+                    "example": []
+                  },
+                  "template_data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "default_email": {
+                          "type": "string",
+                          "example": ""
+                        },
+                        "inviter_role": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Signer 1"
+                        },
+                        "role_id": {
+                          "type": "string",
+                          "example": "{{role_id_1}}"
+                        },
+                        "signing_order": {
+                          "type": "number",
+                          "example": 1
+                        }
+                      }
+                    },
+                    "example": [
+                      {
+                        "default_email": "",
+                        "inviter_role": false,
+                        "name": "Signer 1",
+                        "role_id": "{{role_id_1}}",
+                        "signing_order": 1
+                      }
+                    ]
+                  }
+                }
+              },
+              "example": {
+                "cc": [],
+                "cc_step": [],
+                "template_data": [
+                  {
+                    "default_email": "",
+                    "inviter_role": false,
+                    "name": "Signer 1",
+                    "role_id": "{{role_id_1}}",
+                    "signing_order": 1
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "template_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/template/{template_id}/copy": {
+      "post": {
+        "tags": [
+          "Template"
+        ],
+        "summary": "Get document out of template",
+        "description": "Creates a new document copy out of template. If a name is not supplied than it will default to the original template name.",
+        "operationId": "getDocumentOutOfTemplate",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "template_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get user info",
+        "description": "Returns a user resource",
+        "operationId": "getUserInfo",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Change user details",
+        "description": "Updates user informaition i.e. first name, last name",
+        "operationId": "changeUserDetails",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "first_name": {
+                    "type": "string",
+                    "example": "{{updated_name}}"
+                  },
+                  "last_name": {
+                    "type": "string",
+                    "example": "{{updated_last_name}}"
+                  },
+                  "logout_all": {
+                    "type": "string",
+                    "example": "true"
+                  },
+                  "old_password": {
+                    "type": "string",
+                    "example": "{{old_pass}}"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "{{updated_password}}"
+                  }
+                }
+              },
+              "example": {
+                "first_name": "{{updated_name}}",
+                "last_name": "{{updated_last_name}}",
+                "logout_all": "true",
+                "old_password": "{{old_pass}}",
+                "password": "{{updated_password}}"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Create user",
+        "description": "Creates an account for a user   \n   \n   This endpoint consumes Basic authorization",
+        "operationId": "createUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "{{username}}"
+                  },
+                  "first_name": {
+                    "type": "string",
+                    "example": "{{name}}"
+                  },
+                  "last_name": {
+                    "type": "string",
+                    "example": "{{last name}}"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "{{password}}"
+                  }
+                }
+              },
+              "example": {
+                "email": "{{username}}",
+                "first_name": "{{name}}",
+                "last_name": "{{last name}}",
+                "password": "{{password}}"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/link": {
+      "post": {
+        "tags": [
+          "Signing Link"
+        ],
+        "summary": "Create signing link",
+        "description": "Creates a Signing Link for a specific document.",
+        "operationId": "createSigningLink",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "document_id": {
+                    "type": "string",
+                    "example": "{{document_id}}"
+                  }
+                }
+              },
+              "example": {
+                "document_id": "{{document_id}}"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/v2/application/signing-links": {
+      "put": {
+        "tags": [
+          "02 Signing Link"
+        ],
+        "summary": "11. Deactivate signing link",
+        "description": "11. Deactivate signing link",
+        "operationId": "DeactivateSigningLink",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/template/": {
+      "post": {
+        "tags": [
+          "03 Bulk Invite"
+        ],
+        "summary": "3. Make Template",
+        "description": "3. Make Template",
+        "operationId": "MakeTemplate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "document_id": {
+                    "type": "string",
+                    "example": "{{document_id}}"
+                  },
+                  "document_name": {
+                    "type": "string",
+                    "example": "bulkInvite"
+                  }
+                }
+              },
+              "example": {
+                "document_id": "{{document_id}}",
+                "document_name": "bulkInvite"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/template/{template_id}/bulkinvite": {
+      "post": {
+        "tags": [
+          "03 Bulk Invite"
+        ],
+        "summary": "7. Send bulk invite for three signers",
+        "description": "7. Send bulk invite for three signers",
+        "operationId": "SendBulkInviteForThreeSigners",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "client_timestamp": {
+                    "type": "string",
+                    "example": "{{$timestamp}}"
+                  },
+                  "document_name": {
+                    "type": "string",
+                    "example": "3 signers"
+                  },
+                  "email_message": {
+                    "type": "string",
+                    "example": "Bulk invite message 3 signers"
+                  },
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "folder_id": {
+                    "type": "string",
+                    "example": "5e59dfb292d9655122a0f6087b26ea9b1af3f752"
+                  },
+                  "subject": {
+                    "type": "string",
+                    "example": "Bulk Invite subject 3 signers"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "template_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/document/{document_id_1}": {
+      "get": {
+        "tags": [
+          "04 Document Gorup Invite"
+        ],
+        "summary": "Get field id 1 signer",
+        "description": "Get field id 1 signer",
+        "operationId": "getFieldId1Signer",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "04 Document Gorup Invite"
+        ],
+        "summary": "Add field to doc 1",
+        "description": "Add field to doc 1",
+        "operationId": "addFieldToDoc1",
+        "requestBody": {
+          "content": {
+            "text/plain": {
+              "example": "{\n   \"fields\":[\n      {\n         \"x\":358,\n         \"y\":171,\n         \"width\":177,\n         \"height\":50,\n         \"type\":\"text\",\n         \"page_number\":0,\n         \"required\":true,\n         \"role\":\"Signer 1\",\n         \"custom_defined_option\":false,\n         \"name\":\"signature1\"      \n      \t}\n   ],\n   \"elements\":[\n\n   ],\n   \"client_timestamp\":{{$timestamp}}\n}"
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "document_id_1",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/document/{document_id_2}": {
+      "get": {
+        "tags": [
+          "04 Document Gorup Invite"
+        ],
+        "summary": "Get field id 2 signer",
+        "description": "Get field id 2 signer",
+        "operationId": "getFieldId2Signer",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "04 Document Gorup Invite"
+        ],
+        "summary": "Add field to doc 2",
+        "description": "Add field to doc 2",
+        "operationId": "addFieldToDoc2",
+        "requestBody": {
+          "content": {
+            "text/plain": {
+              "example": "{\n   \"fields\":[\n      {\n         \"x\":358,\n         \"y\":171,\n         \"width\":177,\n         \"height\":50,\n         \"type\":\"text\",\n         \"page_number\":0,\n         \"required\":true,\n         \"role\":\"Signer 1\",\n         \"custom_defined_option\":false,\n         \"name\":\"signature1\"\n        }\n   ],\n   \"elements\":[\n\n   ],\n   \"client_timestamp\":{{$timestamp}}\n}"
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "document_id_2",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/document/{document_id_3}": {
+      "get": {
+        "tags": [
+          "04 Document Gorup Invite"
+        ],
+        "summary": "Get field id 3 signer",
+        "description": "Get field id 3 signer",
+        "operationId": "getFieldId3Signer",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "04 Document Gorup Invite"
+        ],
+        "summary": "Add field to doc 3",
+        "description": "Add field to doc 3",
+        "operationId": "addFieldToDoc3",
+        "requestBody": {
+          "content": {
+            "text/plain": {
+              "example": "{\n   \"fields\":[\n      {\n         \"x\":358,\n         \"y\":171,\n         \"width\":177,\n         \"height\":50,\n         \"type\":\"text\",\n         \"page_number\":0,\n         \"required\":true,\n         \"role\":\"Signer 1\",\n         \"custom_defined_option\":false,\n         \"name\":\"signature1\"\n        }\n   ],\n   \"elements\":[\n\n   ],\n   \"client_timestamp\":{{$timestamp}}\n}"
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "document_id_3",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/documentgroup": {
+      "post": {
+        "tags": [
+          "Document Group"
+        ],
+        "summary": "Create document group",
+        "description": "Creates a document group from a list of document ids\n\nAll documents:\n\nMust be owned by the person creating the document group.\nCannot be templates.\nCannot already be a part of another document group (delete document group first to add them).\nAt least one of the documents must have fields.",
+        "operationId": "createDocumentGroup",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "document_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "{{document_id}}"
+                    },
+                    "example": [
+                      "{{document_id}}",
+                      "{{document1_id}}"
+                    ]
+                  },
+                  "group_name": {
+                    "type": "string",
+                    "example": "Document Group 1"
+                  }
+                }
+              },
+              "example": {
+                "document_ids": [
+                  "{{document_id}}",
+                  "{{document1_id}}"
+                ],
+                "group_name": "Document Group 1"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/documentgroup/{group_id}/groupinvite": {
+      "post": {
+        "tags": [
+          "04 Document Gorup Invite"
+        ],
+        "summary": "Group invite",
+        "description": "Group invite",
+        "operationId": "groupInvite",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "completion_emails": {
+                    "type": "array",
+                    "items": {},
+                    "example": []
+                  },
+                  "invite_steps": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "invite_actions": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "action": {
+                                "type": "string",
+                                "example": "sign"
+                              },
+                              "allow_reassign": {
+                                "type": "string",
+                                "example": "0"
+                              },
+                              "decline_by_signature": {
+                                "type": "string",
+                                "example": "0"
+                              },
+                              "document_id": {
+                                "type": "string",
+                                "example": "{{document_id_1}}"
+                              },
+                              "email": {
+                                "type": "string",
+                                "example": "{{user1}}"
+                              },
+                              "role_name": {
+                                "type": "string",
+                                "example": "Signer 1"
+                              }
+                            }
+                          },
+                          "example": [
+                            {
+                              "action": "sign",
+                              "allow_reassign": "0",
+                              "decline_by_signature": "0",
+                              "document_id": "{{document_id_1}}",
+                              "email": "{{user1}}",
+                              "role_name": "Signer 1"
+                            },
+                            {
+                              "action": "sign",
+                              "allow_reassign": "0",
+                              "decline_by_signature": "0",
+                              "document_id": "{{document_id_2}}",
+                              "email": "{{user2}}",
+                              "role_name": "Signer 1"
+                            }
+                          ]
+                        },
+                        "invite_emails": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "email": {
+                                "type": "string",
+                                "example": "{{user1}}"
+                              },
+                              "expiration_days": {
+                                "type": "number",
+                                "example": 30
+                              },
+                              "message": {
+                                "type": "string",
+                                "example": "custom message"
+                              },
+                              "reminder": {
+                                "type": "number",
+                                "example": 0
+                              },
+                              "subject": {
+                                "type": "string",
+                                "example": "custom subject"
+                              }
+                            }
+                          },
+                          "example": [
+                            {
+                              "email": "{{user1}}",
+                              "expiration_days": 30,
+                              "message": "custom message",
+                              "reminder": 0,
+                              "subject": "custom subject"
+                            },
+                            {
+                              "email": "{{user2}}",
+                              "expiration_days": 30,
+                              "message": "custom message",
+                              "reminder": 0,
+                              "subject": "custom subject"
+                            }
+                          ]
+                        },
+                        "order": {
+                          "type": "number",
+                          "example": 1
+                        }
+                      }
+                    },
+                    "example": [
+                      {
+                        "invite_actions": [
+                          {
+                            "action": "sign",
+                            "allow_reassign": "0",
+                            "decline_by_signature": "0",
+                            "document_id": "{{document_id_1}}",
+                            "email": "{{user1}}",
+                            "role_name": "Signer 1"
+                          },
+                          {
+                            "action": "sign",
+                            "allow_reassign": "0",
+                            "decline_by_signature": "0",
+                            "document_id": "{{document_id_2}}",
+                            "email": "{{user2}}",
+                            "role_name": "Signer 1"
+                          }
+                        ],
+                        "invite_emails": [
+                          {
+                            "email": "{{user1}}",
+                            "expiration_days": 30,
+                            "message": "custom message",
+                            "reminder": 0,
+                            "subject": "custom subject"
+                          },
+                          {
+                            "email": "{{user2}}",
+                            "expiration_days": 30,
+                            "message": "custom message",
+                            "reminder": 0,
+                            "subject": "custom subject"
+                          }
+                        ],
+                        "order": 1
+                      },
+                      {
+                        "invite_actions": [
+                          {
+                            "action": "sign",
+                            "allow_reassign": "0",
+                            "decline_by_signature": "0",
+                            "document_id": "{{document_id_3}}",
+                            "email": "{{user3}}",
+                            "role_name": "Signer 1"
+                          }
+                        ],
+                        "invite_emails": [
+                          {
+                            "email": "{{user3}}",
+                            "expiration_days": 30,
+                            "message": "custom message",
+                            "reminder": 0,
+                            "subject": "custom subject"
+                          }
+                        ],
+                        "order": 2
+                      }
+                    ]
+                  }
+                }
+              },
+              "example": {
+                "completion_emails": [],
+                "invite_steps": [
+                  {
+                    "invite_actions": [
+                      {
+                        "action": "sign",
+                        "allow_reassign": "0",
+                        "decline_by_signature": "0",
+                        "document_id": "{{document_id_1}}",
+                        "email": "{{user1}}",
+                        "role_name": "Signer 1"
+                      },
+                      {
+                        "action": "sign",
+                        "allow_reassign": "0",
+                        "decline_by_signature": "0",
+                        "document_id": "{{document_id_2}}",
+                        "email": "{{user2}}",
+                        "role_name": "Signer 1"
+                      }
+                    ],
+                    "invite_emails": [
+                      {
+                        "email": "{{user1}}",
+                        "expiration_days": 30,
+                        "message": "custom message",
+                        "reminder": 0,
+                        "subject": "custom subject"
+                      },
+                      {
+                        "email": "{{user2}}",
+                        "expiration_days": 30,
+                        "message": "custom message",
+                        "reminder": 0,
+                        "subject": "custom subject"
+                      }
+                    ],
+                    "order": 1
+                  },
+                  {
+                    "invite_actions": [
+                      {
+                        "action": "sign",
+                        "allow_reassign": "0",
+                        "decline_by_signature": "0",
+                        "document_id": "{{document_id_3}}",
+                        "email": "{{user3}}",
+                        "role_name": "Signer 1"
+                      }
+                    ],
+                    "invite_emails": [
+                      {
+                        "email": "{{user3}}",
+                        "expiration_days": 30,
+                        "message": "custom message",
+                        "reminder": 0,
+                        "subject": "custom subject"
+                      }
+                    ],
+                    "order": 2
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "group_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/documentgroup/{group_id}/groupinvite/{group_invite}/resendinvites": {
+      "post": {
+        "tags": [
+          "04 Document Gorup Invite"
+        ],
+        "summary": "Group invite resend",
+        "description": "Group invite resend",
+        "operationId": "groupInviteResend",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "{{user1}}"
+                  }
+                }
+              },
+              "example": {
+                "email": "{{user1}}"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "group_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "group_invite",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/documentgroup/{group_id}/groupinvite/{group_invite}": {
+      "get": {
+        "tags": [
+          "04 Document Gorup Invite"
+        ],
+        "summary": "Get group invite step id's",
+        "description": "Get group invite step id's",
+        "operationId": "getGroupInviteStepIdS",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "group_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "group_invite",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/documentgroup/{group_id}/groupinvite/{group_invite}/cancelinvite": {
+      "post": {
+        "tags": [
+          "04 Document Gorup Invite"
+        ],
+        "summary": "Cancel group invite",
+        "description": "Cancel group invite",
+        "operationId": "cancelGroupInvite",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              },
+              "example": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "group_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "group_invite",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/user/verifyemail": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Send verification email",
+        "description": "Sends verification email to a user",
+        "operationId": "sendVerificationEmail",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "{{user}}"
+                  }
+                }
+              },
+              "example": {
+                "email": "{{user}}"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/user/email/verify": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Verify email",
+        "description": "Verifies user’s email address using token from verification email",
+        "operationId": "verifyEmail",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "{{user}}"
+                  },
+                  "verification_token": {
+                    "type": "string",
+                    "example": ""
+                  }
+                }
+              },
+              "example": {
+                "email": "{{user}}",
+                "verification_token": ""
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/user/forgotpassword": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Reset password",
+        "description": "Sends password reset link via email",
+        "operationId": "resetPassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "{{user}}"
+                  }
+                }
+              },
+              "example": {
+                "email": "{{user}}"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/user/documentsv2": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get modified documents",
+        "description": "Returns an array of user’s documents that were modified (added fields, texts, signatures, etc.)",
+        "operationId": "getModifiedDocuments",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/user/documents": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get user documents",
+        "description": "Returns information of user’s documents that were not modified yet.",
+        "operationId": "getUserDocuments",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/document/fieldextract": {
+      "post": {
+        "tags": [
+          "Document"
+        ],
+        "summary": "Upload document with tags",
+        "description": "Uploads a file that contains [SignNow Text Tags](https://docs.signnow.com/docs/text-tags) . Only .doc, .docx, and .pdf are supported",
+        "operationId": "uploadDocumentWithTags",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Tags": {
+                    "type": "string",
+                    "example": "[\n   {\n      \"tag_name\":\"tag 1\",\n      \"role\":\"Signer 1\",\n      \"label\":\"name\",\n      \"required\":true,\n      \"type\":\"text\",\n      \"height\":15,\n      \"width\":100\n   }\n]"
+                  },
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/document/{document_id}/download": {
+      "get": {
+        "tags": [
+          "Document"
+        ],
+        "summary": "Download document",
+        "description": "Downloads a document",
+        "operationId": "downloadDocument",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "collapsed"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/document/{document_id}/move": {
+      "post": {
+        "tags": [
+          "Document"
+        ],
+        "summary": "Move document",
+        "description": "Moves a document into specified folder",
+        "operationId": "moveDocument",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "folder_id": {
+                    "type": "string",
+                    "example": "{{folder_id}}"
+                  }
+                }
+              },
+              "example": {
+                "folder_id": "{{folder_id}}"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/document/{document_id}/fieldinvitecancel": {
+      "put": {
+        "tags": [
+          "Document"
+        ],
+        "summary": "Cancel invite",
+        "description": "Cancels an invite to sign a document.",
+        "operationId": "cancelInvite",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/document/{document_id}/download/link": {
+      "get": {
+        "tags": [
+          "Document"
+        ],
+        "summary": "Get document download link",
+        "description": "Returns a one-time use URL for anyone to download the document as a PDF.",
+        "operationId": "getDocumentDownloadLink",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/document/{document_id}/custom_history_event": {
+      "post": {
+        "tags": [
+          "Document"
+        ],
+        "summary": "Add custom event",
+        "description": "Allows developers to add their custom events to the audit log. \n\nFor example, if you are using a single SignNow account to make API calls but authenticating multiple people, use this call to add a record to the audit log for that specific document that references the authentication method.",
+        "operationId": "addCustomEvent",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/document/merge": {
+      "post": {
+        "tags": [
+          "Document"
+        ],
+        "summary": "Merge documents",
+        "description": "Merges existing documents into one.",
+        "operationId": "mergeDocuments",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "document_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "{{document_id}}"
+                    },
+                    "example": [
+                      "{{document_id}}",
+                      "{{document2_id}}"
+                    ]
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "the merged doc"
+                  }
+                }
+              },
+              "example": {
+                "document_ids": [
+                  "{{document_id}}",
+                  "{{document2_id}}"
+                ],
+                "name": "the merged doc"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/document/{document_id}/historyfull": {
+      "get": {
+        "tags": [
+          "Document"
+        ],
+        "summary": "Get document history",
+        "description": "Returns the history of a document.",
+        "operationId": "getDocumentHistory",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/documentgroup/{document_group_id}": {
+      "get": {
+        "tags": [
+          "Document Group"
+        ],
+        "summary": "Get document group",
+        "description": "Returns document and roles information for documents in a document group. The invite_id property is null if there is no group invite for the group yet.",
+        "operationId": "getDocumentGroup",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Document Group"
+        ],
+        "summary": "Delete document group",
+        "description": "Delete document group",
+        "operationId": "deleteDocumentGroup",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "document_group_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/user/documentgroups": {
+      "get": {
+        "tags": [
+          "Document Group"
+        ],
+        "summary": "Get document groups",
+        "description": "Returns back all document groups the user owns.\n\nThe call is paginated by last_updated, so offset and limit query parameters are required:\n\n1. Limit must be greater than 0 but less than or equal to 50.\n2. Offset must be 0 or greater.",
+        "operationId": "getDocumentGroups",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/documentgroup/{document_group_id}/groupinvite": {
+      "post": {
+        "tags": [
+          "Document Group"
+        ],
+        "summary": "Invite to sign document group",
+        "description": "Creates a multi-step invite for a document group.\n\nEach invite step consists of <invite_email> objects that set the email message or can disable emails all together for specific user. Invite steps also are made of the <invite_action> objects that need to be completed before the step is considered complete. Once all the invite_actions are completed, the next step’s invite emails are sent out. When all steps have been completed, completion emails are sent out.",
+        "operationId": "inviteToSignDocumentGroup",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "completion_emails": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "disabled": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": " janedoe@barracuda.com "
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "The COMPLETE message"
+                        },
+                        "subject": {
+                          "type": "string",
+                          "example": "The subject COMPLETE "
+                        }
+                      }
+                    },
+                    "example": [
+                      {
+                        "disabled": 0,
+                        "email": " janedoe@barracuda.com ",
+                        "message": "The COMPLETE message",
+                        "subject": "The subject COMPLETE "
+                      },
+                      {
+                        "email": " test@mailinator.com ",
+                        "message": "COMPLETE message",
+                        "subject": "COMPLETE subject "
+                      },
+                      {
+                        "disabled": 0,
+                        "email": "bob@SignNow.com",
+                        "message": " message COMPLETED",
+                        "subject": "COMPLETED subject "
+                      }
+                    ]
+                  },
+                  "invite_steps": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "invite_actions": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "action": {
+                                "type": "string",
+                                "example": "sign"
+                              },
+                              "allow_reassign": {
+                                "type": "number",
+                                "example": 0
+                              },
+                              "authentication": {
+                                "type": "object",
+                                "properties": {
+                                  "type": {
+                                    "type": "string",
+                                    "example": "password"
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "example": "abc123"
+                                  }
+                                }
+                              },
+                              "document_id": {
+                                "type": "string",
+                                "example": "dd63da6fbe213863626a61d36b0c13ce61e4a2be"
+                              },
+                              "email": {
+                                "type": "string",
+                                "example": " janedoe@barracuda.com "
+                              },
+                              "role_name": {
+                                "type": "string",
+                                "example": "role6"
+                              }
+                            }
+                          },
+                          "example": [
+                            {
+                              "action": "sign",
+                              "allow_reassign": 0,
+                              "authentication": {
+                                "type": "password",
+                                "value": "abc123"
+                              },
+                              "document_id": "dd63da6fbe213863626a61d36b0c13ce61e4a2be",
+                              "email": " janedoe@barracuda.com ",
+                              "role_name": "role6"
+                            },
+                            {
+                              "action": "sign",
+                              "allow_reassign": 0,
+                              "document_id": "cddc2f79a3873af02ebc1d1ab0d45b2a1a3a2e7b",
+                              "email": " test@mailinator.com ",
+                              "role_name": "role2"
+                            }
+                          ]
+                        },
+                        "invite_emails": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "disabled": {
+                                "type": "number",
+                                "example": 0
+                              },
+                              "email": {
+                                "type": "string",
+                                "example": "janedoe@barracuda.com"
+                              },
+                              "message": {
+                                "type": "string",
+                                "example": "The message for step1"
+                              },
+                              "subject": {
+                                "type": "string",
+                                "example": "The subject step1"
+                              }
+                            }
+                          },
+                          "example": [
+                            {
+                              "disabled": 0,
+                              "email": "janedoe@barracuda.com",
+                              "message": "The message for step1",
+                              "subject": "The subject step1"
+                            },
+                            {
+                              "email": "test@mailinator.com",
+                              "message": "message step 1",
+                              "subject": "subject step 1"
+                            },
+                            {
+                              "email": " bob@SignNow.com ",
+                              "message": "@signnow message step 1",
+                              "subject": "@signnow subject step 1"
+                            }
+                          ]
+                        },
+                        "order": {
+                          "type": "number",
+                          "example": 1
+                        }
+                      }
+                    },
+                    "example": [
+                      {
+                        "invite_actions": [
+                          {
+                            "action": "sign",
+                            "allow_reassign": 0,
+                            "authentication": {
+                              "type": "password",
+                              "value": "abc123"
+                            },
+                            "document_id": "dd63da6fbe213863626a61d36b0c13ce61e4a2be",
+                            "email": " janedoe@barracuda.com ",
+                            "role_name": "role6"
+                          },
+                          {
+                            "action": "sign",
+                            "allow_reassign": 0,
+                            "document_id": "cddc2f79a3873af02ebc1d1ab0d45b2a1a3a2e7b",
+                            "email": " test@mailinator.com ",
+                            "role_name": "role2"
+                          }
+                        ],
+                        "invite_emails": [
+                          {
+                            "disabled": 0,
+                            "email": "janedoe@barracuda.com",
+                            "message": "The message for step1",
+                            "subject": "The subject step1"
+                          },
+                          {
+                            "email": "test@mailinator.com",
+                            "message": "message step 1",
+                            "subject": "subject step 1"
+                          },
+                          {
+                            "email": " bob@SignNow.com ",
+                            "message": "@signnow message step 1",
+                            "subject": "@signnow subject step 1"
+                          }
+                        ],
+                        "order": 1
+                      },
+                      {
+                        "invite_actions": [
+                          {
+                            "action": "view",
+                            "allow_reassign": 0,
+                            "document_id": "dd63da6fbe213863626a61d36b0c13ce61e4a2be",
+                            "email": " janedoe@barracuda.com ",
+                            "role_name": "role4"
+                          },
+                          {
+                            "action": "view",
+                            "allow_reassign": 0,
+                            "document_id": "dd63da6fbe213863626a61d36b0c13ce61e4a2be",
+                            "email": " test@mailinator.com ",
+                            "role_name": "role5"
+                          }
+                        ],
+                        "invite_emails": [
+                          {
+                            "disabled": 0,
+                            "email": " janedoe@barracuda.com ",
+                            "message": "The message for step2",
+                            "subject": "The subject for step2"
+                          },
+                          {
+                            "email": " test@mailinator.com ",
+                            "message": " message step 2",
+                            "subject": "subject step 2"
+                          }
+                        ],
+                        "order": 2
+                      },
+                      {
+                        "invite_actions": [
+                          {
+                            "action": "sign",
+                            "allow_reassign": 0,
+                            "document_id": "cddc2f79a3873af02ebc1d1ab0d45b2a1a3a2e7b",
+                            "email": " janedoe@barracuda.com ",
+                            "role_name": "role1"
+                          },
+                          {
+                            "action": "sign",
+                            "allow_reassign": 0,
+                            "document_id": "cddc2f79a3873af02ebc1d1ab0d45b2a1a3a2e7b",
+                            "email": " test@mailinator.com ",
+                            "role_name": "role3"
+                          }
+                        ],
+                        "invite_emails": [
+                          {
+                            "disabled": 0,
+                            "email": " janedoe@barracuda.com ",
+                            "message": "The message for step3",
+                            "subject": "The subject for step3"
+                          },
+                          {
+                            "email": " test@mailinator.com ",
+                            "message": "message step 3",
+                            "subject": "subject step 3"
+                          }
+                        ],
+                        "order": 3
+                      }
+                    ]
+                  }
+                }
+              },
+              "example": {
+                "completion_emails": [
+                  {
+                    "disabled": 0,
+                    "email": " janedoe@barracuda.com ",
+                    "message": "The COMPLETE message",
+                    "subject": "The subject COMPLETE "
+                  },
+                  {
+                    "email": " test@mailinator.com ",
+                    "message": "COMPLETE message",
+                    "subject": "COMPLETE subject "
+                  },
+                  {
+                    "disabled": 0,
+                    "email": "bob@SignNow.com",
+                    "message": " message COMPLETED",
+                    "subject": "COMPLETED subject "
+                  }
+                ],
+                "invite_steps": [
+                  {
+                    "invite_actions": [
+                      {
+                        "action": "sign",
+                        "allow_reassign": 0,
+                        "authentication": {
+                          "type": "password",
+                          "value": "abc123"
+                        },
+                        "document_id": "dd63da6fbe213863626a61d36b0c13ce61e4a2be",
+                        "email": " janedoe@barracuda.com ",
+                        "role_name": "role6"
+                      },
+                      {
+                        "action": "sign",
+                        "allow_reassign": 0,
+                        "document_id": "cddc2f79a3873af02ebc1d1ab0d45b2a1a3a2e7b",
+                        "email": " test@mailinator.com ",
+                        "role_name": "role2"
+                      }
+                    ],
+                    "invite_emails": [
+                      {
+                        "disabled": 0,
+                        "email": "janedoe@barracuda.com",
+                        "message": "The message for step1",
+                        "subject": "The subject step1"
+                      },
+                      {
+                        "email": "test@mailinator.com",
+                        "message": "message step 1",
+                        "subject": "subject step 1"
+                      },
+                      {
+                        "email": " bob@SignNow.com ",
+                        "message": "@signnow message step 1",
+                        "subject": "@signnow subject step 1"
+                      }
+                    ],
+                    "order": 1
+                  },
+                  {
+                    "invite_actions": [
+                      {
+                        "action": "view",
+                        "allow_reassign": 0,
+                        "document_id": "dd63da6fbe213863626a61d36b0c13ce61e4a2be",
+                        "email": " janedoe@barracuda.com ",
+                        "role_name": "role4"
+                      },
+                      {
+                        "action": "view",
+                        "allow_reassign": 0,
+                        "document_id": "dd63da6fbe213863626a61d36b0c13ce61e4a2be",
+                        "email": " test@mailinator.com ",
+                        "role_name": "role5"
+                      }
+                    ],
+                    "invite_emails": [
+                      {
+                        "disabled": 0,
+                        "email": " janedoe@barracuda.com ",
+                        "message": "The message for step2",
+                        "subject": "The subject for step2"
+                      },
+                      {
+                        "email": " test@mailinator.com ",
+                        "message": " message step 2",
+                        "subject": "subject step 2"
+                      }
+                    ],
+                    "order": 2
+                  },
+                  {
+                    "invite_actions": [
+                      {
+                        "action": "sign",
+                        "allow_reassign": 0,
+                        "document_id": "cddc2f79a3873af02ebc1d1ab0d45b2a1a3a2e7b",
+                        "email": " janedoe@barracuda.com ",
+                        "role_name": "role1"
+                      },
+                      {
+                        "action": "sign",
+                        "allow_reassign": 0,
+                        "document_id": "cddc2f79a3873af02ebc1d1ab0d45b2a1a3a2e7b",
+                        "email": " test@mailinator.com ",
+                        "role_name": "role3"
+                      }
+                    ],
+                    "invite_emails": [
+                      {
+                        "disabled": 0,
+                        "email": " janedoe@barracuda.com ",
+                        "message": "The message for step3",
+                        "subject": "The subject for step3"
+                      },
+                      {
+                        "email": " test@mailinator.com ",
+                        "message": "message step 3",
+                        "subject": "subject step 3"
+                      }
+                    ],
+                    "order": 3
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "document_group_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/document/{document_group_id}/groupinvite/{invite_id}": {
+      "get": {
+        "tags": [
+          "Document Group"
+        ],
+        "summary": "Get document group invite",
+        "description": "Returns invite action information for a group invite, including the status of each step and action.\n\nHere is the list of possible invite action statuses:\n1. ‘created’: invite or action has been created but is not waiting to be signed\n2. ‘pending’: emails have been sent out for this invite action or step and are waiting to be viewed or signed\n3. ‘fulfilled’: actions and steps that have been finished by singing or viewing",
+        "operationId": "getDocumentGroupInvite",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "document_group_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "invite_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/documentgroup/{document_group_id}/groupinvite/{invite_id}/cancelinvite": {
+      "post": {
+        "tags": [
+          "Document Group"
+        ],
+        "summary": "Cancel document group invite",
+        "description": "Cancels a group invite. \n\nAll documents will be unshared with invitees. Any signatures that occurred before canceling will remain on the documents.",
+        "operationId": "cancelDocumentGroupInvite",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "document_group_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "invite_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/documentgroup/{document_group_id}/groupinvite/{invte_id}/pendinginvites": {
+      "get": {
+        "tags": [
+          "Document Group"
+        ],
+        "summary": "Get pending group invites",
+        "description": "Returns all pending invite information as well as invites already signed for a group invite for the user that makes the call. \n\nIf the user making the call is the document owner, it will return pending invites for that user and ALL actions that have already been fulfilled.",
+        "operationId": "getPendingGroupInvites",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "document_group_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "invte_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/documentgroup/{document_group_id}/groupinvite/{invite_id}/resendinvites": {
+      "post": {
+        "tags": [
+          "Document Group"
+        ],
+        "summary": "Resend document group invite",
+        "description": "Resends invite emails to those with pending invites for the group invite. \n\nResend can also be used to resend invites to a single user if the user’s email is specified in the POST JSON body.",
+        "operationId": "resendDocumentGroupInvite",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "test@email.com"
+                  }
+                }
+              },
+              "example": {
+                "email": "test@email.com"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "document_group_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "invite_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/documentgroup/{document_group_id}/groupinvite/{invite_id}/invitestep/{step_id}/update": {
+      "post": {
+        "tags": [
+          "Document Group"
+        ],
+        "summary": "Update document group invite",
+        "description": "Either replaces invitees for a particular step or updates the invite attributes for a user at a particular step",
+        "operationId": "updateDocumentGroupInvite",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "document_group_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "invite_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "step_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/v2/events": {
+      "get": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Get event subscriptions",
+        "description": "Gets information about all subscriptions to events made with a specific application",
+        "operationId": "getEventSubscriptions",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Create event subscription",
+        "description": "Allows to subscribe an external service(callback_url) to a specific event of user or document.\n\nCheck [this article](https://docs.signnow.com/webhooks/subscriptions) for more details.",
+        "operationId": "createEventSubscription",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "example": "callback"
+                  },
+                  "attributes": {
+                    "type": "object",
+                    "properties": {
+                      "callback": {
+                        "type": "string",
+                        "example": " "
+                      },
+                      "docid_queryparam": {
+                        "type": "boolean",
+                        "example": true
+                      },
+                      "headers": {
+                        "type": "object",
+                        "properties": {
+                          "bool_head": {
+                            "type": "boolean",
+                            "example": false
+                          },
+                          "float_head": {
+                            "type": "number",
+                            "example": 12.24
+                          },
+                          "int_head": {
+                            "type": "number",
+                            "example": 12
+                          },
+                          "string_head": {
+                            "type": "string",
+                            "example": "test"
+                          }
+                        }
+                      },
+                      "integration_id": {
+                        "type": "string",
+                        "example": "Unique ID Integration System"
+                      },
+                      "use_tls_12": {
+                        "type": "boolean",
+                        "example": true
+                      }
+                    }
+                  },
+                  "entity_id": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "event": {
+                    "type": "string",
+                    "example": ""
+                  }
+                }
+              },
+              "example": {
+                "action": "callback",
+                "attributes": {
+                  "callback": " ",
+                  "docid_queryparam": true,
+                  "headers": {
+                    "bool_head": false,
+                    "float_head": 12.24,
+                    "int_head": 12,
+                    "string_head": "test"
+                  },
+                  "integration_id": "Unique ID Integration System",
+                  "use_tls_12": true
+                },
+                "entity_id": "",
+                "event": ""
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v2/events/{event_subscription_id}": {
+      "put": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Update event subscription",
+        "description": "Allows changing an existing event subscription",
+        "operationId": "updateEventSubscription",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "example": "callback"
+                  },
+                  "attributes": {
+                    "type": "object",
+                    "properties": {
+                      "callback": {
+                        "type": "string",
+                        "example": "https://enlvww20vv7m.x.pipedream.net/"
+                      },
+                      "docid_queryparam": {
+                        "type": "boolean",
+                        "example": true
+                      },
+                      "headers": {
+                        "type": "object",
+                        "properties": {
+                          "bool_head": {
+                            "type": "boolean",
+                            "example": false
+                          },
+                          "float_head": {
+                            "type": "number",
+                            "example": 12.24
+                          },
+                          "int_head": {
+                            "type": "number",
+                            "example": 12
+                          },
+                          "string_head": {
+                            "type": "string",
+                            "example": "test"
+                          }
+                        }
+                      },
+                      "integration_id": {
+                        "type": "string",
+                        "example": "b98fc00add6b43a606bc527c81eee741bf16a7d8"
+                      },
+                      "use_tls_12": {
+                        "type": "boolean",
+                        "example": true
+                      }
+                    }
+                  },
+                  "entity_id": {
+                    "type": "string",
+                    "example": "63fde884ad755149ff213563de654f9a61a1884c"
+                  },
+                  "event": {
+                    "type": "string",
+                    "example": "document.fieldinvite.sent"
+                  }
+                }
+              },
+              "example": {
+                "action": "callback",
+                "attributes": {
+                  "callback": "https://enlvww20vv7m.x.pipedream.net/",
+                  "docid_queryparam": true,
+                  "headers": {
+                    "bool_head": false,
+                    "float_head": 12.24,
+                    "int_head": 12,
+                    "string_head": "test"
+                  },
+                  "integration_id": "b98fc00add6b43a606bc527c81eee741bf16a7d8",
+                  "use_tls_12": true
+                },
+                "entity_id": "63fde884ad755149ff213563de654f9a61a1884c",
+                "event": "document.fieldinvite.sent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Delete event subscription",
+        "description": "Unsubscribes an external service (callback_url) from specific events of user or document",
+        "operationId": "deleteEventSubscription",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "event_subscription_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/user/folder": {
+      "get": {
+        "tags": [
+          "Folder"
+        ],
+        "summary": "Get all folders",
+        "description": "Returns all folders of a user.",
+        "operationId": "getAllFolders",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Folder"
+        ],
+        "summary": "Creaate folder",
+        "description": "Creates a folder for the user.",
+        "operationId": "creaateFolder",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "test folder"
+                  },
+                  "parent_id": {
+                    "type": "string",
+                    "example": ""
+                  }
+                }
+              },
+              "example": {
+                "name": "test folder",
+                "parent_id": ""
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/folder/{folder_id}": {
+      "get": {
+        "tags": [
+          "Folder"
+        ],
+        "summary": "Get folder by id",
+        "description": "Returns all details of a specific folder including an array of all documents in that folder.\n\nYou can adjust the response produced by this endpoint using the following query parameters:\n\n**filters=signing-status&filter-values** - allows to show documents with specific status\n<br>allowed values: signed, pending, waiting-for-me, waiting-for-others\n\n**filters=documents-created&filter-values** - shows documents that were created started from specific date (note: this filter is not applicable for Templates)\n<br>allowed values: Unix timestamp\n\n**filters=documents-updated&filter-values** - shows documents that were updated started from specific date (note: this filter is not applicable for Templates)\n<br>allowed values: Unix timestamp\n\n**sortby=created&order** - sorts documents by creation date in descending or ascending order\n<br>allowed values: desc, asc\n\n**sortby=updated&order** - sorts documents by update date\n<br>allowed values: desc, asc\n\n**limit** - displays specified number of documents; Max limit is 100. It means that if value of \"limit\" parameter exceeds 100, response is automatically limited to 100 documents.\n<br>allowed values: integer\n\n**offset** - displays documents from specified position\n<br>allowed values: integer\n\n**subfolder-data** - defines whether sub-folders of the given folder are displayed in the response. <br>allowed values: 1, 0 (i.e. subfolder-data=1)\n\n**with_team_documents** - allows to display \"Team Documents\" folders.\n<br>allowed values: true, false (i.e. with_team_documents=true)\n\n**exclude_documents_relations** - allows to display short list of document info and increases maximum limit from 100 to 500 documents per page.\n<br>allowed values: true, false (i.e. exclude_documents_relations=false)\n\nThe short list of document info is:\n\n```\n{\n\"id\": \" \",\n\"user_id\": \" \",\n\"document_name\": \" \",\n\"page_count\": \" \",\n\"created\": \" \",\n\"updated\": \" \",\n\"original_filename\": \" \"\n}\n```\n**include_documents_subfolders** - allows to hide sub-folders and display all documents from those sub-folders in the parent folder. Parameter works only for \"Documents\" and \"Template\" folder and their children. Default value - true\n<br>allowed values: true, false\n\n\n\n**exclude_documents_relations** - when this param is true, for documents in folder won’t include relations such as fields, signatures, etc, only the main info will be displayed.\n<br>allowed values: true, false",
+        "operationId": "getFolderById",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "folder_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/user/folder/{folder_id}": {
+      "put": {
+        "tags": [
+          "Folder"
+        ],
+        "summary": "Rename folder",
+        "description": "Renames a folder.",
+        "operationId": "renameFolder",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Folder"
+        ],
+        "summary": "Delete folder",
+        "description": "Deletes a folder.",
+        "operationId": "deleteFolder",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "folder_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/document/{document_id}/integration/object/smartfields": {
+      "post": {
+        "tags": [
+          "Smart Fields"
+        ],
+        "summary": "Prefill smart fields",
+        "description": "Prefills smart fields.\n\nYou can add Smart Fields to a template though web UI only. <br>\n**Note:** names of Smart Fields are case sensetive.",
+        "operationId": "prefillSmartFields",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "client_timestamp": {
+                    "type": "string",
+                    "example": "UTC time stamp"
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "field_name1": {
+                          "type": "string",
+                          "example": "value1"
+                        },
+                        "field_name2": {
+                          "type": "string",
+                          "example": "value2"
+                        }
+                      }
+                    },
+                    "example": [
+                      {
+                        "field_name1": "value1"
+                      },
+                      {
+                        "field_name2": "value2"
+                      }
+                    ]
+                  }
+                }
+              },
+              "example": {
+                "client_timestamp": "UTC time stamp",
+                "data": [
+                  {
+                    "field_name1": "value1"
+                  },
+                  {
+                    "field_name2": "value2"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    }
+  },
+  "tags": [
+    {
+      "name": "00 Invite to Sign (with fields)"
+    },
+    {
+      "name": "01 Free form Invite (without fields)"
+    },
+    {
+      "name": "02 Signing Link"
+    },
+    {
+      "name": "03 Bulk Invite"
+    },
+    {
+      "name": "04 Document Gorup Invite"
+    },
+    {
+      "name": "05 Embedded Signning"
+    },
+    {
+      "name": "User"
+    },
+    {
+      "name": "Oauth2"
+    },
+    {
+      "name": "Document"
+    },
+    {
+      "name": "Template"
+    },
+    {
+      "name": "Document Group"
+    },
+    {
+      "name": "Signing Link"
+    },
+    {
+      "name": "Webhooks"
+    },
+    {
+      "name": "Folder"
+    },
+    {
+      "name": "Smart Fields"
+    }
+  ]
+}

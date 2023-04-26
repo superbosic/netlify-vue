@@ -127,7 +127,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { createApiInstance } from '@/api';
-import { Fundraising } from '@/api/Fundraising';
+import { Fundraising } from '@/api/token/Fundraising';
 import useRequest from '@/composition/useRequest';
 import { useDateFormatters, useFormatNumber } from '@/composition/useFormatters';
 import { useToken } from '@/composition/business/useToken';

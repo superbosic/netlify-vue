@@ -1,21 +1,72 @@
 <template>
   <q-uploader
     ref="uploaderRef"
-    class="upload-image rounded-borders overflow-hidden"
+    class="sign-now-upload-document rounded-borders overflow-hidden full-width full-height"
+    color="transparent"
+    accept="application/pdf"
     flat
-    @added="onFilesAdded"
-  />
+    @added="uploadFile($event[0])"
+  >
+    <template #header>
+      <div
+        :style="{width: '100%'}"
+        class="row items-center justify-center full-height"
+      >
+        <div class="column items-center">
+          <div class="text-h5 text-black">
+            Upload Contract
+          </div>
+          <q-icon
+            name="cloud_upload"
+            size="80px"
+            color="grey-5"
+          />
+          <div class="text-black text-body1">
+            Drag & drop files or <span class="text-orange-4">Browse</span>
+          </div>
+        </div>
+        <q-uploader-add-trigger />
+        <q-inner-loading
+          :showing="loading"
+          color="primary"
+        />
+      </div>
+    </template>
+  </q-uploader>
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue';
+import { QUploader, useQuasar } from 'quasar';
 import { useAccountStore } from '@/store/account';
 import { useSignNow } from '@/composition/useSignNow';
+import useRequest from '@/composition/useRequest';
 
 const accountStore = useAccountStore();
+const { notify } = useQuasar();
 const { upload } = useSignNow(accountStore.user.value!);
-
-function onFilesAdded(files: readonly File[]) {
-  upload(files[0]);
-}
+const uploaderRef = ref<QUploader | null>(null);
+const { loading, sendRequest: uploadFile } = useRequest({
+  request: (file: File) => upload(file),
+  successCallback: () => {
+    uploaderRef.value?.reset();
+    notify({
+      message: 'Document loaded',
+      type: 'positive',
+      position: 'top',
+    });
+  },
+});
 
 </script>
+<style lang="scss">
+.sign-now-upload-document {
+  .q-uploader__header {
+    height: 100%;
+  }
+
+  .q-uploader__list {
+    display: none;
+  }
+}
+</style>

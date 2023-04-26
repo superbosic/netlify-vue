@@ -1,4 +1,4 @@
-import { Project } from '@/api/Project';
+import { Project } from '@/api/token/Project';
 import { ExtractHttpResponseType } from '@/types/http';
 
 export type ProjectInfo = NonNullable<ExtractHttpResponseType<ReturnType<Project['projectList']>>['data']>;

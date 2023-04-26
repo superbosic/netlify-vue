@@ -1,4 +1,4 @@
-import { Fundraising } from '@/api/Fundraising';
+import { Fundraising } from '@/api/token/Fundraising';
 import { ExtractHttpResponseType } from '@/types/http';
 
 export type FundraisingRoundStatus = 'draft' | 'completed' | 'ongoing' | 'archived';
