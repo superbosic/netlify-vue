@@ -19,6 +19,17 @@ const httpSignNowClient = ky.extend({
         }
       },
     ],
+    afterResponse: [
+      async (req, opt, res) => {
+        if (!res.ok) {
+          const { error } = await res.json();
+
+          if (error === 'invalid_token') {
+            LocalStorage.remove(BearerTokenKey);
+          }
+        }
+      },
+    ],
   },
 });
 
@@ -44,11 +55,9 @@ export function createApiInstance<C extends typeof HttpClient>(ApiConstructor: C
   });
 }
 export function createSignNowApiInstance<C extends typeof SingNowHttpClient>(ApiConstructor: C): C['prototype'] {
-  const baseUrl = process.env.NODE_ENV === 'development' ? document.location.origin : import.meta.env.VITE_API_PATH;
-
   return new ApiConstructor({
     customFetch: httpSignNowClient!,
-    baseUrl: `${baseUrl}/signnow`,
+    baseUrl: `${document.location.origin}/signnow`,
     baseApiParams: {
       headers: {
         'Tyk-Authorization': TykAuthorization,

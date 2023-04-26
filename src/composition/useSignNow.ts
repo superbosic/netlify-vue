@@ -29,7 +29,7 @@ export function useSignNow(user: IUser) {
       username,
       password,
       grant_type: 'password',
-      expiration_time: '1000',
+      expiration_time: '10000000',
     }, {
       headers: {
         Authorization: `Basic ${BasicToken}`,
