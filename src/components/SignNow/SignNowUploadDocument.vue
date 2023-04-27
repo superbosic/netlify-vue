@@ -37,24 +37,22 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { QUploader, useQuasar } from 'quasar';
+import { QUploader } from 'quasar';
+import { useRouter } from 'vue-router';
 import { useAccountStore } from '@/store/account';
 import { useSignNow } from '@/composition/useSignNow';
 import useRequest from '@/composition/useRequest';
+import { RouteNames } from '@/router/routeNames';
 
 const accountStore = useAccountStore();
-const { notify } = useQuasar();
+const router = useRouter();
 const { upload } = useSignNow(accountStore.user.value!);
 const uploaderRef = ref<QUploader | null>(null);
 const { loading, sendRequest: uploadFile } = useRequest({
   request: (file: File) => upload(file),
-  successCallback: () => {
-    uploaderRef.value?.reset();
-    notify({
-      message: 'Document loaded',
-      type: 'positive',
-      position: 'top',
-    });
+  successCallback: ({ id }) => {
+    console.log(id);
+    router.push({ name: RouteNames.DocumentUpload, params: { id } });
   },
 });
 

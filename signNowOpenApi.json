@@ -3253,6 +3253,54 @@
           }
         }
       ]
+    },
+    "/v2/documents/{document_id}/embedded-editor": {
+      "post": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "{{url}}/v2/documents/{document_id}/embedded-editor",
+        "description": "{{url}}/v2/documents/{document_id}/embedded-editor",
+        "operationId": "urlV2Documents{document_id}EmbeddedEditor",
+        "parameters": [
+          {
+            "name": "Tyk-Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "example": "{{tyk}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "link_expiration": {
+                    "type": "number",
+                    "example": 15
+                  },
+                  "redirect_uri": {
+                    "type": "string",
+                    "example": "https://ya.ru"
+                  }
+                }
+              },
+              "example": {
+                "link_expiration": 15,
+                "redirect_uri": "https://ya.ru"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
     }
   },
   "tags": [
@@ -3300,6 +3348,9 @@
     },
     {
       "name": "Smart Fields"
+    },
+    {
+      "name": "Documents"
     }
   ]
 }

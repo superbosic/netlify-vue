@@ -3926,6 +3926,53 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Documents",
+			"item": [
+				{
+					"name": "{{url}}/v2/documents/a8e19a184d534256950405c7e02c78e2824432b4/embedded-editor",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Tyk-Authorization",
+								"value": "{{tyk}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"redirect_uri\": \"https://ya.ru\",\n  \"link_expiration\": 15\n}"
+						},
+						"url": {
+							"raw": "{{url}}/v2/documents/a8e19a184d534256950405c7e02c78e2824432b4/embedded-editor",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"v2",
+								"documents",
+								"a8e19a184d534256950405c7e02c78e2824432b4",
+								"embedded-editor"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"auth": {

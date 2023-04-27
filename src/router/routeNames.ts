@@ -8,4 +8,5 @@ export enum RouteNames {
     FundraisingRound = 'FundraisingRound',
     FundraisingRoundCreate = 'FundraisingRoundCreate',
     ProjectEdit = 'ProjectEdit',
+    DocumentUpload = 'DocumentUpload',
 }

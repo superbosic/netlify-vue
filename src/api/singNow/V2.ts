@@ -9,7 +9,7 @@
  * ---------------------------------------------------------------
  */
 
-import { HttpClient, RequestParams } from "./http-client";
+import { ContentType, HttpClient, RequestParams } from "./http-client";
 
 export class V2<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
@@ -24,6 +24,31 @@ export class V2<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
     this.request<void, any>({
       path: `/v2/application/signing-links`,
       method: "PUT",
+      ...params,
+    });
+  /**
+   * @description {{url}}/v2/documents/{document_id}/embedded-editor
+   *
+   * @tags Documents
+   * @name UrlV2DocumentsDocumentIdEmbeddedEditor
+   * @summary {{url}}/v2/documents/{document_id}/embedded-editor
+   * @request POST:/v2/documents/{document_id}/embedded-editor
+   */
+  urlV2DocumentsDocumentIdEmbeddedEditor = (
+    documentId: string,
+    data: {
+      /** @example 15 */
+      link_expiration?: number;
+      /** @example "https://ya.ru" */
+      redirect_uri?: string;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<void, any>({
+      path: `/v2/documents/${documentId}/embedded-editor`,
+      method: "POST",
+      body: data,
+      type: ContentType.Json,
       ...params,
     });
 }

@@ -69,6 +69,17 @@ const routes: Array<RouteRecordRaw> = [
           },
         ],
       },
+      {
+        path: 'document',
+        children: [
+          {
+            path: 'upload/:id',
+            component: () => import('@/pages/Document/DocumentUploadPage.vue'),
+            name: RouteNames.DocumentUpload,
+            props: true,
+          },
+        ],
+      },
 
     ],
   },

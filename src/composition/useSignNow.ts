@@ -62,7 +62,7 @@ export function useSignNow(user: IUser) {
     //   await createFolder();
     // }
 
-    await signNowDocumentApi.uploadDocument1({ file }).then((res) => res.json());
+    return signNowDocumentApi.uploadDocument1({ file }).then((res) => res.json());
   }
 
   // onMounted(getAllFolders);
