@@ -30,4 +30,9 @@ export const menuItems: INavigationMenuItem[] = [
     icon: 'savings',
     label: 'Fundraising',
   },
+  {
+    routeName: RouteNames.Tasks,
+    icon: 'edit_square',
+    label: 'Tasks',
+  },
 ];

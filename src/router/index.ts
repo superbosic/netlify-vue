@@ -88,7 +88,16 @@ const routes: Array<RouteRecordRaw> = [
           },
         ],
       },
-
+      {
+        path: 'tasks',
+        children: [
+          {
+            path: 'tasks',
+            component: () => import('@/pages/Task/TasksPage.vue'),
+            name: RouteNames.Tasks,
+          },
+        ],
+      },
     ],
   },
   {
