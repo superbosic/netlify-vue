@@ -79,12 +79,94 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
    * @description <br /><br /> <b>Authentication:</b> required
    *
    * @tags fundraising
+   * @name RoundDocumentCreate
+   * @request POST:/fundraising/round/document
+   * @secure
+   */
+  roundDocumentCreate = (
+    data: {
+      /** @format int64 */
+      id: number;
+      signnow_document_id: string;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<
+      {
+        data: {
+          /** @format int64 */
+          id: number;
+          /**
+           * @format timestamptz
+           * @default "now"
+           */
+          created_at: number;
+          /** @format int64 */
+          project_id: number;
+          name: string;
+          status: "draft" | "ongoing" | "completed";
+          token_percentage: number;
+          /** @format int64 */
+          token_amount: number;
+          token_price_usd: number;
+          /** @format int64 */
+          raise_usd: number;
+          signnow_documet_id: string;
+        };
+      },
+      void
+    >({
+      path: `/fundraising/round/document`,
+      method: "POST",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * @description <br /><br /> <b>Authentication:</b> required
+   *
+   * @tags fundraising
+   * @name RoundInvestorCreate
+   * @request POST:/fundraising/round/investor
+   * @secure
+   */
+  roundInvestorCreate = (
+    data: {
+      /** @format int64 */
+      id: number;
+      email: string;
+      /** @format int64 */
+      investment_allocation: number;
+      wallet_address: string;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<
+      {
+        data: string;
+      },
+      void
+    >({
+      path: `/fundraising/round/investor`,
+      method: "POST",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * @description <br /><br /> <b>Authentication:</b> required
+   *
+   * @tags fundraising
    * @name RoundDelete
    * @request DELETE:/fundraising/round
    * @secure
    */
   roundDelete = (
-    query: {
+    data: {
       /** @format int64 */
       id: number;
     },
@@ -98,8 +180,9 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
     >({
       path: `/fundraising/round`,
       method: "DELETE",
-      query: query,
+      body: data,
       secure: true,
+      type: ContentType.Json,
       format: "json",
       ...params,
     });
@@ -138,6 +221,7 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
           token_price_usd: number;
           /** @format int64 */
           raise_usd: number;
+          signnow_documet_id: string;
           unlock_scheme: {
             /** @format int64 */
             id: number;
@@ -167,6 +251,7 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
             fundraising_round_id?: number;
             /** @format int64 */
             investor_id?: number;
+            email: string;
             wallet_address: string;
             /** @format int64 */
             investment_allocation: number;
@@ -220,6 +305,7 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
           token_price_usd: number;
           /** @format int64 */
           raise_usd: number;
+          signnow_documet_id: string;
         };
       },
       void
@@ -276,6 +362,7 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
             token_price_usd: number;
             /** @format int64 */
             raise_usd: number;
+            signnow_documet_id?: string;
             unlock_scheme?: {
               /** @format int64 */
               id: number;
@@ -305,6 +392,7 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
               fundraising_round_id?: number;
               /** @format int64 */
               investor_id?: number;
+              email: string;
               wallet_address: string;
               /** @format int64 */
               investment_allocation: number;

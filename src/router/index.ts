@@ -65,6 +65,14 @@ const routes: Array<RouteRecordRaw> = [
                   id: parseInt(params.id as string, 10),
                 }),
               },
+              {
+                path: ':roundId/investors',
+                name: RouteNames.FundraisingRoundInvestors,
+                component: () => import('@/pages/Fundraising/FundraisingRoundInvestorsPage.vue'),
+                props: ({ params }) => ({
+                  roundId: parseInt(params.roundId as string, 10),
+                }),
+              },
             ],
           },
         ],

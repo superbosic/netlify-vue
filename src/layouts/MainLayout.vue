@@ -23,7 +23,7 @@
 <script lang="ts" setup>
 import { onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { createApiInstance } from '@/api';
+import { createApiInstance } from '@/api/token';
 import { Auth } from '@/api/token/Auth';
 import { IUser, useAccountStore } from '@/store/account';
 import useRequest from '@/composition/useRequest';

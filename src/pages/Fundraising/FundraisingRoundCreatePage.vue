@@ -68,7 +68,7 @@ import UiNumberField from '@/components/ui/UiNumberField.vue';
 import { FundraisingRoundInput } from '@/types/fundraising';
 import { useValidationRules } from '@/composition/useValidationRules';
 import FundraisingUnlockSchemesSelect from '@/components/Fundraising/FundraisingUnlockSchemesSelect.vue';
-import { createApiInstance } from '@/api';
+import { createApiInstance } from '@/api/token';
 import { Fundraising } from '@/api/token/Fundraising';
 import useRequest from '@/composition/useRequest';
 import { RouteNames } from '@/router/routeNames';

@@ -38,7 +38,7 @@
 import { computed } from 'vue';
 import { QSelectProps } from 'quasar';
 import useRequest from '@/composition/useRequest';
-import { createApiInstance } from '@/api';
+import { createApiInstance } from '@/api/token';
 import { Fundraising } from '@/api/token/Fundraising';
 import { useToken } from '@/composition/business/useToken';
 

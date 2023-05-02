@@ -119,7 +119,23 @@
         </div>
       </div>
       <div class="q-mt-md">
+        <div class="row justify-end">
+          <q-btn
+            label="Add investor"
+            icon="add"
+            color="primary"
+            flat
+            no-caps
+            @click="fundraisingInvestorCreateDialogIsOpen = true"
+          />
+        </div>
         <fundraising-investors-table :investors="round?.investors" />
+        <fundraising-investor-create-dialog
+          v-if="fundraisingInvestorCreateDialogIsOpen"
+          v-model="fundraisingInvestorCreateDialogIsOpen"
+          :round-id="round.id"
+          @created="onRoundInvestorCreated"
+        />
       </div>
     </div>
     <q-spinner
@@ -132,11 +148,11 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { Chart } from 'highcharts-vue';
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
-import { createApiInstance } from '@/api';
+import { createApiInstance } from '@/api/token';
 import { Fundraising } from '@/api/token/Fundraising';
 import useRequest from '@/composition/useRequest';
 import FundraisingRoundStatus from '@/components/Fundraising/FundraisingRoundStatus.vue';
@@ -147,6 +163,7 @@ import { RouteNames } from '@/router/routeNames';
 import UiChartLegendItem from '@/components/ui/UiChartLegendItem.vue';
 import FundraisingInvestorsTable from '@/components/Fundraising/FundraisingInvestorsTable.vue';
 import SignNowUploadDocument from '@/components/SignNow/SignNowUploadDocument.vue';
+import FundraisingInvestorCreateDialog from '@/components/Fundraising/FundraisingInvestorCreateDialog.vue';
 
 const props = defineProps<{
     id: number,
@@ -165,6 +182,7 @@ const { sendRequest: roundDelete } = useRequest({
   request: () => fundraisingApi.roundDelete({ id: props.id }).then((data) => data!.data!.data!),
   successCallback: () => router.replace({ name: RouteNames.Fundraising }),
 });
+const fundraisingInvestorCreateDialogIsOpen = ref(false);
 const name = computed(() => round.value?.name);
 const chartOptions = computed(() => ({
   chart: {
@@ -218,6 +236,11 @@ function deleteRoundClick() {
     title: `Delete ${round.value?.name} round?`,
     cancel: true,
   }).onOk(roundDelete);
+}
+
+function onRoundInvestorCreated() {
+  fundraisingInvestorCreateDialogIsOpen.value = false;
+  loadRound();
 }
 
 loadRound();

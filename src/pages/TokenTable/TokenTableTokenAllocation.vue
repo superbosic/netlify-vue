@@ -170,7 +170,7 @@
 import { computed, ref } from 'vue';
 import { QTableProps, useQuasar } from 'quasar';
 import { Chart } from 'highcharts-vue';
-import { createApiInstance } from '@/api';
+import { createApiInstance } from '@/api/token';
 import { Tokentable } from '@/api/token/Tokentable';
 import useRequest from '@/composition/useRequest';
 import { useFormatNumber } from '@/composition/useFormatters';

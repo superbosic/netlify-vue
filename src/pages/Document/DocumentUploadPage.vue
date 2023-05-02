@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import { createSignNowApiInstance } from '@/api';
+import { createSignNowApiInstance } from '@/api/token';
 import { V2 } from '@/api/singNow/V2';
 import useRequest from '@/composition/useRequest';
 

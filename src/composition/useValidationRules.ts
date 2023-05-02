@@ -39,6 +39,10 @@ export function useValidationRules() {
     return (value: string) => value.length <= max;
   }
 
+  function emailRules(value: string): boolean | string {
+    return !value || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) || 'invalid email';
+  }
+
   const defaultRequiredRules = [defaultRequiredRule];
   const defaultMultipleRequiredRule = [multipleRequiredRule];
 
@@ -51,5 +55,6 @@ export function useValidationRules() {
     numberCustomMinValue,
     numberCustomMaxValue,
     maxTextLength,
+    emailRules,
   };
 }

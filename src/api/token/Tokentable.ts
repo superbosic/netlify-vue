@@ -21,7 +21,7 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
    * @secure
    */
   tokenAllocationUnlockSchemeDelete = (
-    query: {
+    data: {
       /** @format int64 */
       tokentable_allocation_id: number;
       /** @format int64 */
@@ -37,8 +37,9 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
     >({
       path: `/tokentable/token_allocation/unlock_scheme`,
       method: "DELETE",
-      query: query,
+      body: data,
       secure: true,
+      type: ContentType.Json,
       format: "json",
       ...params,
     });
@@ -88,7 +89,7 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
    * @secure
    */
   tokenAllocationDelete = (
-    query: {
+    data: {
       /** @format int64 */
       id: number;
     },
@@ -102,8 +103,9 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
     >({
       path: `/tokentable/token_allocation`,
       method: "DELETE",
-      query: query,
+      body: data,
       secure: true,
+      type: ContentType.Json,
       format: "json",
       ...params,
     });

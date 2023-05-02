@@ -6,7 +6,7 @@ import stockInit from 'highcharts/modules/stock';
 import quasarUserOptions from '@/quasar-user-options';
 import App from '@/App.vue';
 import router from '@/router';
-import { init } from '@/api';
+import { init } from '@/api/token';
 import { createHttpErrorHook, noneAuthorizeHook } from '@/api/token/hooks';
 import '@/styles/index.sass';
 

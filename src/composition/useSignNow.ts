@@ -1,7 +1,7 @@
 import { LocalStorage } from 'quasar';
 import { computed, onMounted } from 'vue';
 import { IUser } from '@/store/account';
-import { BearerTokenKey, createSignNowApiInstance } from '@/api';
+import { BearerTokenKey, createSignNowApiInstance } from '@/api/token';
 import { Oauth2 } from '@/api/singNow/Oauth2';
 import { Document } from '@/api/singNow/Document';
 import { useProjectStore } from '@/store/project';
