@@ -11,4 +11,5 @@ export enum RouteNames {
     ProjectEdit = 'ProjectEdit',
     DocumentUpload = 'DocumentUpload',
     Tasks = 'Tasks',
+    Portfolio = 'Portfolio',
 }

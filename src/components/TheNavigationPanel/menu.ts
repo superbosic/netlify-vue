@@ -35,4 +35,9 @@ export const menuItems: INavigationMenuItem[] = [
     icon: 'edit_square',
     label: 'Tasks',
   },
+  {
+    routeName: RouteNames.Portfolio,
+    icon: 'subject',
+    label: 'Portfolio',
+  },
 ];

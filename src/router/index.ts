@@ -92,9 +92,19 @@ const routes: Array<RouteRecordRaw> = [
         path: 'tasks',
         children: [
           {
-            path: 'tasks',
+            path: '',
             component: () => import('@/pages/Task/TasksPage.vue'),
             name: RouteNames.Tasks,
+          },
+        ],
+      },
+      {
+        path: 'portfolio',
+        children: [
+          {
+            path: '',
+            component: () => import('@/pages/Portfolio/PortfolioPage.vue'),
+            name: RouteNames.Portfolio,
           },
         ],
       },
