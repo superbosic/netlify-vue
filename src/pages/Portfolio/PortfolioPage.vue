@@ -1,6 +1,7 @@
 <template>
   <div class="q-pa-md">
     <q-card
+      v-if="project"
       flat
       bordered
     >
