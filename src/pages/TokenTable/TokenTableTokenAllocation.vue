@@ -334,8 +334,6 @@ const unlockTokensByMonthTotalChartOptions = computed(() => {
       data[i] = data[i] ?? 0;
     }
 
-    console.log(data);
-
     return {
       name: token.round,
       data,

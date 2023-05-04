@@ -75,9 +75,16 @@
 import { QTableProps } from 'quasar';
 import { useProjectStore } from '@/store/project';
 import { useFormatNumber } from '@/composition/useFormatters';
+import { createApiInstance } from '@/api/token';
+import { Portfolio } from '@/api/token/Portfolio';
+import useRequest from '@/composition/useRequest';
 
 const { project } = useProjectStore();
 const { currencyFormat } = useFormatNumber();
+const portfolioApi = createApiInstance(Portfolio);
+const { loading, sendRequest: portfolioList } = useRequest({
+  request: () => portfolioApi.portfolioList(),
+});
 
 const columns: QTableProps['columns'] = [
   {
@@ -106,4 +113,6 @@ const columns: QTableProps['columns'] = [
     field: 'contracts',
   },
 ];
+
+portfolioList();
 </script>

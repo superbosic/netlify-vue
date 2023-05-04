@@ -9,9 +9,12 @@
           >
             <q-card-section>
               <div class="text-center text-h4 text-grey-9">
-                Create New Round
+                {{ title }}
               </div>
-              <div class="q-mt-lg text-center text-h6 text-grey-7">
+              <div
+                v-if="!id"
+                class="q-mt-lg text-center text-h6 text-grey-7"
+              >
                 Please enter round information to start a new round
               </div>
             </q-card-section>
@@ -51,10 +54,14 @@
                 type="submit"
                 color="primary"
                 no-caps
-                :loading="loading"
+                :loading="roundCreateLoading"
               />
             </q-card-actions>
           </q-form>
+          <q-inner-loading
+            color="primary"
+            :showing="getRoundLoading"
+          />
         </q-card>
       </div>
     </div>
@@ -62,7 +69,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import UiNumberField from '@/components/ui/UiNumberField.vue';
 import { FundraisingRoundInput } from '@/types/fundraising';
@@ -72,6 +79,10 @@ import { createApiInstance } from '@/api/token';
 import { Fundraising } from '@/api/token/Fundraising';
 import useRequest from '@/composition/useRequest';
 import { RouteNames } from '@/router/routeNames';
+
+const props = defineProps<{
+    id?: number,
+}>();
 
 const router = useRouter();
 
@@ -84,11 +95,37 @@ const round = ref<FundraisingRoundInput>({
   allocation_id: 0,
 });
 const allocationId = ref();
-const { loading, sendRequest: roundCreate } = useRequest({
+const title = computed(() => (props.id ? 'Edit Round' : 'Create New Round'));
+const { loading: roundCreateLoading, sendRequest: roundCreate } = useRequest({
   request: () => fundraisingApi.roundCreate({
+    id: props.id,
     ...round.value,
     allocation_id: allocationId.value,
   }).then((data) => data!.data!.data),
-  successCallback: ({ id }) => router.push({ name: RouteNames.FundraisingRound, params: { id } }),
+  successCallback: ({ id }) => {
+    if (!props.id) {
+      router.push({ name: RouteNames.FundraisingRound, params: { id } });
+    }
+  },
 });
+const { loading: getRoundLoading, sendRequest: getRound } = useRequest({
+  request: () => fundraisingApi.roundList({ id: props.id! }).then((data) => data!.data!.data),
+  successCallback: (value) => {
+    round.value = {
+      id: value.id,
+      name: value.name,
+      token_price_usd: value.token_price_usd,
+      token_percentage: value.token_percentage,
+      allocation_id: 0,
+    };
+
+    if (value.unlock_scheme.length > 0) {
+      allocationId.value = value.unlock_scheme[0].id;
+    }
+  },
+});
+
+if (props.id) {
+  getRound();
+}
 </script>

@@ -7,6 +7,7 @@ export enum RouteNames {
     TokenTableUnlockTokens = 'TokenTableUnlockTokens',
     FundraisingRound = 'FundraisingRound',
     FundraisingRoundCreate = 'FundraisingRoundCreate',
+    FundraisingRoundEdit = 'FundraisingRoundEdit',
     FundraisingRoundInvestors = 'FundraisingRoundInvestors',
     ProjectEdit = 'ProjectEdit',
     DocumentUpload = 'DocumentUpload',

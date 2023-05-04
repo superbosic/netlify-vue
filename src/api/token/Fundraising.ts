@@ -255,6 +255,7 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
             wallet_address: string;
             /** @format int64 */
             investment_allocation: number;
+            state: "pending" | "signed";
           }[];
         };
       },
@@ -282,6 +283,8 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
       token_price_usd: number;
       /** @format int64 */
       allocation_id: number;
+      /** @format int64 */
+      id?: number;
     },
     params: RequestParams = {},
   ) =>
@@ -396,6 +399,7 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
               wallet_address: string;
               /** @format int64 */
               investment_allocation: number;
+              state: "pending" | "signed";
               profile?: {
                 /** @format int64 */
                 id: number;

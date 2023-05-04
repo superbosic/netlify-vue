@@ -19,13 +19,22 @@
               </div>
               <fundraising-round-status :status="round.status" />
               <q-space />
-              <q-btn
-                color="warning"
-                label="Delete this round"
-                flat
-                no-caps
-                @click="deleteRoundClick"
-              />
+              <div class="row q-gutter-md">
+                <q-btn
+                  color="primary"
+                  label="Edit this round"
+                  flat
+                  no-caps
+                  :to="{name: RouteNames.FundraisingRoundEdit, params: { id }}"
+                />
+                <q-btn
+                  color="warning"
+                  label="Delete this round"
+                  flat
+                  no-caps
+                  @click="deleteRoundClick"
+                />
+              </div>
             </div>
           </div>
           <div>

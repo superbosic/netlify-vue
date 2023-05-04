@@ -48,9 +48,15 @@
 <script lang="ts" setup>
 import { QTableProps } from 'quasar';
 import { useDateFormatters } from '@/composition/useFormatters';
+import { createApiInstance } from '@/api/token';
+import { Tasks } from '@/api/token/Tasks';
+import useRequest from '@/composition/useRequest';
 
+const tasksApi = createApiInstance(Tasks);
 const { formatFromTimestamp } = useDateFormatters();
-
+const { loading, sendRequest: tasksList, responseData: tasks } = useRequest({
+  request: () => tasksApi.tasksList().then((data) => data.data.data),
+});
 const columns:QTableProps['columns'] = [
   {
     label: 'Project',
@@ -83,4 +89,6 @@ const columns:QTableProps['columns'] = [
     field: 'action',
   },
 ];
+
+tasksList();
 </script>
