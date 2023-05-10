@@ -102,7 +102,7 @@ const { loading: roundCreateLoading, sendRequest: roundCreate } = useRequest({
     ...round.value,
     allocation_id: allocationId.value,
   }).then((data) => data!.data!.data),
-  successCallback: ({ id }) => {
+  successCallback: (id) => {
     if (!props.id) {
       router.push({ name: RouteNames.FundraisingRound, params: { id } });
     }
