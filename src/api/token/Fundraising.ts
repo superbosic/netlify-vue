@@ -290,26 +290,7 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
   ) =>
     this.request<
       {
-        data: {
-          /** @format int64 */
-          id: number;
-          /**
-           * @format timestamptz
-           * @default "now"
-           */
-          created_at: number;
-          /** @format int64 */
-          project_id: number;
-          name: string;
-          status: "draft" | "ongoing" | "completed";
-          token_percentage: number;
-          /** @format int64 */
-          token_amount: number;
-          token_price_usd: number;
-          /** @format int64 */
-          raise_usd: number;
-          signnow_documet_id: string;
-        };
+        data: string;
       },
       void
     >({

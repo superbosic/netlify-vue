@@ -31,16 +31,14 @@ export class Portfolio<SecurityDataType = unknown> extends HttpClient<SecurityDa
            * @default "now"
            */
           created_at?: number;
+          name?: string;
           /** @format int64 */
-          fundraising_round_id?: number;
+          tokentable?: number;
           /** @format int64 */
-          investor_id?: number;
-          email?: string;
-          wallet_address?: string;
-          /** @format int64 */
-          investment_allocation?: number;
-          state?: "pending" | "signed";
-          fundraising_round?: {
+          max_token_supply?: number;
+          token_ticker?: string;
+          token_network?: "polygon" | "ethereum" | "fantom" | "binance_smart_chain" | "avalanche";
+          fundraising_rounds?: {
             /** @format int64 */
             id: number;
             /**
@@ -59,22 +57,6 @@ export class Portfolio<SecurityDataType = unknown> extends HttpClient<SecurityDa
             /** @format int64 */
             raise_usd: number;
             signnow_documet_id?: string;
-            project?: {
-              /** @format int64 */
-              id: number;
-              /**
-               * @format timestamptz
-               * @default "now"
-               */
-              created_at?: number;
-              name: string;
-              /** @format int64 */
-              tokentable?: number;
-              /** @format int64 */
-              max_token_supply: number;
-              token_ticker: string;
-              token_network: "polygon" | "ethereum" | "fantom" | "binance_smart_chain" | "avalanche";
-            } | null;
             unlock_scheme?: {
               /** @format int64 */
               id: number;
@@ -92,7 +74,25 @@ export class Portfolio<SecurityDataType = unknown> extends HttpClient<SecurityDa
               /** @format int64 */
               vesting_months?: number;
             }[];
-          };
+            investor?: {
+              /** @format int64 */
+              id: number;
+              /**
+               * @format timestamptz
+               * @default "now"
+               */
+              created_at?: number;
+              /** @format int64 */
+              fundraising_round_id?: number;
+              /** @format int64 */
+              investor_id?: number;
+              email: string;
+              wallet_address: string;
+              /** @format int64 */
+              investment_allocation: number;
+              state: "pending" | "signed";
+            } | null;
+          }[];
         }[];
       },
       void
