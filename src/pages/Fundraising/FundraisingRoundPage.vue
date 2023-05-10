@@ -121,7 +121,7 @@
               class="full-height"
             >
               <q-card-section class="full-height">
-                <SignNowUploadDocument />
+                <SignNowUploadDocument @document-uploaded="onDocumentUploaded" />
               </q-card-section>
             </q-card>
           </div>
@@ -191,6 +191,12 @@ const { sendRequest: roundDelete } = useRequest({
   request: () => fundraisingApi.roundDelete({ id: props.id }).then((data) => data!.data!.data!),
   successCallback: () => router.replace({ name: RouteNames.Fundraising }),
 });
+const { sendRequest: roundDocumentCreate } = useRequest({
+  request: (documentId: string) => fundraisingApi.roundDocumentCreate({
+    id: round.value!.id!,
+    signnow_document_id: documentId,
+  }),
+});
 const fundraisingInvestorCreateDialogIsOpen = ref(false);
 const name = computed(() => round.value?.name);
 const chartOptions = computed(() => ({
@@ -250,6 +256,11 @@ function deleteRoundClick() {
 function onRoundInvestorCreated() {
   fundraisingInvestorCreateDialogIsOpen.value = false;
   loadRound();
+}
+
+async function onDocumentUploaded(id: string) {
+  await roundDocumentCreate(id);
+  router.push({ name: RouteNames.DocumentUpload, params: { id } });
 }
 
 loadRound();

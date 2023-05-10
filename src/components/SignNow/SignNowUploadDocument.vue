@@ -42,20 +42,18 @@ import { useRouter } from 'vue-router';
 import { useAccountStore } from '@/store/account';
 import { useSignNow } from '@/composition/useSignNow';
 import useRequest from '@/composition/useRequest';
-import { RouteNames } from '@/router/routeNames';
 
+const emits = defineEmits<{
+    (e: 'document-uploaded', id: string): void
+}>();
 const accountStore = useAccountStore();
 const router = useRouter();
 const { upload } = useSignNow(accountStore.user.value!);
 const uploaderRef = ref<QUploader | null>(null);
 const { loading, sendRequest: uploadFile } = useRequest({
   request: (file: File) => upload(file),
-  successCallback: ({ id }) => {
-    console.log(id);
-    router.push({ name: RouteNames.DocumentUpload, params: { id } });
-  },
+  successCallback: ({ id }: { id: string }) => emits('document-uploaded', id),
 });
-
 </script>
 <style lang="scss">
 .sign-now-upload-document {

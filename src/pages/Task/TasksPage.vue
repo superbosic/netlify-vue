@@ -81,7 +81,6 @@ import useRequest from '@/composition/useRequest';
 import { useToken } from '@/composition/business/useToken';
 
 const tasksApi = createApiInstance(Tasks);
-const { formatFromTimestamp } = useDateFormatters();
 const { currencyFormat } = useFormatNumber();
 const { unlockSchemeToString } = useToken();
 const { loading, sendRequest: tasksList, responseData: tasks } = useRequest({
