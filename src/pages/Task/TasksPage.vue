@@ -35,6 +35,17 @@
                 {{ unlockSchemeToString(row.unlock_scheme) }}
               </q-td>
             </template>
+            <template #body-cell-action="{ row }">
+              <q-td class="text-right">
+                <q-btn
+                  color="primary"
+                  no-caps
+                  label="Sign"
+                  :loading="createInviteLinkLoading"
+                  @click="createInviteLink(row)"
+                />
+              </q-td>
+            </template>
           </q-table>
         </q-card-section>
         <!--        <q-card-section>
@@ -74,17 +85,53 @@
 
 <script lang="ts" setup>
 import { QTableProps } from 'quasar';
-import { useDateFormatters, useFormatNumber } from '@/composition/useFormatters';
-import { createApiInstance } from '@/api/token';
+import { useFormatNumber } from '@/composition/useFormatters';
+import { createApiInstance, createSignNowApiInstance } from '@/api/token';
+import { Document } from '@/api/singNow/Document';
 import { Tasks } from '@/api/token/Tasks';
 import useRequest from '@/composition/useRequest';
 import { useToken } from '@/composition/business/useToken';
+import { TasksListItemFundraisingRound } from '@/types/task';
+import { V2 } from '@/api/singNow/V2';
 
 const tasksApi = createApiInstance(Tasks);
+const signNowDocumentApi = createSignNowApiInstance(Document);
+const signNowV2Api = createSignNowApiInstance(V2);
 const { currencyFormat } = useFormatNumber();
 const { unlockSchemeToString } = useToken();
 const { loading, sendRequest: tasksList, responseData: tasks } = useRequest({
   request: () => tasksApi.tasksList().then((data) => data.data.data),
+});
+const { loading: createInviteLinkLoading, sendRequest: createInviteLink } = useRequest({
+  request: async (row: TasksListItemFundraisingRound) => {
+    const { roles: [{ unique_id }], field_invites } = await signNowDocumentApi.getDocument(row.signnow_documet_id!).then((res) => res.json());
+    let field_invite_id;
+
+    if (field_invites.length === 0) {
+      const [{ id }] = await signNowV2Api.urlV2DocumentsDocumentIdEmbeddedEditor2(row.signnow_documet_id!, {
+        name_formula: 'any_text_prefix',
+        invites: [
+          {
+            email: row.investor?.email,
+            role_id: unique_id,
+            order: 1,
+            auth_method: 'none',
+          },
+        ],
+      }).then((res) => res.json());
+
+      field_invite_id = id;
+    } else {
+      field_invite_id = field_invites[0].id;
+    }
+
+    const { data: { link } } = await signNowV2Api.urlV2DocumentsDocumentIdEmbeddedInvitesFieldInviteIdLink(row.signnow_documet_id!, field_invite_id!, {
+      link_expiration: 15,
+      auth_method: 'none',
+    }).then((res) => res.json());
+
+    window.open(link, '_blank');
+  },
 });
 const columns:QTableProps['columns'] = [
   {

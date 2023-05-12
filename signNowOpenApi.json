@@ -3301,6 +3301,101 @@
           }
         }
       }
+    },
+    "/v2/documents/{document_id}/embedded-invites": {
+      "post": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "{{url}}/v2/documents/{document_id}/embedded-invites",
+        "description": "{{url}}/v2/documents/{document_id}/embedded-invites",
+        "operationId": "urlV2Documents{document_id}EmbeddedEditor",
+        "parameters": [
+          {
+            "name": "Tyk-Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "example": "{{tyk}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name_formula": {
+                    "type": "string",
+                    "example": "any_text_prefix|document_field1|document_field2|document_field3|document_field4|document_field5"
+                  },
+                  "invites": {
+                    "type": "array"
+                  }
+                }
+              },
+              "example": {
+                "link_expiration": 15,
+                "redirect_uri": "https://ya.ru"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/v2/documents/{document_id}/embedded-invites/{field_invite_id}/link/": {
+      "post": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "{{url}}/v2/documents/{document_id}/embedded-invites/{field_invite_id}/link/",
+        "description": "{{url}}/v2/documents/{document_id}/embedded-invites/{field_invite_id}/link/",
+        "operationId": "urlV2Documents{document_id}EmbeddedInvites{field_invite_id}Link",
+        "parameters": [
+          {
+            "name": "Tyk-Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "example": "{{tyk}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "link_expiration": {
+                    "type": "number",
+                    "example": 15
+                  },
+                  "auth_method": {
+                    "type": "string",
+                    "example": "https://ya.ru"
+                  }
+                }
+              },
+              "example": {
+                "link_expiration": 15,
+                "redirect_uri": "https://ya.ru"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
     }
   },
   "tags": [
