@@ -2,3 +2,8 @@
   from = "/signnow/*"
   to = "https://realistic-factor-gw.aws-usw2.cloud-ara.tyk.io/signnow/:splat"
   status = 200
+
+[[redirects]]
+  from = "/ethers/*"
+  to = "https://testnet.bscscan.com/:splat"
+  status = 200
