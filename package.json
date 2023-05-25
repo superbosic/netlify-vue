@@ -17,6 +17,7 @@
     "@quasar/extras": "^1.16.1",
     "@signnow/api-client": "^1.8.2",
     "dayjs": "^1.11.7",
+    "ethers": "^6.3.0",
     "highcharts": "^10.3.3",
     "highcharts-vue": "^1.4.0",
     "ky": "^0.33.3",

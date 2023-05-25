@@ -1,7 +1,6 @@
 <template>
   <q-header
     class="header-panel bg-white text-black"
-    elevated
   >
     <q-toolbar>
       <q-space />

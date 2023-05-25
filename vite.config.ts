@@ -13,7 +13,9 @@ export default ({ mode }) => {
       vue({
         template: { transformAssetUrls },
       }),
-      quasar(),
+      quasar({
+        sassVariables: 'src/styles/quasar.variables.sass',
+      }),
     ],
     resolve: {
       alias: {
@@ -27,6 +29,10 @@ export default ({ mode }) => {
           changeOrigin: true,
         },
         '^/signnow': {
+          target: apiPath,
+          changeOrigin: true,
+        },
+        '^/ethers': {
           target: apiPath,
           changeOrigin: true,
         },

@@ -47,6 +47,7 @@
                 type="submit"
                 color="primary"
                 no-caps
+                unelevated
                 :loading="loading"
               />
             </q-card-actions>

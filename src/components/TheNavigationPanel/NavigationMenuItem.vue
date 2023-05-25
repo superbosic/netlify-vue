@@ -4,6 +4,7 @@
     :key="menuItem.routeName"
     :class="[
       'navigation-menu-item',
+      'q-pl-none',
       {
         'navigation-menu-item--icon': menuItem.icon,
         'navigation-menu-item--without-icon': !menuItem.icon,
@@ -17,7 +18,8 @@
   >
     <q-item-section
       avatar
-      class="align-center"
+      class="align-center q-pr-sm"
+      style="min-width: 24px"
     >
       <div
         class="row justify-center items-center"
@@ -88,27 +90,14 @@ const toComp = computed(() => {
 
 <style lang="scss">
 .navigation-menu-item {
-  &.q-item, &.q-expansion-item {
-    .q-icon {
-      //color: $color-text-disabled;
-    }
-
-    .q-item__section {
-      //color: $color-text-secondary;
-    }
-  }
+  font-size: 18px;
+  color: $greyscale-900;
 }
 
 .navigation-menu-item--icon {
   &.navigation-menu-item--active {
-    background-color: rgba(224, 172, 133, 0.1);
-    color: rgba(251,117,14,1.00);
-    font-weight: bold;
-    //color: $color-primary-3 !important;
-    //font-size: map-get($subtitle2, 'size');
-    //line-height: map-get($subtitle2, 'line-height');
-    //letter-spacing: map-get($subtitle2, 'letter-spacing');
-    //font-weight: map-get($subtitle2, 'weight');
+    color: $primary;
+    font-weight: 600;
 
     &:after {
       content: '';
@@ -117,12 +106,7 @@ const toComp = computed(() => {
       bottom: 0;
       right: 0;
       width: 3px;
-      //background-color: $color-primary-3;
       border-radius: 2px 0 0 2px;
-    }
-
-    .q-icon, .q-item__section {
-      //color: $color-primary-3 !important;
     }
   }
 }
@@ -130,14 +114,7 @@ const toComp = computed(() => {
 .navigation-menu-item--without-icon {
   &.navigation-menu-item--active {
     .q-item__section {
-      //color: $color-text-primary !important;
-      //font-size: map-get($subtitle2, 'size');
-      //line-height: map-get($subtitle2, 'line-height');
-      //letter-spacing: map-get($subtitle2, 'letter-spacing');
-      //font-weight: map-get($subtitle2, 'weight');
-
       .q-icon {
-        //color: $color-primary-3 !important;
         font-size: 8px !important;
       }
     }

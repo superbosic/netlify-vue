@@ -1,7 +1,7 @@
 <template>
   <q-layout
     v-if="account && project"
-    view="hHh LpR fFf"
+    view="lHh LpR fFf"
   >
     <the-header-panel />
     <the-navigation-panel

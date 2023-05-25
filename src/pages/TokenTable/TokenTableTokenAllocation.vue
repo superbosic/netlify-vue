@@ -25,6 +25,7 @@
               color="primary"
               label="Add token allocation"
               no-caps
+              unelevated
               @click="addNewTokenClick"
             />
           </div>
@@ -161,6 +162,7 @@
     <div class="row justify-center">
       <q-spinner
         size="3em"
+        color="primary"
       />
     </div>
   </q-card-section>

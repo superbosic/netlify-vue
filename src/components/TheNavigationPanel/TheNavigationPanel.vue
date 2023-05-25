@@ -3,22 +3,29 @@
     v-model="isOpen"
     show-if-above
     side="left"
-    bordered
-    class="navigation-panel q-pt-md"
+    class="navigation-panel"
   >
-    <div class="column justify-center q-gutter-y-md">
-      <q-list>
-        <q-item>
-          <div class="text-grey-6 text-uppercase text-bold text-center">
-            Products
-          </div>
-        </q-item>
-        <navigation-menu-item
-          v-for="menuItem in menuItems"
-          :key="menuItem.routeName"
-          :menu-item="menuItem"
-        />
-      </q-list>
+    <div class="navigation-panel__logo" />
+    <q-separator class="navigation-panel__separator" />
+    <div class="q-px-xl q-py-md">
+      <div class="column justify-center q-gutter-y-md">
+        <q-list>
+          <q-item
+            class="q-pl-none"
+            dense
+          >
+            <div class="text-grey-6 text-center">
+              Products
+            </div>
+          </q-item>
+          <q-separator color="greyscale-200" />
+          <navigation-menu-item
+            v-for="menuItem in menuItems"
+            :key="menuItem.routeName"
+            :menu-item="menuItem"
+          />
+        </q-list>
+      </div>
     </div>
   </q-drawer>
 </template>
@@ -48,6 +55,15 @@ const isOpen = computed({
     border-radius: 12px;
     padding: 16px 20px;
     //background-color: $color-grey-200;
+  }
+
+  &__logo {
+    height: $toolbar-min-height;
+    border-right: 1px solid #0000000A;
+  }
+
+  &__separator {
+    background: #0000000A;
   }
 }
 

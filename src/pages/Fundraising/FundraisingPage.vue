@@ -45,6 +45,7 @@
             no-caps
             color="primary"
             label="Create new round"
+            unelevated
             :to="{ name: RouteNames.FundraisingRoundCreate }"
           />
         </div>

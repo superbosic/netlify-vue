@@ -1,6 +1,9 @@
 <template>
-  <div class="q-pa-md">
-    <div class="q-gutter-md">
+  <div class="q-pa-md relative-position">
+    <div
+      v-if="tasks"
+      class="q-gutter-md"
+    >
       <q-card
         v-for="task in tasks || []"
         :key="task.id"
@@ -40,6 +43,7 @@
                 <q-btn
                   color="primary"
                   no-caps
+                  unelevated
                   label="Sign"
                   :loading="createInviteLinkLoading"
                   @click="createInviteLink(row)"
@@ -80,6 +84,12 @@
         </q-card-section>-->
       </q-card>
     </div>
+    <q-spinner
+      v-else
+      size="xl"
+      color="primary"
+      class="absolute-center"
+    />
   </div>
 </template>
 

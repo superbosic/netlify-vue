@@ -43,6 +43,7 @@
             color="primary"
             label="Apply"
             no-caps
+            unelevated
             type="submit"
           />
           <q-btn

@@ -31,7 +31,7 @@ const routes: Array<RouteRecordRaw> = [
         children: [
           {
             path: 'token-allocation',
-            component: () => import('@/pages/TokenTable/TokenTableTokenAllocation.vue'),
+              component: () => import('@/pages/TokenTable/TokenTableTokenAllocation.vue'),
             name: RouteNames.TokenTableTokenAllocation,
           },
           {
@@ -128,6 +128,11 @@ const routes: Array<RouteRecordRaw> = [
         name: RouteNames.ProjectEdit,
       },
     ],
+  },
+  {
+    path: '/ethers',
+    name: RouteNames.Ethers,
+    component: () => import('@/pages/EthersPage.vue'),
   },
 ];
 

@@ -1,5 +1,9 @@
 <template>
-  <q-card class="col-12 col-md-6">
+  <q-card
+    class="col-12 col-md-6"
+    flat
+    bordered
+  >
     <q-form @submit="logIn">
       <q-card-section class="column q-col-gutter-md">
         <div class="text-h5">
@@ -27,6 +31,7 @@
           label="Login"
           :loading="loading"
           no-caps
+          unelevated
           color="primary"
           type="submit"
         />
