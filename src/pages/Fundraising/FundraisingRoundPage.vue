@@ -28,7 +28,7 @@
                   :to="{name: RouteNames.FundraisingRoundEdit, params: { id }}"
                 />
                 <q-btn
-                  color="warning"
+                  color="negative"
                   label="Delete this round"
                   flat
                   no-caps
@@ -89,7 +89,7 @@
                     <div class="row q-col-gutter-xl">
                       <div class="col-6">
                         <ui-chart-legend-item
-                          color="orange-3"
+                          color="primary"
                           name="Amount Raised"
                           :value="currencyFormat(round.raise_usd)"
                         />
@@ -225,7 +225,7 @@ const chartOptions = computed(() => ({
         {
           name: 'Amount Raised',
           y: round.value?.raise_usd,
-          color: '#ffcc80',
+          color: '#22C55E',
         },
         {
           name: 'Amount Remaining',

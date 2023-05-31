@@ -21,9 +21,9 @@
     "highcharts": "^10.3.3",
     "highcharts-vue": "^1.4.0",
     "ky": "^0.33.3",
-    "quasar": "^2.11.9",
-    "vue": "^3.2.47",
-    "vue-router": "^4.0.12"
+    "quasar": "^2.12.0",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.2"
   },
   "devDependencies": {
     "@gitbeaker/node": "^35.6.0",

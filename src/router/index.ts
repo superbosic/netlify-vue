@@ -24,6 +24,11 @@ const routes: Array<RouteRecordRaw> = [
         name: RouteNames.Dashboard,
       },
       {
+        path: '/share',
+        name: RouteNames.Share,
+        component: () => import('@/pages/Share/SharePage.vue'),
+      },
+      {
         path: 'token-table',
         redirect: { name: RouteNames.TokenTableTokenAllocation },
         component: () => import('@/pages/TokenTable/index.vue'),
@@ -31,7 +36,7 @@ const routes: Array<RouteRecordRaw> = [
         children: [
           {
             path: 'token-allocation',
-              component: () => import('@/pages/TokenTable/TokenTableTokenAllocation.vue'),
+            component: () => import('@/pages/TokenTable/TokenTableTokenAllocation.vue'),
             name: RouteNames.TokenTableTokenAllocation,
           },
           {

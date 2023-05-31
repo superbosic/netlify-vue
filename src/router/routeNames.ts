@@ -14,4 +14,5 @@ export enum RouteNames {
     Tasks = 'Tasks',
     Portfolio = 'Portfolio',
     Ethers = 'Ethers',
+    Share = 'Share',
 }

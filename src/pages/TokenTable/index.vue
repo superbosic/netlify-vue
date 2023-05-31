@@ -7,7 +7,10 @@
         flat
         bordered
       >
-        <q-tabs>
+        <q-tabs
+          active-color="primary"
+          indicator-color="primary"
+        >
           <q-route-tab
             label="Token Allocation"
             :to="{ name: RouteNames.TokenTableTokenAllocation }"
