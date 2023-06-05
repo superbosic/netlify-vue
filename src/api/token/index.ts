@@ -41,7 +41,8 @@ export const TykAuthorization = 'eyJvcmciOiI2NDFkZjRmZTEyNjQ5ZTAwMDFkMmVmZjIiLCJ
 
 export function createApiInstance<C extends typeof HttpClient>(ApiConstructor: C): C['prototype'] {
   const { getToken } = useAccountStore();
-  const baseUrl = process.env.NODE_ENV === 'development' ? document.location.origin : import.meta.env.VITE_API_PATH;
+  // const baseUrl = process.env.NODE_ENV === 'development' ? document.location.origin : import.meta.env.VITE_API_PATH;
+  const baseUrl = document.location.origin;
 
   return new ApiConstructor({
     customFetch: httpClient!,

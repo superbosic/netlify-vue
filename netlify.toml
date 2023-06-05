@@ -7,3 +7,9 @@
   from = "/ethers/*"
   to = "https://testnet.bscscan.com/:splat"
   status = 200
+  status = 200
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://realistic-factor-gw.aws-usw2.cloud-ara.tyk.io/:splat"
+  status = 200
