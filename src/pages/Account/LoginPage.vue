@@ -101,7 +101,7 @@ const { loading: web3LoginCreateLoading, sendRequest: web3LoginCreate } = useReq
 
 async function web() {
   const web3auth = new Web3Auth({
-    clientId: 'BBmBrHPtxeYpjI6oCwDQcI7LuRZvqwBh-gJDWeiuXxxPEbUxwx6KDLqt7-NjBrJEwX74rKyx6nFsjcrTmyXA5pU', // Get your Client ID from Web3Auth Dashboard
+    clientId: import.meta.env.VITE_WEB3OAUTH_CLIENT_ID, // Get your Client ID from Web3Auth Dashboard
     chainConfig: {
       chainNamespace: 'eip155',
       chainId: '0x1',
