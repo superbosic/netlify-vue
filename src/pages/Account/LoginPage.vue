@@ -35,6 +35,13 @@
           color="primary"
           type="submit"
         />
+        <q-btn
+          label="web3oauth"
+          no-caps
+          unelevated
+          color="primary"
+          @click="web"
+        />
       </q-card-actions>
     </q-form>
   </q-card>
@@ -42,6 +49,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+import { Web3Auth } from '@web3auth/modal';
 import { useValidationRules } from '@/composition/useValidationRules';
 import router from '@/router';
 import { urlParamsToObject } from '@/utils';
@@ -73,4 +81,38 @@ const { sendRequest: logIn, loading } = useRequest({
     });
   },
 });
+const { loading: web3LoginCreateLoading, sendRequest: web3LoginCreate } = useRequest({
+  request: (JWT: string) => authApi.web3LoginCreate({
+    JWT,
+  }).then((data) => data.data),
+  successCallback: async ({ authToken }) => {
+    accountStore.setToken(authToken!);
+    const [
+      path,
+      query,
+    ] = (router.currentRoute.value.query.redirect as string || '/').split('?');
+
+    await router.replace({
+      path,
+      query: urlParamsToObject(query),
+    });
+  },
+});
+
+async function web() {
+  const web3auth = new Web3Auth({
+    clientId: 'BBmBrHPtxeYpjI6oCwDQcI7LuRZvqwBh-gJDWeiuXxxPEbUxwx6KDLqt7-NjBrJEwX74rKyx6nFsjcrTmyXA5pU', // Get your Client ID from Web3Auth Dashboard
+    chainConfig: {
+      chainNamespace: 'eip155',
+      chainId: '0x1',
+    },
+  });
+
+  const result = await web3auth.initModal();
+  const connect = await web3auth.connect();
+
+  const user = await web3auth.getUserInfo();
+
+  await web3LoginCreate(user.idToken!);
+}
 </script>

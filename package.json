@@ -16,6 +16,7 @@
   "dependencies": {
     "@quasar/extras": "^1.16.1",
     "@signnow/api-client": "^1.8.2",
+    "@web3auth/modal": "^6.0.0-alpha.0",
     "dayjs": "^1.11.7",
     "ethers": "^6.3.0",
     "highcharts": "^10.3.3",

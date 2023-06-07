@@ -34,7 +34,7 @@ export class Auth<SecurityDataType = unknown> extends HttpClient<SecurityDataTyp
   ) =>
     this.request<
       {
-        authToken: string;
+        authToken?: string;
       },
       void
     >({
@@ -59,6 +59,33 @@ export class Auth<SecurityDataType = unknown> extends HttpClient<SecurityDataTyp
       path: `/auth/me`,
       method: "GET",
       secure: true,
+      format: "json",
+      ...params,
+    });
+  /**
+   * @description Login and retrieve an authentication token <br /><br /> <b>Authentication:</b> not required
+   *
+   * @tags auth
+   * @name Web3LoginCreate
+   * @summary Login and retrieve an authentication token
+   * @request POST:/auth/web3login
+   */
+  web3LoginCreate = (
+    data: {
+      JWT: string;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<
+      {
+        authToken?: string;
+      },
+      void
+    >({
+      path: `/auth/web3login`,
+      method: "POST",
+      body: data,
+      type: ContentType.Json,
       format: "json",
       ...params,
     });

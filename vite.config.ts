@@ -2,6 +2,7 @@ import { fileURLToPath, URL } from 'node:url';
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { quasar, transformAssetUrls } from '@quasar/vite-plugin';
+import * as path from 'path';
 
 // https://vitejs.dev/config/
 export default ({ mode }) => {
@@ -20,6 +21,7 @@ export default ({ mode }) => {
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
+        '@web3auth/modal': path.resolve(__dirname, './node_modules/@web3auth/modal/dist/modal.umd.min.js'),
       },
     },
     server: {
