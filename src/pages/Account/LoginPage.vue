@@ -112,7 +112,14 @@ async function web() {
   const connect = await web3auth.connect();
 
   const user = await web3auth.getUserInfo();
+  let { idToken } = user;
 
-  await web3LoginCreate(user.idToken!);
+  if (!idToken) {
+    const authUser = await web3auth.authenticateUser();
+
+    idToken = authUser.idToken;
+  }
+
+  await web3LoginCreate(idToken);
 }
 </script>
