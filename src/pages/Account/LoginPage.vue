@@ -82,8 +82,9 @@ const { sendRequest: logIn, loading } = useRequest({
   },
 });
 const { loading: web3LoginCreateLoading, sendRequest: web3LoginCreate } = useRequest({
-  request: (JWT: string) => authApi.web3LoginCreate({
+  request: ({ JWT, Method }: { JWT: string, Method: string }) => authApi.web3LoginCreate({
     JWT,
+    Method,
   }).then((data) => data.data),
   successCallback: async ({ authToken }) => {
     accountStore.setToken(authToken!);
@@ -108,8 +109,8 @@ async function web() {
     },
   });
 
-  const result = await web3auth.initModal();
-  const connect = await web3auth.connect();
+  await web3auth.initModal();
+  await web3auth.connect();
 
   const user = await web3auth.getUserInfo();
   let { idToken } = user;
@@ -120,6 +121,6 @@ async function web() {
     idToken = authUser.idToken;
   }
 
-  await web3LoginCreate(idToken);
+  await web3LoginCreate({ JWT: idToken, Method: web3auth.connectedAdapterName! });
 }
 </script>

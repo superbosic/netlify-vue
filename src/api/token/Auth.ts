@@ -73,6 +73,7 @@ export class Auth<SecurityDataType = unknown> extends HttpClient<SecurityDataTyp
   web3LoginCreate = (
     data: {
       JWT: string;
+      Method: string;
     },
     params: RequestParams = {},
   ) =>
