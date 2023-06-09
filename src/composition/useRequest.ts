@@ -45,8 +45,8 @@ export default function useRequest<T, P>(props: IRequestProps<T, P>) {
       }
 
       loading.value = false;
-    } catch (e: unknown) {
-      if ((e as Error)?.name !== Errors.ABORT) {
+    } catch (e: any) {
+      if ((e as Error)?.name !== Errors.ABORT && e.httpStatusCode !== 401) {
         Notify.create({
           message: (e as Error).message,
           type: 'negative',

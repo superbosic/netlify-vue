@@ -1,9 +1,11 @@
 import { ref } from 'vue';
 import { useQuasar } from 'quasar';
+import { Web3Auth } from '@web3auth/modal';
+import type { Web3AuthOptions } from '@web3auth/modal';
 import { Auth } from '@/api/token/Auth';
-import { ExtractHttpResponseType } from '@/types/http';
+import { createApiInstance } from '@/api/token';
+import { APP_TOKEN_KEY } from '@/constants';
 
-// export type IUser = ExtractHttpResponseType<ReturnType<Auth['getAuth']>>;
 export interface IUser {
   id: number
   name: string
@@ -12,13 +14,20 @@ export interface IUser {
   project_id: number
 }
 
-const APP_TOKEN_KEY = 'APP_TOKEN_KEY';
+const web3AuthOptions:Web3AuthOptions = {
+  clientId: import.meta.env.VITE_WEB3OAUTH_CLIENT_ID, // Get your Client ID from Web3Auth Dashboard
+  chainConfig: {
+    chainNamespace: 'eip155',
+    chainId: '0x1',
+  },
+};
 
 const user = ref<IUser | null>(null);
 const token = ref<string | null>(null);
 
 export function useAccountStore() {
   const { localStorage } = useQuasar();
+  const authApi = createApiInstance(Auth);
 
   function setUser(value: IUser) {
     user.value = value;
@@ -33,17 +42,44 @@ export function useAccountStore() {
     localStorage.set(APP_TOKEN_KEY, value);
   }
 
-  function logout() {
+  async function logout() {
+    const web3auth = new Web3Auth(web3AuthOptions);
+
+    await web3auth.initModal();
+    await web3auth.connect();
+    await web3auth.logout();
+
     localStorage.remove(APP_TOKEN_KEY);
     user.value = null;
     token.value = null;
   }
 
+  async function login() {
+    const web3auth = new Web3Auth(web3AuthOptions);
+
+    await web3auth.initModal();
+    const c = await web3auth.connect();
+
+    const userInfo = await web3auth.getUserInfo();
+    let { idToken } = userInfo;
+
+    if (!idToken) {
+      const authUser = await web3auth.authenticateUser();
+
+      idToken = authUser.idToken;
+    }
+
+    return authApi.web3LoginCreate({
+      JWT: idToken,
+      Method: web3auth.connectedAdapterName!,
+    }).then((data) => data.data).then(({ authToken }) => setToken(authToken!));
+  }
+
   return {
     setUser,
     getToken,
-    setToken,
     logout,
+    login,
     user,
   };
 }

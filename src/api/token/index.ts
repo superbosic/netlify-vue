@@ -2,7 +2,7 @@ import ky, { Options } from 'ky';
 import { LocalStorage } from 'quasar';
 import { HttpClient } from '@/api/token/http-client';
 import { HttpClient as SingNowHttpClient } from '@/api/singNow/http-client';
-import { useAccountStore } from '@/store/account';
+import { APP_TOKEN_KEY } from '@/constants';
 
 let httpClient: typeof ky | null = null;
 
@@ -40,8 +40,7 @@ export function init(defaultOptions: Options) {
 export const TykAuthorization = 'eyJvcmciOiI2NDFkZjRmZTEyNjQ5ZTAwMDFkMmVmZjIiLCJpZCI6IjIzZmEzNjIwMjA0YzRmNTU4MjI5MzcyZjI5NTM2NmM2IiwiaCI6Im11cm11cjEyOCJ9';
 
 export function createApiInstance<C extends typeof HttpClient>(ApiConstructor: C): C['prototype'] {
-  const { getToken } = useAccountStore();
-  // const baseUrl = process.env.NODE_ENV === 'development' ? document.location.origin : import.meta.env.VITE_API_PATH;
+  const token = LocalStorage.getItem<string>(APP_TOKEN_KEY);
   const baseUrl = document.location.origin;
 
   return new ApiConstructor({
@@ -50,7 +49,7 @@ export function createApiInstance<C extends typeof HttpClient>(ApiConstructor: C
     baseApiParams: {
       headers: {
         'Tyk-Authorization': TykAuthorization,
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${token}`,
       },
     },
   });
@@ -65,8 +64,4 @@ export function createSignNowApiInstance<C extends typeof SingNowHttpClient>(Api
       },
     },
   });
-}
-
-export function getHttpClient() {
-  return httpClient!;
 }
