@@ -1,4 +1,5 @@
-import { RouteParams } from 'vue-router';
+import { RouteParams, useRoute } from 'vue-router';
+import { computed } from 'vue';
 import { RouteNames } from '@/router/routeNames';
 
 interface IQuery {
@@ -6,7 +7,7 @@ interface IQuery {
 }
 
 export interface INavigationMenuItem {
-    routeName: RouteNames;
+    routeName?: RouteNames;
     params?: RouteParams;
     query?: IQuery;
     icon?: string;
@@ -14,30 +15,42 @@ export interface INavigationMenuItem {
     label?: string;
 }
 
-export const menuItems: INavigationMenuItem[] = [
+const menuItems: INavigationMenuItem[] = [
   {
     routeName: RouteNames.Dashboard,
     icon: 'home',
     label: 'Dashboard',
   },
-  {
-    routeName: RouteNames.TokenTable,
-    icon: 'attach_money',
-    label: 'Token Table',
-  },
-  {
-    routeName: RouteNames.Fundraising,
-    icon: 'savings',
-    label: 'Fundraising',
-  },
-  {
-    routeName: RouteNames.Tasks,
-    icon: 'edit_square',
-    label: 'Tasks',
-  },
+  // {
+  //   routeName: RouteNames.TokenTable,
+  //   icon: 'attach_money',
+  //   label: 'Token Table',
+  // },
+  // {
+  //   routeName: RouteNames.Fundraising,
+  //   icon: 'savings',
+  //   label: 'Fundraising',
+  // },
+  // {
+  //   routeName: RouteNames.Tasks,
+  //   icon: 'edit_square',
+  //   label: 'Tasks',
+  // },
   {
     routeName: RouteNames.Portfolio,
     icon: 'subject',
     label: 'Portfolio',
   },
 ];
+
+export function useMenu() {
+  const route = useRoute();
+  const currentMenuItem = computed(() => menuItems.find(({ routeName }) => routeName === route.name));
+  const currentMenuLabel = computed(() => currentMenuItem.value?.label ?? '');
+
+  return {
+    menuItems,
+    currentMenuItem,
+    currentMenuLabel,
+  };
+}

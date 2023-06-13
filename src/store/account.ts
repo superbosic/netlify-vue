@@ -2,6 +2,7 @@ import { ref } from 'vue';
 import { useQuasar } from 'quasar';
 import { Web3Auth } from '@web3auth/modal';
 import type { Web3AuthOptions } from '@web3auth/modal';
+import { UserInfo } from '@web3auth/base';
 import { Auth } from '@/api/token/Auth';
 import { createApiInstance } from '@/api/token';
 import { APP_TOKEN_KEY } from '@/constants';
@@ -23,6 +24,7 @@ const web3AuthOptions:Web3AuthOptions = {
 };
 
 const user = ref<IUser | null>(null);
+const userInfo = ref<Partial<UserInfo> | null>(null);
 const token = ref<string | null>(null);
 
 export function useAccountStore() {
@@ -60,8 +62,8 @@ export function useAccountStore() {
     await web3auth.initModal();
     const c = await web3auth.connect();
 
-    const userInfo = await web3auth.getUserInfo();
-    let { idToken } = userInfo;
+    userInfo.value = await web3auth.getUserInfo();
+    let { idToken } = userInfo.value;
 
     if (!idToken) {
       const authUser = await web3auth.authenticateUser();
@@ -81,5 +83,6 @@ export function useAccountStore() {
     logout,
     login,
     user,
+    userInfo,
   };
 }

@@ -15,4 +15,5 @@ export enum RouteNames {
     Portfolio = 'Portfolio',
     Ethers = 'Ethers',
     Share = 'Share',
+    Settings = 'Settings',
 }

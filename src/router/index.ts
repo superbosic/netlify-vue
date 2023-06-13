@@ -24,6 +24,11 @@ const routes: Array<RouteRecordRaw> = [
         name: RouteNames.Dashboard,
       },
       {
+        path: 'settings',
+        component: () => import('@/pages/Settings/Settings.vue'),
+        name: RouteNames.Settings,
+      },
+      {
         path: 'token-table',
         redirect: { name: RouteNames.TokenTableTokenAllocation },
         component: () => import('@/pages/TokenTable/index.vue'),

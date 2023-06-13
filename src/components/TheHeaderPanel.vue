@@ -1,28 +1,43 @@
 <template>
   <q-header
     class="header-panel bg-white text-black"
+    bordered
   >
     <q-toolbar>
+      <div class="text-bold">
+        {{ currentMenuLabel }}
+      </div>
       <q-space />
       <div class="row q-gutter-x-xs items-center">
-        <div>
-          {{ (user as any)?.name }}
-        </div>
         <q-btn
-          padding="0"
           flat
-          rounded
-          disable-dropdown
-          :loading="loading"
-          @click="logoutUser"
+          padding="0"
         >
-          <q-avatar size="40px">
-            <q-icon
-              name="logout"
-              size="sm"
-              color="color-text-secondary"
-            />
+          <q-avatar>
+            <img
+              :src="userInfo?.profileImage"
+              :alt="userInfo?.name"
+            >
           </q-avatar>
+          <q-popup-proxy>
+            <q-list>
+              <q-item>
+                <q-item-section avatar>
+                  <q-avatar icon="person" />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label class="text-no-wrap">
+                    {{ userInfo?.name }}
+                  </q-item-label>
+                  <q-item-label
+                    caption
+                  >
+                    Name
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-popup-proxy>
         </q-btn>
       </div>
     </q-toolbar>
@@ -30,18 +45,9 @@
 </template>
 
 <script lang="ts" setup>
-import { useRouter } from 'vue-router';
 import { useAccountStore } from '@/store/account';
-import { RouteNames } from '@/router/routeNames';
-import useRequest from '@/composition/useRequest';
+import { useMenu } from '@/components/TheNavigationPanel/menu';
 
-const { user, logout } = useAccountStore();
-const router = useRouter();
-const { loading, sendRequest: logoutUser } = useRequest({
-  request: () => logout(),
-  successCallback: () => router.replace({
-    name: RouteNames.AccountLogin,
-    query: { redirect: router.currentRoute.value.fullPath },
-  }),
-});
+const { userInfo } = useAccountStore();
+const { currentMenuLabel } = useMenu();
 </script>

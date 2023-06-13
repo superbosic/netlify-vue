@@ -33,7 +33,7 @@ import { Project } from '@/api/token/Project';
 import { RouteNames } from '@/router/routeNames';
 import { useProjectStore } from '@/store/project';
 
-const { setUser } = useAccountStore();
+const { setUser, login } = useAccountStore();
 const { setProject } = useProjectStore();
 const authApi = createApiInstance(Auth);
 const projectApi = createApiInstance(Project);
@@ -51,7 +51,7 @@ const { sendRequest: projectList, responseData: project } = useRequest({
   },
 });
 const { sendRequest: loadAccountInfo, responseData: account } = useRequest({
-  request: () => authApi.getAuth().then((data) => data!.data!),
+  request: () => login().then(() => authApi.getAuth()).then((data) => data!.data!),
   successCallback: (value) => {
     setUser(value as IUser);
     projectList();

@@ -1,7 +1,6 @@
 <template>
   <q-item
     v-if="!menuItem.items"
-    :key="menuItem.routeName"
     :class="[
       'navigation-menu-item',
       'q-pl-none',
@@ -45,7 +44,6 @@
 
   <q-expansion-item
     v-else
-    :key="`${menuItem.routeName}-${menuItem.label ?? ''}`"
     :default-opened="active"
     class="navigation-menu-item"
     :header-class="[
@@ -75,15 +73,15 @@ const props = defineProps<{
 const route = useRoute();
 
 const active = computed(
-  () => route.matched.some(({ name }) => props.menuItem.routeName === name),
+  () => props.menuItem.routeName && route.matched.some(({ name }) => props.menuItem.routeName === name),
 );
 
 const toComp = computed(() => {
-  return {
+  return props.menuItem.routeName ? {
     name: props.menuItem.routeName,
     query: props.menuItem.query,
     params: {},
-  };
+  } : undefined;
 });
 
 </script>
