@@ -18,7 +18,7 @@ export interface INavigationMenuItem {
 const menuItems: INavigationMenuItem[] = [
   {
     routeName: RouteNames.Dashboard,
-    icon: 'home',
+    icon: 'o_home',
     label: 'Dashboard',
   },
   // {
@@ -38,7 +38,7 @@ const menuItems: INavigationMenuItem[] = [
   // },
   {
     routeName: RouteNames.Portfolio,
-    icon: 'subject',
+    icon: 'o_subject',
     label: 'Portfolio',
   },
 ];

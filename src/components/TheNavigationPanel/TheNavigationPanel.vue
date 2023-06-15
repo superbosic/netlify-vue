@@ -88,12 +88,12 @@ const { loading: logoutUserLoading, sendRequest: logoutUser } = useRequest({
 const menuItemSettings:INavigationMenuItem = {
   label: 'Settings',
   routeName: RouteNames.Settings,
-  icon: 'settings',
+  icon: 'o_settings',
 };
 
 const menuItemLogout:INavigationMenuItem = {
   label: 'Logout',
-  icon: 'logout',
+  icon: 'o_logout',
 };
 
 function logoutClick() {

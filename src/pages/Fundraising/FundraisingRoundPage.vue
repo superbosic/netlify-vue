@@ -131,7 +131,7 @@
         <div class="row justify-end">
           <q-btn
             label="Add investor"
-            icon="add"
+            icon="o_add"
             color="primary"
             flat
             no-caps

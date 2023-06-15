@@ -9,7 +9,7 @@
         <div class="row">
           <q-btn
             :to="{name: RouteNames.Settings}"
-            icon="settings"
+            icon="o_settings"
             label="Settings"
             color="greyscale-700"
             no-caps
@@ -17,7 +17,7 @@
           />
           <q-btn
             class="q-ml-md"
-            icon="share"
+            icon="o_share"
             label="Share Project TokenTable"
             color="greyscale-700"
             no-caps
@@ -34,28 +34,28 @@
             <ui-info-card
               name="Token Holders"
               :value="numberFormat(0)"
-              icon-name="group"
+              icon-name="o_group"
             />
           </div>
           <div class="col-3">
             <ui-info-card
               name="Current Round"
               value="Not Yet Started"
-              icon-name="change_circle"
+              icon-name="o_change_circle"
             />
           </div>
           <div class="col-3">
             <ui-info-card
               name="Total Fund Raised"
               :value="currencyFormat(0)"
-              icon-name="attach_money"
+              icon-name="o_attach_money"
             />
           </div>
           <div class="col-3">
             <ui-info-card
               name="Total Token Allocated"
               :value="`${numberFormat(0)} (${percentFormat(0)})`"
-              icon-name="generating_tokens"
+              icon-name="o_generating_tokens"
             />
           </div>
         </div>

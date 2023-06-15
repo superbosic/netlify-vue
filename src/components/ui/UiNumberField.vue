@@ -40,7 +40,7 @@ const props = withDefaults(defineProps<{
   rules: () => [],
 });
 
-const emit = defineEmits<{
+const emits = defineEmits<{
     (e: 'update:modelValue', value?: number):void
 }>();
 
@@ -55,6 +55,6 @@ const innerRules = computed(() => [
 function emitChanges(value: string | number | null) {
   const modelValue = Number.parseFloat(value as string);
 
-  emit('update:modelValue', Number.isNaN(modelValue) ? undefined : modelValue);
+  emits('update:modelValue', Number.isNaN(modelValue) ? undefined : modelValue);
 }
 </script>

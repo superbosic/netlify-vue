@@ -13,7 +13,7 @@
               <div class="row q-col-gutter-md items-center">
                 <div>
                   <q-avatar
-                    icon="person"
+                    icon="o_person"
                     color="grey-6"
                     text-color="white"
                   />

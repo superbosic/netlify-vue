@@ -34,7 +34,7 @@
         <template #body-cell-unlock_scheme="{ row }">
           <q-td class="text-right">
             <q-btn
-              icon="add"
+              icon="o_add"
               color="primary"
               flat
               padding="4px"
@@ -49,7 +49,7 @@
                 {{ unlockSchemeToString(item) }}
               </div>
               <q-btn
-                icon="close"
+                icon="o_close"
                 color="negative"
                 flat
                 padding="4px"
@@ -63,14 +63,14 @@
         <template #body-cell-actions="{ row }">
           <q-td>
             <q-btn
-              icon="edit"
+              icon="o_edit"
               color="primary"
               flat
               padding="4px"
               @click="editItem(row)"
             />
             <q-btn
-              icon="delete"
+              icon="o_delete"
               color="negative"
               flat
               padding="4px"

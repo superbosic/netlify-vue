@@ -23,7 +23,7 @@
             <q-list>
               <q-item>
                 <q-item-section avatar>
-                  <q-avatar icon="person" />
+                  <q-avatar icon="o_person" />
                 </q-item-section>
                 <q-item-section>
                   <q-item-label class="text-no-wrap">
