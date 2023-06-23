@@ -6,14 +6,18 @@ import { UserInfo } from '@web3auth/base';
 import { Auth } from '@/api/token/Auth';
 import { createApiInstance } from '@/api/token';
 import { APP_TOKEN_KEY } from '@/constants';
+import { IUser } from '@/types/user';
 
-export interface IUser {
-  id: number
-  name: string
-  email: string
-  created_at: string
-  project_id: number
-}
+// export interface IUser {
+//   id: number
+//   name: string
+//   email: string
+//   created_at: string
+//   project_id: number
+//   Web3AuthWalletChain: string
+//   Web3AuthWalletAddress: string
+//   Web3AuthId: string
+// }
 
 const web3AuthOptions:Web3AuthOptions = {
   clientId: import.meta.env.VITE_WEB3OAUTH_CLIENT_ID, // Get your Client ID from Web3Auth Dashboard

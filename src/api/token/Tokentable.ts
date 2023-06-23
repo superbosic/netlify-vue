@@ -31,7 +31,7 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
   ) =>
     this.request<
       {
-        data: string;
+        data?: string;
       },
       void
     >({
@@ -68,7 +68,7 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
   ) =>
     this.request<
       {
-        data: string;
+        data?: string;
       },
       void
     >({
@@ -97,7 +97,7 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
   ) =>
     this.request<
       {
-        data: string;
+        data?: string;
       },
       void
     >({
@@ -120,22 +120,25 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
   tokenAllocationList = (params: RequestParams = {}) =>
     this.request<
       {
-        data: {
+        data?: {
           /** @format int64 */
-          id: number;
+          id?: number;
           /**
            * @format timestamptz
            * @default "now"
            */
-          created_at: number;
-          name: string;
+          created_at?: number;
+          icon?: string;
+          name?: string;
+          token_network?: "polygon" | "ethereum" | "fantom" | "binance_smart_chain" | "avalanche";
+          token_ticker?: string;
           /** @format int64 */
-          max_token_supply: number;
-          token_ticker: string;
-          token_network: "polygon" | "ethereum" | "fantom" | "binance_smart_chain" | "avalanche";
-          tokentable: {
+          max_token_supply?: number;
+          /** @format int64 */
+          current_market_price_usd?: number;
+          tokentable?: {
             /** @format int64 */
-            id: number;
+            id?: number;
             /**
              * @format timestamptz
              * @default "now"
@@ -143,7 +146,7 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
             created_at?: number;
             token_allocation?: {
               /** @format int64 */
-              id: number;
+              id?: number;
               /**
                * @format timestamptz
                * @default "now"
@@ -151,11 +154,11 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
               created_at?: number;
               /** @format int64 */
               tokentable_id?: number;
-              round: string;
-              token_percent: number;
+              round?: string;
+              token_percent?: number;
               price_usd?: number;
               /** @format int64 */
-              tge_percent: number;
+              tge_percent?: number;
               /** @format int64 */
               token_amount?: number;
               /** @format int64 */
@@ -168,17 +171,17 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
               fdv_usd?: number;
               unlock_scheme?: {
                 /** @format int64 */
-                id: number;
+                id?: number;
                 /**
                  * @format timestamptz
                  * @default "now"
                  */
                 created_at?: number;
                 /** @format int64 */
-                tokentable_allocation_id: number;
-                type: "onetime" | "liner";
+                tokentable_allocation_id?: number;
+                type?: "onetime" | "liner";
                 /** @format int64 */
-                month_after_tge: number;
+                month_after_tge?: number;
                 percent?: number;
                 /** @format int64 */
                 vesting_months?: number;
@@ -217,7 +220,7 @@ export class Tokentable<SecurityDataType = unknown> extends HttpClient<SecurityD
   ) =>
     this.request<
       {
-        data: string;
+        data?: string;
       },
       void
     >({

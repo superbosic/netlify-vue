@@ -23,21 +23,24 @@ export class Project<SecurityDataType = unknown> extends HttpClient<SecurityData
   projectDelete = (params: RequestParams = {}) =>
     this.request<
       {
-        data: {
+        data?: {
           /** @format int64 */
-          id: number;
+          id?: number;
           /**
            * @format timestamptz
            * @default "now"
            */
-          created_at: number;
-          name: string;
+          created_at?: number;
+          name?: string;
+          Web3AuthWalletChain?: string;
+          Web3AuthWalletAddress?: string;
+          Web3AuthId?: string;
           /** @format email */
-          email: string | null;
+          email?: string | null;
           /** @format password */
-          password: string | null;
+          password?: string | null;
           /** @format int64 */
-          project_id: number;
+          project_id?: number;
         };
       },
       void
@@ -59,22 +62,25 @@ export class Project<SecurityDataType = unknown> extends HttpClient<SecurityData
   projectList = (params: RequestParams = {}) =>
     this.request<
       {
-        data: {
+        data?: {
           /** @format int64 */
-          id: number;
+          id?: number;
           /**
            * @format timestamptz
            * @default "now"
            */
-          created_at: number;
-          name: string;
+          created_at?: number;
+          icon?: string;
+          name?: string;
+          token_network?: "polygon" | "ethereum" | "fantom" | "binance_smart_chain" | "avalanche";
+          token_ticker?: string;
           /** @format int64 */
-          max_token_supply: number;
-          token_ticker: string;
-          token_network: "polygon" | "ethereum" | "fantom" | "binance_smart_chain" | "avalanche";
-          tokentable: {
+          max_token_supply?: number;
+          /** @format int64 */
+          current_market_price_usd?: number;
+          tokentable?: {
             /** @format int64 */
-            id: number;
+            id?: number;
             /**
              * @format timestamptz
              * @default "now"
@@ -111,7 +117,7 @@ export class Project<SecurityDataType = unknown> extends HttpClient<SecurityData
   ) =>
     this.request<
       {
-        data: string;
+        data?: string;
       },
       void
     >({

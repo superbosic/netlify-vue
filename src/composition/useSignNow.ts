@@ -1,6 +1,5 @@
 import { LocalStorage } from 'quasar';
-import { computed, onMounted } from 'vue';
-import { IUser } from '@/store/account';
+import { computed } from 'vue';
 import { BearerTokenKey, createSignNowApiInstance } from '@/api/token';
 import { Oauth2 } from '@/api/singNow/Oauth2';
 import { Document } from '@/api/singNow/Document';
@@ -8,6 +7,7 @@ import { useProjectStore } from '@/store/project';
 import { User } from '@/api/singNow/User';
 import useRequest from '@/composition/useRequest';
 import { Folder } from '@/api/singNow/Folder';
+import { IUser } from '@/types/user';
 
 const BasicToken = 'ZDVlMTkzMzZmYmM0ZmY4YzgxY2UyZWMyOTczZTM4YTU6MDZkNTQ5M2IxNDI4ZDk5MTQyY2EzM2FhYmZlOTA1NjY=';
 const username = 'bagfaq.innocode@gmail.com';

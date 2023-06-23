@@ -1,5 +1,6 @@
 <template>
   <q-form
+    ref="refForm"
     greedy
     @submit="projectCreate"
   >
@@ -52,6 +53,7 @@
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
+import { QForm } from 'quasar';
 import UiNumberField from '@/components/ui/UiNumberField.vue';
 import { useProjectStore } from '@/store/project';
 import { createApiInstance } from '@/api/token';
@@ -70,6 +72,7 @@ const emits = defineEmits<{
 const { project, setProject } = useProjectStore();
 const projectApi = createApiInstance(Project);
 const { defaultRequiredRules, numberRequiredRule } = useValidationRules();
+const refForm = ref<QForm | null>(null);
 const projectInput = ref<ProjectInput>({
   name: project.value?.name ?? '',
   max_token_supply: project.value?.max_token_supply ?? 0,
@@ -87,7 +90,17 @@ const { loading, sendRequest: projectCreate } = useRequest({
   },
 });
 
+async function submit() {
+  const isValid = await refForm.value?.validate();
+
+  if (isValid) {
+    refForm.value?.submit();
+  }
+
+  return isValid;
+}
+
 defineExpose({
-  projectCreate,
+  submit,
 });
 </script>

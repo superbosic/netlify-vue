@@ -17,7 +17,7 @@
               <div class="text-h6">
                 {{ name }}
               </div>
-              <fundraising-round-status :status="round.status" />
+              <fundraising-round-status :status="round.status!" />
               <q-space />
               <div class="row q-gutter-md">
                 <q-btn
@@ -138,11 +138,11 @@
             @click="fundraisingInvestorCreateDialogIsOpen = true"
           />
         </div>
-        <fundraising-investors-table :investors="round?.investors" />
+        <fundraising-investors-table :investors="round?.investors ?? []" />
         <fundraising-investor-create-dialog
           v-if="fundraisingInvestorCreateDialogIsOpen"
           v-model="fundraisingInvestorCreateDialogIsOpen"
-          :round-id="round.id"
+          :round-id="round.id!"
           @created="onRoundInvestorCreated"
         />
       </div>

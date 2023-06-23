@@ -112,7 +112,7 @@
       <token-table-token-allocation-add-new-dialog
         v-if="tokenTableTokenAllocationAddNewDialogIsOpen"
         v-model="tokenTableTokenAllocationAddNewDialogIsOpen"
-        :token="rowToEdit"
+        :token="rowToEdit!"
         @created="onTokenAllocationCreated"
       />
 

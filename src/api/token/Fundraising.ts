@@ -23,7 +23,7 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
   availableUnlockSchemesList = (params: RequestParams = {}) =>
     this.request<
       {
-        data: {
+        data?: {
           /** @format int64 */
           id?: number;
           /**
@@ -50,17 +50,17 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
           fdv_usd?: number;
           unlock_scheme?: {
             /** @format int64 */
-            id: number;
+            id?: number;
             /**
              * @format timestamptz
              * @default "now"
              */
             created_at?: number;
             /** @format int64 */
-            tokentable_allocation_id: number;
-            type: "onetime" | "liner";
+            tokentable_allocation_id?: number;
+            type?: "onetime" | "liner";
             /** @format int64 */
-            month_after_tge: number;
+            month_after_tge?: number;
             percent?: number;
             /** @format int64 */
             vesting_months?: number;
@@ -93,25 +93,25 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
   ) =>
     this.request<
       {
-        data: {
+        data?: {
           /** @format int64 */
-          id: number;
+          id?: number;
           /**
            * @format timestamptz
            * @default "now"
            */
-          created_at: number;
+          created_at?: number;
           /** @format int64 */
-          project_id: number;
-          name: string;
-          status: "draft" | "ongoing" | "completed";
-          token_percentage: number;
+          project_id?: number;
+          name?: string;
+          status?: "draft" | "ongoing" | "completed";
+          token_percentage?: number;
           /** @format int64 */
-          token_amount: number;
-          token_price_usd: number;
+          token_amount?: number;
+          token_price_usd?: number;
           /** @format int64 */
-          raise_usd: number;
-          signnow_documet_id: string;
+          raise_usd?: number;
+          signnow_documet_id?: string;
         };
       },
       void
@@ -145,7 +145,7 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
   ) =>
     this.request<
       {
-        data: string;
+        data?: string;
       },
       void
     >({
@@ -174,7 +174,7 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
   ) =>
     this.request<
       {
-        data: string;
+        data?: string;
       },
       void
     >({
@@ -203,45 +203,45 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
   ) =>
     this.request<
       {
-        data: {
+        data?: {
           /** @format int64 */
-          id: number;
+          id?: number;
           /**
            * @format timestamptz
            * @default "now"
            */
-          created_at: number;
+          created_at?: number;
           /** @format int64 */
-          project_id: number;
-          name: string;
-          status: "draft" | "ongoing" | "completed";
-          token_percentage: number;
+          project_id?: number;
+          name?: string;
+          status?: "draft" | "ongoing" | "completed";
+          token_percentage?: number;
           /** @format int64 */
-          token_amount: number;
-          token_price_usd: number;
+          token_amount?: number;
+          token_price_usd?: number;
           /** @format int64 */
-          raise_usd: number;
-          signnow_documet_id: string;
-          unlock_scheme: {
+          raise_usd?: number;
+          signnow_documet_id?: string;
+          unlock_scheme?: {
             /** @format int64 */
-            id: number;
+            id?: number;
             /**
              * @format timestamptz
              * @default "now"
              */
             created_at?: number;
             /** @format int64 */
-            fundraising_round_id: number;
-            type: "onetime" | "liner";
+            fundraising_round_id?: number;
+            type?: "onetime" | "liner";
             /** @format int64 */
-            month_after_tge: number;
+            month_after_tge?: number;
             percent?: number;
             /** @format int64 */
             vesting_months?: number;
           }[];
-          investors: {
+          investors?: {
             /** @format int64 */
-            id: number;
+            id?: number;
             /**
              * @format timestamptz
              * @default "now"
@@ -251,11 +251,11 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
             fundraising_round_id?: number;
             /** @format int64 */
             investor_id?: number;
-            email: string;
-            wallet_address: string;
+            email?: string;
+            wallet_address?: string;
             /** @format int64 */
-            investment_allocation: number;
-            state: "pending" | "signed";
+            investment_allocation?: number;
+            state?: "pending" | "signed";
           }[];
         };
       },
@@ -290,7 +290,7 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
   ) =>
     this.request<
       {
-        data: string;
+        data?: string;
       },
       void
     >({
@@ -313,24 +313,27 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
   fundraisingList = (params: RequestParams = {}) =>
     this.request<
       {
-        data: {
+        data?: {
           /** @format int64 */
-          id: number;
+          id?: number;
           /**
            * @format timestamptz
            * @default "now"
            */
-          created_at: number;
-          name: string;
+          created_at?: number;
           /** @format int64 */
-          tokentable: number;
+          tokentable?: number;
+          icon?: string;
+          name?: string;
+          token_network?: "polygon" | "ethereum" | "fantom" | "binance_smart_chain" | "avalanche";
+          token_ticker?: string;
           /** @format int64 */
-          max_token_supply: number;
-          token_ticker: string;
-          token_network: "polygon" | "ethereum" | "fantom" | "binance_smart_chain" | "avalanche";
-          fundraising_rounds: {
+          max_token_supply?: number;
+          /** @format int64 */
+          current_market_price_usd?: number;
+          fundraising_rounds?: {
             /** @format int64 */
-            id: number;
+            id?: number;
             /**
              * @format timestamptz
              * @default "now"
@@ -338,35 +341,35 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
             created_at?: number;
             /** @format int64 */
             project_id?: number;
-            name: string;
-            status: "draft" | "ongoing" | "completed";
-            token_percentage: number;
+            name?: string;
+            status?: "draft" | "ongoing" | "completed";
+            token_percentage?: number;
             /** @format int64 */
-            token_amount: number;
-            token_price_usd: number;
+            token_amount?: number;
+            token_price_usd?: number;
             /** @format int64 */
-            raise_usd: number;
+            raise_usd?: number;
             signnow_documet_id?: string;
             unlock_scheme?: {
               /** @format int64 */
-              id: number;
+              id?: number;
               /**
                * @format timestamptz
                * @default "now"
                */
               created_at?: number;
               /** @format int64 */
-              fundraising_round_id: number;
-              type: "onetime" | "liner";
+              fundraising_round_id?: number;
+              type?: "onetime" | "liner";
               /** @format int64 */
-              month_after_tge: number;
+              month_after_tge?: number;
               percent?: number;
               /** @format int64 */
               vesting_months?: number;
             }[];
             investors?: {
               /** @format int64 */
-              id: number;
+              id?: number;
               /**
                * @format timestamptz
                * @default "now"
@@ -376,22 +379,22 @@ export class Fundraising<SecurityDataType = unknown> extends HttpClient<Security
               fundraising_round_id?: number;
               /** @format int64 */
               investor_id?: number;
-              email: string;
-              wallet_address: string;
+              email?: string;
+              wallet_address?: string;
               /** @format int64 */
-              investment_allocation: number;
-              state: "pending" | "signed";
+              investment_allocation?: number;
+              state?: "pending" | "signed";
               profile?: {
                 /** @format int64 */
-                id: number;
+                id?: number;
                 /**
                  * @format timestamptz
                  * @default "now"
                  */
                 created_at?: number;
-                name: string;
+                name?: string;
                 /** @format email */
-                email: string | null;
+                email?: string | null;
                 /** @format int64 */
                 project_id?: number;
               };

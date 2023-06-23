@@ -110,18 +110,18 @@ const { loading: roundCreateLoading, sendRequest: roundCreate } = useRequest({
   },
 });
 const { loading: getRoundLoading, sendRequest: getRound } = useRequest({
-  request: () => fundraisingApi.roundList({ id: props.id! }).then((data) => data!.data!.data),
+  request: () => fundraisingApi.roundList({ id: props.id! }).then((data) => data!.data!.data!),
   successCallback: (value) => {
     round.value = {
       id: value.id,
-      name: value.name,
-      token_price_usd: value.token_price_usd,
-      token_percentage: value.token_percentage,
+      name: value.name!,
+      token_price_usd: value.token_price_usd!,
+      token_percentage: value.token_percentage!,
       allocation_id: 0,
     };
 
-    if (value.unlock_scheme.length > 0) {
-      allocationId.value = value.unlock_scheme[0].id;
+    if (value.unlock_scheme!.length > 0) {
+      allocationId.value = value.unlock_scheme![0].id;
     }
   },
 });

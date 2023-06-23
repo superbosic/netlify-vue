@@ -106,7 +106,7 @@
                       </div>
                     </div>
                     <div>
-                      <fundraising-round-status :status="round.status" />
+                      <fundraising-round-status :status="round.status!" />
                     </div>
                   </div>
                 </q-card-section>

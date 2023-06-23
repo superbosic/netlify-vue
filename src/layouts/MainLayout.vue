@@ -1,6 +1,6 @@
 <template>
   <q-layout
-    v-if="account && project"
+    v-if="account"
     view="lHh LpR fFf"
   >
     <the-header-panel />
@@ -25,13 +25,13 @@ import { onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { createApiInstance } from '@/api/token';
 import { Auth } from '@/api/token/Auth';
-import { IUser, useAccountStore } from '@/store/account';
+import { useAccountStore } from '@/store/account';
 import useRequest from '@/composition/useRequest';
 import TheHeaderPanel from '@/components/TheHeaderPanel.vue';
 import TheNavigationPanel from '@/components/TheNavigationPanel/TheNavigationPanel.vue';
 import { Project } from '@/api/token/Project';
-import { RouteNames } from '@/router/routeNames';
 import { useProjectStore } from '@/store/project';
+import { isDefined } from '@/utils/extra';
 
 const { setUser, login } = useAccountStore();
 const { setProject } = useProjectStore();
@@ -43,9 +43,12 @@ const router = useRouter();
 const { sendRequest: projectList, responseData: project } = useRequest({
   request: () => projectApi.projectList().then((data) => data!.data!.data),
   successCallback: (value) => {
-    if (!value) {
-      router.replace({ name: RouteNames.ProjectEdit });
-    } else {
+    // if (!value) {
+    //   router.replace({ name: RouteNames.ProjectEdit });
+    // } else {
+    //   setProject(value);
+    // }
+    if (isDefined(value)) {
       setProject(value);
     }
   },
@@ -53,7 +56,7 @@ const { sendRequest: projectList, responseData: project } = useRequest({
 const { sendRequest: loadAccountInfo, responseData: account } = useRequest({
   request: () => login().then(() => authApi.getAuth()).then((data) => data!.data!),
   successCallback: (value) => {
-    setUser(value as IUser);
+    setUser(value);
     projectList();
   },
 });
